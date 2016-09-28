@@ -1,0 +1,12 @@
+# System and ide files
+.idea
+.DS_Store
+Thumbs.db
+
+# libraries
+/node_modules
+/bower_components
+
+# misc
+typings
+
