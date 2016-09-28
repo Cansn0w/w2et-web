@@ -1,12 +1,33 @@
-# System and ide files
-.idea
-.DS_Store
-Thumbs.db
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# libraries
+# compiled output
+/dist
+/tmp
+
+# dependencies
 /node_modules
 /bower_components
 
-# misc
-typings
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
 
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+#System Files
+.DS_Store
+Thumbs.db
