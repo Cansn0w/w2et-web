@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
@@ -18,6 +20,7 @@ import { W2etRoutingModule } from './app-routing.module'
     RecipeComponent
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     FormsModule,
     HttpModule,
