@@ -9,15 +9,20 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { RecipeComponent } from './recipe/recipe.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
-import { W2etRoutingModule } from './app-routing.module'
+import { UserService } from './user.service'
+import { W2etRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     RestaurantComponent,
-    RecipeComponent
+    RecipeComponent,
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     NgbModule,
@@ -26,7 +31,7 @@ import { W2etRoutingModule } from './app-routing.module'
     HttpModule,
     W2etRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
