@@ -1,0 +1,26 @@
+<div class="row">
+
+    <label style="color: whitesmoke">Keyword</label>
+    <input #q (input)="setOption('keyword', q.value)">
+
+    <label style="color: whitesmoke">Diet</label>
+    <select #diet (change)="setOption('diet', diet.value)">
+        <option *ngFor="let item of diet_options">
+            {{ item }}
+        </option>
+    </select>
+
+    <label style="color: whitesmoke">Cuisine</label>
+    <select #cuisine (change)="setOption('cuisine', cuisine.value)">
+        <option *ngFor="let item of cuisine_options">
+            {{ item }}
+        </option>
+    </select>
+
+    <label style="color: whitesmoke">Intolerance</label>
+    <select #intolerance (change)="setOption('intolerance', intolerance.value)">
+        <option *ngFor="let item of intolerance_options">
+            {{ item }}
+        </option>
+    </select>
+</div>

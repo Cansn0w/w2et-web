@@ -1,17 +1,51 @@
-<div class="container">
-  <form (ngSubmit)="submitLogin()">
+<div class="container narrow-container">
 
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="email" class="form-control" id="email" name="email" required [(ngModel)]="loginData.email">
+    <h1 style="padding-top: 10%; color: white;">Sign in</h1>
+
+    <div class="row">
+        <div class = "col-xs-12 well" style="background-color:white;">
+            <form class="col-md-6">
+                <!--Email-->
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control" id="email" name="email" required
+                           [(ngModel)]="loginData.email">
+                </div>
+                <!--Password-->
+                <div class="form-group">
+                    <label for="passwd">Password</label>
+                    <input type="password" class="form-control" id="passwd" name="passwd" required
+                           [(ngModel)]="loginData.password">
+                </div>
+                <!--Checkbox & Signup-->
+                <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a style="margin: 10%;"
+                       (click)="signup()">Sign up</a>
+                </div>
+                <!--Submit Login-->
+                <button class="btn btn-default"
+                        (click)="submitLogin()">Login</button>
+            </form>
+            <!--Third party Log in-->
+            <form class="col-md-6" style="top:30px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" style="background-color:#3b5998;">
+                        <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
+                            <path fill="#FFF" d="M19,4V7H17A1,1 0 0,0 16,8V10H19V13H16V20H13V13H11V10H13V7.5C13,5.56 14.57,4 16.5,4M20,2H4A2,2 0 0,0 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z" />
+                        </svg>
+                        Log in with Facebook
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" style="background-color:#c71610;">
+                        <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
+                            <path fill="#FFF" d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
+                        </svg>
+                        Log in with Google+
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="form-group">
-      <label for="passwd">Password</label>
-      <input type="password" class="form-control" id="passwd" name="passwd" required [(ngModel)]="loginData.password">
-    </div>
-
-    <button type="submit" class="btn btn-default">Login</button>
-
-  </form>
 </div>
