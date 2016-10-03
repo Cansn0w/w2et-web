@@ -20,21 +20,38 @@ export class RecipeListComponent implements OnInit {
 		private router: Router
 	) { }
 
-	getRecipeList(): void {
-		this.recipeService.searchRecipes()
-			.then(recipes => {
-				this.recipes = recipes;
-			});
+	getRecipeFullList(ids: number[]): void {
+		for (let id of ids) {
+			this.recipeService.fetchRecipeDetails(+id)
+				.then(recipe => {
+					this.recipes.push(recipe);
+				});
+		}
+	}
+
+	getRecipeIDs(callback): void {
+		this.recipeService.fetchRecipesIDs()
+			.then(ids => {
+				callback(ids);
+			})
+	}
+
+	initRecipeList(): void {
+		this.recipes = [];
+		this.getRecipeIDs((ids: number[]) => {
+			this.getRecipeFullList(ids)
+		});
 	}
 
 	ngOnInit() {
-		this.getRecipeList();
+		this.initRecipeList()
 	}
 
 	onFilterOptionSet(choice: any) {
 		if (choice.key != 'keyword') { // todo: make it responsive
 			this.recipeService.updateFilter(choice.key, choice.value);
-			this.getRecipeList();
+			console.log(this.recipeService.getFilter());
+			this.initRecipeList();
 		}
 	}
 
