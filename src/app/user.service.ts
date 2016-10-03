@@ -5,8 +5,6 @@ export class UserService {
   private _loggedIn: boolean = false;
   private _email: string;
 
-
-
   login(email: string, password: string): boolean {
     this._email = email;
     this._loggedIn = true;
