@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RecipeService } from './recipe.service';
-import { RecipeFilter } from './recipe-filter.component';
 
 @Component({
 	selector: 'recipe',
@@ -21,7 +20,7 @@ export class RecipeComponent implements OnInit {
 	}
 
 	gotoList(): void {
-		this.router.navigate(['/recipe/list'])
+		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toJson()])
 	}
 
 	onFilterOptionSet(choice: any) {

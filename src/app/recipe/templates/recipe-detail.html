@@ -1,0 +1,18 @@
+<div class="container narrow-container">
+    <button (click)="go_back()">BACK</button>
+    <button (click)="go_next()">NEXT</button>
+    <ul>
+        <li>Name:  {{ recipe.name }}</li>
+        <li>Url:  {{ recipe.url}}</li>
+        <li>dairy free:  {{ recipe.dairyFree}}</li>
+        <li>gluten free:  {{ recipe.glutenFree}}</li>
+        <li>
+            <ul>
+                <li *ngFor="let ingrd of recipe.ingredients">
+                    {{ ingrd.name }}
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <img src="{{recipe.image}}">
+</div>
