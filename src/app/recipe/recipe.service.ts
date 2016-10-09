@@ -32,7 +32,8 @@ export class RecipeService {
 	public last_filter: RecipeFilter = new RecipeFilter();
 
 	private filter = new RecipeFilter();
-	private host = 'http://192.168.0.200:8000';
+	// private host = 'http://192.168.0.200:8000';
+	private host = 'http://127.0.0.1:8000/';
 
 	constructor(private http: Http) {
 	}
@@ -76,7 +77,8 @@ export class RecipeService {
 
 	fetchRecipesIDs(): Promise<number[]> {
 		let formatted_url = this.build_search_url();
-		return this.http.get(formatted_url).toPromise()
+		return this.http.get(formatted_url)
+			.toPromise()
 			.then(response => response.json() as number[])
 			.catch(this.handleError)
 	}

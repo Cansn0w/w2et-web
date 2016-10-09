@@ -9,8 +9,6 @@ import { RecipeService } from './recipe.service';
 })
 export class RecipeComponent implements OnInit {
 
-	url_path: string = 'http://192.168.0.200:4200';
-
 	constructor(
 		private recipeService: RecipeService,
 	    private router: Router
