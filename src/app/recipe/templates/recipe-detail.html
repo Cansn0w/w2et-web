@@ -1,6 +1,8 @@
 <div class="container narrow-container">
     <button (click)="go_back()">BACK</button>
     <button (click)="go_next()">NEXT</button>
+
+    <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
     <ul>
         <li>Name:  {{ recipe.name }}</li>
         <li>Url:  {{ recipe.url}}</li>

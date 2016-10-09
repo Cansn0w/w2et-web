@@ -30,7 +30,7 @@ import { app_routing } from './app-routing'
 		HomeComponent,
 		RestaurantComponent,
 		LoginComponent,
-		ProfileComponent
+		ProfileComponent,
 	],
 	providers: [UserService],
 	bootstrap: [AppComponent]

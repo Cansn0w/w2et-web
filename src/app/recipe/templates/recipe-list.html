@@ -18,7 +18,7 @@
                     <!--Recipe Bookmark/share icons-->
                     <div class="col-xs-2" style="float:right;">
                         <i class="material-icons" style="font-size:20px;">bookmark_border</i>
-                        <i class="material-icons" style="font-size:20px;">share</i>
+                        <facebook-share-btn  *ngIf="recipe.url !== null"  [url]="recipe.url"></facebook-share-btn>
                         <!--when click on the icon, change to the one below
                         <i class="material-icons">bookmark</i>-->
                     </div>
