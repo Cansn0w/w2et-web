@@ -20,7 +20,7 @@
           </button>
         </div>
       </div>
-      <form (ngSubmit)="submitLogin()">
+      <form (ngSubmit)="submitLogin(loginData)">
         <div class="form-group">
           <label for="login_email">E-mail</label>
           <input type="email" class="form-control" id="login_email" name="login_email" required
@@ -34,7 +34,7 @@
         </div>
 
         <div class="checkbox">
-          <label><input type="checkbox"> Remember me</label>
+          <label><input  #chbox_remember type="checkbox" (change)="remember_user(chbox_remember.checked)"> Remember me</label>
         </div>
         <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true">Log in</button>
         <a href="/signup" style="margin:5%;">Sign up</a>
@@ -45,7 +45,7 @@
 
 
   <div *ngIf="!islogin">
-    <form (ngSubmit)="submitSignup()">
+    <form (ngSubmit)="submitSignup(regData)">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" name="username" required

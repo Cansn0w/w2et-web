@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise'
+import {HOST} from '../com/config'
 
 import {RecipeFilter} from './recipe-filter.component'
 
@@ -32,7 +33,6 @@ export class RecipeService {
 	public last_filter: RecipeFilter = new RecipeFilter();
 
 	private filter = new RecipeFilter();
-	private host = 'http://10.19.71.137:8000';
 
 	constructor(private http: Http) {
 	}
@@ -47,11 +47,11 @@ export class RecipeService {
 	// Url builders
 	build_search_url(): string {
 		let f = this.filter; // for simplicity
-		return this.host + `/api/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
+		return HOST + `/api/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
 	}
 
 	build_rcp_url(id: number): string {
-		return this.host + `/api/recipe/${id}`;
+		return HOST + `/api/recipe/${id}`;
 	}
 
 	// Recipe Filter handlers

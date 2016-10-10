@@ -24,7 +24,6 @@ export class RecipeDetailComponent implements OnInit {
 			this.recipeService.fetchRecipeDetails(id)
 				.then(recipe => {
 					this.recipe = recipe;
-					console.log(recipe);
 				});
 		});
 	}

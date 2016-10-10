@@ -15,6 +15,10 @@ const routes: Routes = [
 		component: RestaurantComponent
 	},
 	{
+		path: 'signin',
+		component: SigninComponent
+	},
+	{
 		path: 'login',
 		component: SigninComponent
 	},

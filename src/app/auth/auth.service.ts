@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 
+import {HOST} from '../com/config'
 import 'rxjs/add/operator/toPromise'
 
 @Injectable()
 export class AuthService {
 
-	private host = 'http://10.19.71.137:8000/';
 
 	constructor(private http: Http) {
 	}
@@ -16,19 +16,19 @@ export class AuthService {
 		let path = '';
 		switch (type) {
 			case 'login':
-				path = 'auth/login/';
+				path = '/auth/login/';
 				break;
 			case 'signup':
-				path = 'auth/registration/';
+				path = '/auth/registration/';
 				break;
 			case 'getuser':
-				path = 'auth/user/';
+				path = '/auth/user/';
 				break;
 			case 'logout':
-				path = 'auth/logout/';
+				path = '/auth/logout/';
 				break;
 		}
-		return this.host + path;
+		return HOST + path;
 	}
 
 	// Server communication handlers
@@ -41,7 +41,7 @@ export class AuthService {
 	login(loginData: {}): Promise<any> {
 		let body = JSON.stringify(loginData);
 		let options = new RequestOptions({
-			headers: new Headers({ 'Content-Type': 'application/json' })
+			headers: new Headers({'Content-Type': 'application/json'})
 		});
 
 		return this.http.post(this.get_endpoint('login'), body, options)
@@ -51,10 +51,10 @@ export class AuthService {
 	}
 
 	// SIGN-UP
-	signup(regData: {}): Promise<any>  {
+	signup(regData: {}): Promise<any> {
 		let body = JSON.stringify(regData);
 		let options = new RequestOptions({
-			headers: new Headers({ 'Content-Type': 'application/json' })
+			headers: new Headers({'Content-Type': 'application/json'})
 		});
 
 		return this.http.post(this.get_endpoint('signup'), body, options)
@@ -66,7 +66,7 @@ export class AuthService {
 	// GET USER DATA
 	get_user(token: string): Promise<any> {
 		let options = new RequestOptions({
-			headers: new Headers({ 'Authorization': 'Token '+ token })
+			headers: new Headers({'Authorization': 'Token ' + token})
 		});
 
 		return this.http.get(this.get_endpoint('getuser'), options)
