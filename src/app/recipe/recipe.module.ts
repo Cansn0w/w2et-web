@@ -7,8 +7,8 @@ import { RecipeDetailComponent } from './recipe-detail.component';
 import { RecipeListComponent } from './recipe-list.component';
 import { RecipeFilterComponent } from './recipe-filter.component'
 
-import { FacebookShareButton } from '../shared/fbshare.component'
-import { SafePipe } from '../shared/safe-url.pipe'
+import { FacebookShareButton } from '../com/fbshare.component'
+import { SafePipe } from '../com/safe-url.pipe'
 
 import { UserService } from '../user.service';
 import { RecipeService } from './recipe.service';

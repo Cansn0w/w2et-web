@@ -6,10 +6,25 @@ export class UserService {
 	private _email: string;
 	private _token: string;
 
+	constructor(){
+		this.reset();
+	}
+
+	reset(): void {
+		this._token = '';
+		this._email = '';
+		this._loggedIn = false;
+	}
+
 	login(userdata: {}): boolean {
 		this._email = userdata['email'];
 		this._token = userdata['token'];
 		this._loggedIn = true;
+		return true;
+	}
+
+	logout(): boolean {
+		this.reset();
 		return true;
 	}
 
@@ -20,5 +35,4 @@ export class UserService {
 	getEmail() {
 		return this._email;
 	}
-
 }

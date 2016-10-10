@@ -7,6 +7,8 @@ import {RestaurantComponent} from './restaurant/restaurant.component';
 import {SigninComponent} from './auth/signin.component';
 import {ProfileComponent} from './profile/profile.component';
 
+import {LoginGuard} from './com/login.guard'
+
 const routes: Routes = [
 	{
 		path: 'restaurant',
@@ -22,7 +24,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'profile',
-		component: ProfileComponent
+		component: ProfileComponent,
+		canActivate: [LoginGuard],
 	},
 	{
 		path: '',

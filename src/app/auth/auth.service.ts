@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise'
 @Injectable()
 export class AuthService {
 
-	private host = 'http://127.0.0.1:8000/';
+	private host = 'http://192.168.0.200:8000/';
 
 	constructor(private http: Http) {
 	}
@@ -60,7 +60,7 @@ export class AuthService {
 		return this.http.post(this.get_endpoint('signup'), body, options)
 			.toPromise()
 			.then(response => response.json())
-			.catch(this.handleError)
+			.catch(this.handleError);
 	}
 
 	// GET USER DATA
@@ -72,12 +72,15 @@ export class AuthService {
 		return this.http.get(this.get_endpoint('getuser'), options)
 			.toPromise()
 			.then(response => response.json())
-			.catch(this.handleError)
+			.catch(this.handleError);
 	}
 
 	// LOGOUT
-	logout() {
-
+	logout(token: string): Promise<any> {
+		return this.http.get(this.get_endpoint('logout'))
+			.toPromise()
+			.then(response => response)
+			.catch(this.handleError);
 	}
 
 	// THIRD-PARTY SIGNUP - FB

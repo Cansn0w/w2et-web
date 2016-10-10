@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { UserService } from './user.service'
 import { AuthService } from './auth/auth.service'
+import { LoginGuard } from './com/login.guard'
 import { app_routing } from './app-routing'
 
 @NgModule({
@@ -34,7 +35,11 @@ import { app_routing } from './app-routing'
 		SigninComponent,
 		ProfileComponent,
 	],
-	providers: [UserService, AuthService],
+	providers: [
+		UserService,
+		AuthService,
+		LoginGuard
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
