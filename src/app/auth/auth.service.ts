@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise'
 @Injectable()
 export class AuthService {
 
-	private host = 'http://192.168.0.200:8000/';
+	private host = 'http://10.19.71.137:8000/';
 
 	constructor(private http: Http) {
 	}

@@ -32,7 +32,7 @@ export class RecipeService {
 	public last_filter: RecipeFilter = new RecipeFilter();
 
 	private filter = new RecipeFilter();
-	private host = 'http://192.168.0.200:8000';
+	private host = 'http://10.19.71.137:8000';
 
 	constructor(private http: Http) {
 	}
