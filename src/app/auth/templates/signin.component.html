@@ -1,6 +1,6 @@
 <div class="container narrow-container">
   <div *ngIf="islogin">
-    <h3 style="padding-top: 10%; padding-bottom: 5%; font-weight: 200;">Log in for more features</h3>
+    <h3 style="padding-top: 10%; padding-bottom: 3%; font-weight: 200;">Log in for more features</h3>
     <div class = "col-xs-12 well" style="background-color:white;">
       <div class="row">
         <div class="form-group col-md-6">
@@ -45,32 +45,35 @@
 
 
   <div *ngIf="!islogin">
-    <form (ngSubmit)="submitSignup(regData)">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" required
-               [(ngModel)]="regData.username">
-      </div>
+    <h3 style="padding-top: 10%; padding-bottom: 3%; font-weight: 200;">Fill in the form to sign up</h3>
+    <div class = "col-xs-12 well" style="background-color:white;">
+      <form (ngSubmit)="submitSignup(regData)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required
+                 [(ngModel)]="regData.username">
+        </div>
 
-      <div class="form-group">
-        <label for="email">E-mail</label>
-        <input type="email" class="form-control" id="email" name="email" required
-               [(ngModel)]="regData.email">
-      </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" class="form-control" id="email" name="email" required
+                 [(ngModel)]="regData.email">
+        </div>
 
-      <div class="form-group">
-        <label for="passwd">Password</label>
-        <input type="password" class="form-control" id="passwd" name="passwd" required
-               [(ngModel)]="regData.password1">
-      </div>
+        <div class="form-group">
+          <label for="passwd">Password</label>
+          <input type="password" class="form-control" id="passwd" name="passwd" required
+                 [(ngModel)]="regData.password1">
+        </div>
 
-      <div class="form-group">
-        <label for="passwd">Confirm your password</label>
-        <input type="password" class="form-control" id="passwd_repeat" name="passwd" required
-               [(ngModel)]="regData.password2">
-      </div>
+        <div class="form-group">
+          <label for="passwd">Confirm your password</label>
+          <input type="password" class="form-control" id="passwd_repeat" name="passwd" required
+                 [(ngModel)]="regData.password2">
+        </div>
 
-      <button type="submit" class="btn btn-default">Signup</button>
-    </form>
+        <button type="submit" class="btn btn-default">Signup</button>
+      </form>
+    </div>
   </div>
 </div>
