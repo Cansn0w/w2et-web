@@ -1,26 +1,41 @@
-<div class="row">
+<div class="container narrow-container">
+  <h1 style="padding-top: 10%;">Select filters:</h1>
+  <div class = "well" style="background-color:white;">
+        <div class="row">
+            <div class="col-md-12">
+            <label>Keyword</label>
+            <input #q (input)="setOption('keyword', q.value)">
+            </div>
+        </div>
 
-    <label>Keyword</label>
-    <input #q (input)="setOption('keyword', q.value)">
+        <div class="row" style="margin-top: 3%;">
+          <div class="col-md-4">
+            <label>Diet</label>
+            <select #diet (change)="setOption('diet', diet.value)">
+              <option *ngFor="let item of diet_options">
+                {{ item }}
+              </option>
+            </select>
+          </div>
 
-    <label>Diet</label>
-    <select #diet (change)="setOption('diet', diet.value)">
-        <option *ngFor="let item of diet_options">
-            {{ item }}
-        </option>
-    </select>
+          <div class="col-md-4">
+            <label>Cuisine</label>
+            <select #cuisine (change)="setOption('cuisine', cuisine.value)">
+              <option *ngFor="let item of cuisine_options">
+                {{ item }}
+              </option>
+            </select>
+          </div>
 
-    <label>Cuisine</label>
-    <select #cuisine (change)="setOption('cuisine', cuisine.value)">
-        <option *ngFor="let item of cuisine_options">
-            {{ item }}
-        </option>
-    </select>
+          <div class="col-md-4">
+            <label>Intolerance</label>
+            <select #intolerance (change)="setOption('intolerance', intolerance.value)">
+              <option *ngFor="let item of intolerance_options">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-    <label>Intolerance</label>
-    <select #intolerance (change)="setOption('intolerance', intolerance.value)">
-        <option *ngFor="let item of intolerance_options">
-            {{ item }}
-        </option>
-    </select>
+  </div>
 </div>

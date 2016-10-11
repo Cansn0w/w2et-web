@@ -63,7 +63,8 @@ body {
 
 }
 
-.sign_in_btn{
+.sign_in_btn,
+.sign_in_btn:focus{
   background-color: #EF4105;
   border-style: solid;
   border-width: 1px;
