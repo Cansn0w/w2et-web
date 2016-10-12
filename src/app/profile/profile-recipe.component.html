@@ -1,0 +1,13 @@
+<h2>My Recipes</h2>
+<ul class="recipes">
+  <li *ngFor="let recipe of recipes">
+    <a [routerLink]="['/recipe/detail', recipe.spoonacular_id]">{{recipe.name}}</a>
+    <!--{{recipe.spoonacular_id}}-->
+  </li>
+</ul>
+<!--<div *ngIf="selectedRecipe">-->
+  <!--<h2>-->
+    <!--{{selectedRecipe.name | uppercase}} is my recipe-->
+  <!--</h2>-->
+  <!--<button (click)="favReci()">View Details</button>-->
+<!--</div>-->

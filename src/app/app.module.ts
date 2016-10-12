@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { RecipeModule } from './recipe/recipe.module'
-
+import { RecipeModule } from './recipe/recipe.module';
+import { ProfileModule } from './profile/profile.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { SigninComponent } from './auth/signin.component';
 
-import { ProfileComponent } from './profile/profile.component';
+//import { ProfileComponent } from './profile/profile.component';
 
 import { UserService } from './user.service'
 import { AuthService } from './auth/auth.service'
@@ -24,6 +24,7 @@ import { app_routing } from './app-routing'
 		FormsModule,
 		HttpModule,
 		RecipeModule,
+    ProfileModule,
 		app_routing
 	],
 	declarations: [
@@ -31,7 +32,7 @@ import { app_routing } from './app-routing'
 		HomeComponent,
 		RestaurantComponent,
 		SigninComponent,
-		ProfileComponent,
+		//ProfileComponent,
 	],
 	providers: [
 		UserService,

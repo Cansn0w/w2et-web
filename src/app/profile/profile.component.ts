@@ -1,15 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router'
+
+import {UserService} from '../user.service'
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  templateUrl: './profile.component.html',  //<a routerLink="/recipes" routerLinkActive="active">Recipes</a>
+  //styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
+  constructor(
+    private user: UserService,
+    private router: Router
+  )
 
-  constructor() { }
+  { }
 
-  ngOnInit() {
-  }
+  // favReci() {
+  //   return this.user.getFavRec;
+  // }
+  //
+  // favRest() {
+  //   return this.user.getFavRest;
+  // }
+
+  // gotoRecipe(): void {
+  //   this.router.navigate(['/profile/recipe'])
+  // }
+  //
+  // gotoRestaurent(): void {
+  //   this.router.navigate(['/profile/restaurant'])
+  // }
 
 }
