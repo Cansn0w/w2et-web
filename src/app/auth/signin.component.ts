@@ -58,6 +58,7 @@ export class SigninComponent implements OnInit {
 			})
 			.catch(err => {
 				// WHAT COULD BE HAPPENDING???
+				this.delete_cookies();
 			})
 	}
 
@@ -76,6 +77,8 @@ export class SigninComponent implements OnInit {
 			.catch(err => {
 				if (err.status == 400) {
 					alert('Invalid Credential!'); // todo, highlighting incorrect fields instead?
+					// delete local cookies
+					this.delete_cookies();
 				}
 			});
 	}

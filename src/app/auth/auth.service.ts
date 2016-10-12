@@ -16,16 +16,16 @@ export class AuthService {
 		let path = '';
 		switch (type) {
 			case 'login':
-				path = '/auth/login/';
+				path = '/account/login/';
 				break;
 			case 'signup':
-				path = '/auth/registration/';
+				path = '/account/registration/';
 				break;
 			case 'getuser':
-				path = '/auth/user/';
+				path = '/account/user/';
 				break;
 			case 'logout':
-				path = '/auth/logout/';
+				path = '/account/logout/';
 				break;
 		}
 		return HOST + path;

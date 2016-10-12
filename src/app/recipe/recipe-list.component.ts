@@ -76,12 +76,12 @@ export class RecipeListComponent implements OnInit {
 		});
 	}
 
+	// Events
 	onFilterOptionSet(choice: any) {
 		// todo: in-place url update should be implemented
 		this.searchTerms.next(choice);
 	}
 
-	// Events
 	onSelectRecipe(recipe: Recipe): void {
 		this.router.navigate(['/recipe/detail', recipe.spoonacular_id])
 	}
