@@ -1,9 +1,11 @@
-<div class="container narrow-container">
+<div class="container narrow-container" style="padding-top: 5%;">
   <div *ngIf="islogin">
-    <h3 style="padding-top: 10%; padding-bottom: 3%; font-weight: 200;">Log in for more features</h3>
-    <div class = "col-xs-12 well" style="background-color:white;">
-      <div class="row">
-        <div class="form-group col-md-6">
+      <div class = "well" style="background-color:gray;margin-bottom:0; border-bottom-left-radius:0px; border-bottom-right-radius:0px;border-top-left-radius:6px;border-top-right-radius:6px;border:none;padding-top:5px;padding-bottom:10px;">
+        <h3 style="color:white;font-size:20px;">Log in to your account</h3>
+      </div>
+      <div class = "col-xs-12 well" style="padding-top:5%; background-color:white; margin-top:0; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;border:none;">
+
+        <div class="form-group col-md-12" style="padding-bottom: 20px;">
           <button type="button" class="btn btn-primary btn-block" style="background-color:#3b5998;">
             <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
               <path fill="#FFF" d="M19,4V7H17A1,1 0 0,0 16,8V10H19V13H16V20H13V13H11V10H13V7.5C13,5.56 14.57,4 16.5,4M20,2H4A2,2 0 0,0 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z" />
@@ -11,37 +13,28 @@
             Log in with Facebook
           </button>
         </div>
-        <div class="form-group col-md-6">
-          <button type="button" class="btn btn-primary btn-block" style="background-color:#c71610;">
-            <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
-              <path fill="#FFF" d="M23,11H21V9H19V11H17V13H19V15H21V13H23M8,11V13.4H12C11.8,14.4 10.8,16.4 8,16.4C5.6,16.4 3.7,14.4 3.7,12C3.7,9.6 5.6,7.6 8,7.6C9.4,7.6 10.3,8.2 10.8,8.7L12.7,6.9C11.5,5.7 9.9,5 8,5C4.1,5 1,8.1 1,12C1,15.9 4.1,19 8,19C12,19 14.7,16.2 14.7,12.2C14.7,11.7 14.7,11.4 14.6,11H8Z" />
-            </svg>
-            Log in with Google+
-          </button>
-        </div>
+
+        <form (ngSubmit)="submitLogin(loginData)">
+          <div class="form-group" >
+            <label for="login_email">E-mail</label>
+            <input type="email" class="form-control" id="login_email" name="login_email" required
+                   [(ngModel)]="loginData.email">
+          </div>
+
+          <div class="form-group">
+            <label for="login_passwd">Password</label>
+            <input type="password" class="form-control" id="login_passwd" name="login_passwd" required
+                   [(ngModel)]="loginData.password">
+          </div>
+
+          <div class="checkbox">
+            <label><input  #chbox_remember type="checkbox" (change)="remember_user(chbox_remember.checked)"> Remember me</label>
+          </div>
+          <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true">Log in</button>
+          <a href="/signup" style="margin:5%;">Sign up</a>
+        </form>
       </div>
-      <form (ngSubmit)="submitLogin(loginData)">
-        <div class="form-group">
-          <label for="login_email">E-mail</label>
-          <input type="email" class="form-control" id="login_email" name="login_email" required
-                 [(ngModel)]="loginData.email">
-        </div>
-
-        <div class="form-group">
-          <label for="login_passwd">Password</label>
-          <input type="password" class="form-control" id="login_passwd" name="login_passwd" required
-                 [(ngModel)]="loginData.password">
-        </div>
-
-        <div class="checkbox">
-          <label><input  #chbox_remember type="checkbox" (change)="remember_user(chbox_remember.checked)"> Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true">Log in</button>
-        <a href="/signup" style="margin:5%;">Sign up</a>
-      </form>
-
     </div>
-  </div>
 
 
   <div *ngIf="!islogin">
