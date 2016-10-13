@@ -1,72 +1,132 @@
 <div class="container narrow-container" style="padding-top: 5%;">
-  <div *ngIf="islogin">
-      <div class = "well" style="background-color:gray;margin-bottom:0; border-bottom-left-radius:0px; border-bottom-right-radius:0px;border-top-left-radius:6px;border-top-right-radius:6px;border:none;padding-top:5px;padding-bottom:10px;">
-        <h3 style="color:white;font-size:20px;">Log in to your account</h3>
-      </div>
-      <div class = "col-xs-12 well" style="padding-top:5%; background-color:white; margin-top:0; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;border:none;">
 
-        <div class="form-group col-md-12" style="padding-bottom: 20px;">
-          <button type="button" class="btn btn-primary btn-block" style="background-color:#3b5998;">
-            <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
-              <path fill="#FFF" d="M19,4V7H17A1,1 0 0,0 16,8V10H19V13H16V20H13V13H11V10H13V7.5C13,5.56 14.57,4 16.5,4M20,2H4A2,2 0 0,0 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z" />
-            </svg>
-            Log in with Facebook
-          </button>
+    <!--LOG IN-->
+    <div *ngIf="islogin">
+        <div class="well"
+             style="background-color:gray;margin-bottom:0; border-bottom-left-radius:0px; border-bottom-right-radius:0px;border-top-left-radius:6px;border-top-right-radius:6px;border:none;padding-top:5px;padding-bottom:10px;">
+            <h3 style="color:white;font-size:20px;">Log in to your account</h3>
         </div>
+        <div class="col-xs-12 well"
+             style="padding-top:5%; background-color:white; margin-top:0; border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;border:none;">
 
-        <form (ngSubmit)="submitLogin(loginData)">
-          <div class="form-group" >
-            <label for="login_email">E-mail</label>
-            <input type="email" class="form-control" id="login_email" name="login_email" required
-                   [(ngModel)]="loginData.email">
-          </div>
+            <div class="form-group col-md-12" style="padding-bottom: 20px;">
+                <button type="button" class="btn btn-primary btn-block" style="background-color:#3b5998;">
+                    <svg style="width:24px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
+                        <path fill="#FFF"
+                              d="M19,4V7H17A1,1 0 0,0 16,8V10H19V13H16V20H13V13H11V10H13V7.5C13,5.56 14.57,4 16.5,4M20,2H4A2,2 0 0,0 2,4V20A2,2 0 0,0 4,22H20A2,2 0 0,0 22,20V4C22,2.89 21.1,2 20,2Z"/>
+                    </svg>
+                    Log in with Facebook
+                </button>
+            </div>
 
-          <div class="form-group">
-            <label for="login_passwd">Password</label>
-            <input type="password" class="form-control" id="login_passwd" name="login_passwd" required
-                   [(ngModel)]="loginData.password">
-          </div>
+            <form #loginForm="ngForm" (ngSubmit)="submitLogin(loginData)">
+                <!--Form validation: -->
+                <!--Both email and password are required fields and the password should be at least 8-char long-->
+                <!--'Login' button is disabled if the form is not valid -->
+                <div class="form-group">
+                    <label for="login_email">E-mail</label>
+                    <input type="email" class="form-control" id="login_email" name="login_email"
+                           [(ngModel)]="loginData.email" #login_email="ngModel"
+                           required>
+                    <div [hidden]="login_email.valid || login_email.pristine"
+                         class="alert alert-danger">E-mail is required
+                    </div>
+                </div>
 
-          <div class="checkbox">
-            <label><input  #chbox_remember type="checkbox" (change)="remember_user(chbox_remember.checked)"> Remember me</label>
-          </div>
-          <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true">Log in</button>
-          <a href="/signup" style="margin:5%;">Sign up</a>
-        </form>
-      </div>
+                <div class="form-group">
+                    <label for="login_password">Password</label>
+                    <input type="password" class="form-control" id="login_password" name="login_password"
+                           [(ngModel)]="loginData.password" #login_password="ngModel"
+                           required minlength="8">
+                    <div *ngIf="login_password.errors && (login_password.dirty || login_password.touched)"
+                         class="alert alert-danger">
+                        <div [hidden]="!login_password.errors.required">Password is required</div>
+                        <div [hidden]="!login_password.errors.minlength">Your password should be at least
+                            8-character
+                            long
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkbox">
+                    <label><input #chbox_remember type="checkbox" (change)="remember_user(chbox_remember.checked)">
+                        Remember me</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true"
+                        [disabled]="!loginForm.form.valid">Log in
+                </button>
+                <a href="/signup" style="margin:5%;">Sign up</a>
+            </form>
+        </div>
     </div>
 
 
-  <div *ngIf="!islogin">
-    <h3 style="padding-top: 10%; padding-bottom: 3%; font-weight: 200;">Fill in the form to sign up</h3>
-    <div class = "col-xs-12 well" style="background-color:white;">
-      <form (ngSubmit)="submitSignup(regData)">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" name="username" required
-                 [(ngModel)]="regData.username">
-        </div>
+    <!-- SIGN UP-->
+    <div *ngIf="!islogin">
+        <h3 style="padding-top: 10%; padding-bottom: 3%; font-weight: 200;">Fill in the form to sign up</h3>
+        <div class="col-xs-12 well" style="background-color:white;">
+            <!--Form validation:-->
+            <!--All fields are required-->
+            <!--Password should be longer than 8 characters and contains at elast one uppercase and one lowercase character-->
+            <!--'Submit' button is disabled until all fields are input correctly-->
+            <form #regForm="ngForm" (ngSubmit)="submitSignup(regData)">
+                <div class="form-group">
+                    <label for="reg_username">Username</label>
+                    <input type="text" class="form-control" id="reg_username" name="reg_username"
+                           [(ngModel)]="regData.username" #reg_username="ngModel"
+                           required>
+                    <div [hidden]="reg_username.valid || reg_username.pristine"
+                         class="alert alert-danger">Username is required
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" class="form-control" id="email" name="email" required
-                 [(ngModel)]="regData.email">
-        </div>
+                <div class="form-group">
+                    <label for="reg_email">E-mail</label>
+                    <input type="email" class="form-control" id="reg_email" name="reg_email"
+                           [(ngModel)]="regData.email" #reg_email="ngModel"
+                           required>
+                    <div [hidden]="reg_email.valid || reg_email.pristine"
+                         class="alert alert-danger">E-mail is required
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <label for="passwd">Password</label>
-          <input type="password" class="form-control" id="passwd" name="passwd" required
-                 [(ngModel)]="regData.password1">
-        </div>
+                <div class="form-group">
+                    <label for="reg_password">Password</label>
+                    <input type="password" class="form-control" id="reg_password" name="reg_password"
+                           [(ngModel)]="regData.password1"
+                           #reg_password="ngModel"
+                           required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z]).{8,}$">
+                    <div *ngIf="reg_password.errors && (reg_password.dirty || reg_password.touched)"
+                         class="alert alert-danger">
+                        <div [hidden]="!reg_password.errors.required">Password is required</div>
+                        <div [hidden]="!reg_password.errors.minlength">Your password should be at least 8-character
+                            long
+                        </div>
+                        <div [hidden]="!reg_password.errors.pattern">Your password should contain at least one upper
+                            and one lower case character
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <label for="passwd">Confirm your password</label>
-          <input type="password" class="form-control" id="passwd_repeat" name="passwd" required
-                 [(ngModel)]="regData.password2">
-        </div>
+                <div class="form-group">
+                    <label for="password_repeat">Confirm your password</label>
+                    <input type="password" class="form-control" id="password_repeat" name="password_repeat"
+                           [(ngModel)]="regData.password2" #password_repeat="ngModel"
+                           required minlength="8">
+                    <div *ngIf="password_repeat.errors && (password_repeat.dirty || password_repeat.touched)"
+                         class="alert alert-danger">
+                        <div [hidden]="!password_repeat.errors.required">Password is required</div>
+                        <div [hidden]="!password_repeat.errors.minlength">Your password should be at least
+                            8-character long
+                        </div>
+                    </div>
+                </div>
 
-        <button type="submit" class="btn btn-default">Signup</button>
-      </form>
+                <button type="submit" class="btn btn-default"
+                        [disabled]="!regForm.form.valid">Signup
+                </button>
+            </form>
+        </div>
     </div>
-  </div>
 </div>

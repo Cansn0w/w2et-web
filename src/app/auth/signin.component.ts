@@ -49,7 +49,8 @@ export class SigninComponent implements OnInit {
 			Cookie.deleteAll();
 	}
 
-	loadUserData(token, callback): void {
+	// Retrieve user data using token
+	loadUserData(token: string, callback): void {
 		this.auth.get_user(token)
 			.then(userdata => {
 				userdata['token'] = token;
@@ -57,13 +58,13 @@ export class SigninComponent implements OnInit {
 				callback();
 			})
 			.catch(err => {
-				// WHAT COULD BE HAPPENDING???
+				alert('Sorry something is very wrong....');
 				this.delete_cookies();
 			})
 	}
 
-	submitLogin(loginData: {}): void {
-		// submit login credentials to obtain access token
+	// submit login credentials and obtain access token
+	submitLogin(loginData: any): void {
 		this.auth.login(loginData)
 			.then(response => {
 				// set user info & redirect to homepage
@@ -75,15 +76,21 @@ export class SigninComponent implements OnInit {
 				});
 			})
 			.catch(err => {
-				if (err.status == 400) {
-					alert('Invalid Credential!'); // todo, highlighting incorrect fields instead?
-					// delete local cookies
+				if (err.status != 200) {
+					alert('Invalid Credential!');
 					this.delete_cookies();
 				}
-			});
+			})
 	}
 
-	submitSignup(regData: {}): void {
+	// submit registration credentials to obtain access token
+	submitSignup(regData: any): void {
+		// validate password
+		if (regData.password1 !== regData.password2) {
+			alert('Please make sure your have entered the same password twice o.O ');
+			return;
+		}
+
 		// submit signup credentials to obtain access token
 		this.auth.signup(regData)
 			.then(response => {
@@ -92,9 +99,9 @@ export class SigninComponent implements OnInit {
 					this.router.navigate(['']);
 				});
 			})
-			.catch(err => {
-				// WHAT COULD BE HAPPENING?
-			});
+			.catch(error => {
+				alert(error.toString());
+			})
 	}
 
 	ngOnInit() {

@@ -6,11 +6,11 @@ export class UserService {
 	private _loggedIn: boolean = false;
 	private _email: string;
 	private _token: string;
-  private _fav_recipe : Recipe[];
-  private _fav_restaurant: number[];
+	private _fav_recipe: Recipe[];
+	private _fav_restaurant: number[];
 
 
-  constructor(){
+	constructor() {
 		this.reset();
 	}
 
@@ -23,8 +23,8 @@ export class UserService {
 	login(userdata: {}): boolean {
 		this._email = userdata['email'];
 		this._token = userdata['token'];
-    this._fav_recipe = userdata['fav_recipe'];
-    this._fav_restaurant = userdata['fav_restaurant'];
+		this._fav_recipe = userdata['fav_recipe'];
+		this._fav_restaurant = userdata['fav_restaurant'];
 		this._loggedIn = true;
 		return true;
 	}
@@ -41,18 +41,19 @@ export class UserService {
 	getEmail() {
 		return this._email;
 	}
-  getFavRec(): Promise<Recipe[]> {
 
-      let rcp = new Recipe();
-	  rcp.spoonacular_id = 10086;
-	  rcp.name = 'beef';
-    return Promise.resolve([rcp]);
-    //return this._fav_recipe;
+	getFavRec(): Promise<Recipe[]> {
 
-  }
+		let rcp = new Recipe();
+		rcp.spoonacular_id = 10086;
+		rcp.name = 'beef';
+		return Promise.resolve([rcp]);
+		//return this._fav_recipe;
 
-  getFavRest(): Promise<number[]>{
-    return Promise.resolve([10086]);
-    //return this._fav_restaurant;
-  }
+	}
+
+	getFavRest(): Promise<number[]> {
+		return Promise.resolve([10086]);
+		//return this._fav_restaurant;
+	}
 }

@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { RecipeComponent } from './recipe.component';
+import { RecipeFilterComponent } from './recipe-filter.component'
+import { RecipeHomeComponent } from './recipe-home.component'
 import { RecipeDetailComponent } from './recipe-detail.component';
 import { RecipeListComponent } from './recipe-list.component';
-import { RecipeFilterComponent } from './recipe-filter.component'
 
 import { FacebookShareButton } from '../com/fbshare.component'
 import { SafePipe } from '../com/safe-url.pipe'
@@ -23,6 +24,7 @@ import { recipeRouting } from './recipe.routing'
 
 	declarations: [
 		RecipeComponent,
+		RecipeHomeComponent,
 		RecipeListComponent,
 		RecipeDetailComponent,
 		RecipeFilterComponent,

@@ -48,11 +48,11 @@ export class RecipeService {
 	// Url builders
 	build_search_url(): string {
 		let f = this.filter; // for simplicity
-		return HOST + `/api/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
+		return HOST + `/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
 	}
 
 	build_rcp_url(id: number): string {
-		return HOST + `/api/recipe/${id}`;
+		return HOST + `/recipe/${id}`;
 	}
 
 	// Recipe Filter handlers

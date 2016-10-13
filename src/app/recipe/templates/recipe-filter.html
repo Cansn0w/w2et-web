@@ -4,7 +4,11 @@
         <div class="row">
             <div class="col-md-12">
             <label>Keyword</label>
-            <input #q (input)="setOption('keyword', q.value)">
+            <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
+                   ngModel #keyword="ngModel" required>
+                <div [hidden]="keyword.valid || keyword.pristine"
+                     class="alert alert-danger">Keyword must be given
+                </div>
             </div>
         </div>
 

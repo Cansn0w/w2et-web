@@ -1,22 +1,21 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 
-import { RecipeModule } from './recipe/recipe.module';
-import { ProfileModule } from './profile/profile.module';
+import {RecipeModule} from './recipe/recipe.module';
+import {RestaurantModule} from './restaurant/restaurant.module'
+import {ProfileModule} from './profile/profile.module';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { RestaurantComponent } from './restaurant/restaurant.component';
-import { SigninComponent } from './auth/signin.component';
+import {AppComponent} from './app.component';
+import {HomeComponent} from './home/home.component';
+import {SigninComponent} from './auth/signin.component';
 
-//import { ProfileComponent } from './profile/profile.component';
 
-import { UserService } from './user.service'
-import { AuthService } from './auth/auth.service'
-import { LoginGuard } from './com/login.guard'
-import { app_routing } from './app-routing'
+import {UserService} from './user.service'
+import {AuthService} from './auth/auth.service'
+import {LoginGuard} from './com/login.guard'
+import {app_routing} from './app-routing'
 
 @NgModule({
 	imports: [
@@ -24,15 +23,14 @@ import { app_routing } from './app-routing'
 		FormsModule,
 		HttpModule,
 		RecipeModule,
-    ProfileModule,
+		RestaurantModule,
+		ProfileModule,
 		app_routing
 	],
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		RestaurantComponent,
 		SigninComponent,
-		//ProfileComponent,
 	],
 	providers: [
 		UserService,
@@ -41,4 +39,6 @@ import { app_routing } from './app-routing'
 	],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+}

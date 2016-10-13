@@ -27,6 +27,11 @@ export class RecipeListComponent implements OnInit {
 
 
 	getRecipeFullList(ids: number[]): void {
+		if (ids === []) {
+			this.notify_empty_result();
+			return;
+		}
+
 		for (let id of ids) {
 			this.recipeService.fetchRecipeDetails(+id)
 				.subscribe(
@@ -41,7 +46,7 @@ export class RecipeListComponent implements OnInit {
 	ngOnInit() {
 		// config search stream
 		this.searched_ids = this.searchTerms
-			.debounceTime(300)     // wait for 0.3s pause in event
+			.debounceTime(300)      // wait for 0.5s pause in event
 			.distinctUntilChanged() // ignore if next search option is the same as previous
 			.switchMap(
 				(choice) => {
@@ -71,13 +76,18 @@ export class RecipeListComponent implements OnInit {
 		this.route.params.forEach((params: Params) => {
 			for (let param in params)
 				this.recipeService.updateFilter(param, params[param]);
-			// kick off a init search
+			// kick off an init search
 			this.searchTerms.next({key: '', value: ''})
 		});
 	}
 
+	// ______
+	notify_empty_result(): void {
+		// todo
+	}
+
 	// Events
-	onFilterOptionSet(choice: any) {
+	onFilterOptionSet(choice: any): void {
 		// todo: in-place url update should be implemented
 		this.searchTerms.next(choice);
 	}

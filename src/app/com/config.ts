@@ -11,5 +11,5 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 
 // export const HOST = 'http://192.168.43.241:8000';
-export const HOST = 'http://127.0.0.1:8000';
+export const HOST = 'http://192.168.0.200:8000';
 export const WEBURL = 'localhost:4200';

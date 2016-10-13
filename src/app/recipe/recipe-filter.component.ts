@@ -1,4 +1,5 @@
 import {Component, Output, EventEmitter} from '@angular/core';
+
 @Component({
 	selector: 'recipe-filter',
 	templateUrl: './templates/recipe-filter.html',
@@ -12,6 +13,9 @@ export class RecipeFilterComponent {
 	@Output() onFilterOptionSet = new EventEmitter<any>();
 
 	setOption(key, value) {
+		if (key == 'keyword' && value == '')
+			// ignore empty keyword option
+			return;
 		this.onFilterOptionSet.emit({key: key, value: value});
 	}
 }

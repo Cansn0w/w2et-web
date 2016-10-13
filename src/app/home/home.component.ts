@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
 	ngOnInit() {
 		// sign-in for user if the auto-login is set by user
 		let cookies = Cookie.getAll();
-
 		if (!this.user.isLoggedIn() && 'email' in cookies && 'password' in cookies)
 			this.router.navigate(['/signin']);
 	}
