@@ -1,20 +1,19 @@
 
-    <div class="container narrow-container" style="padding-bottom: 100px">
+    <div class="container mid-container" style="padding-bottom: 100px">
       <div class = "well" style="background-color:white;">
-
-        <div class="col-md-12 recipe-filter" style="font-size:14px; margin-bottom: 20px; margin-left: 20%;">
-          <label>Search recipe by: </label>
-          <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
-                 ngModel #keyword="ngModel" placeholder="eg.Ingredient" required>
-          <div [hidden]="keyword.valid || keyword.pristine"
-               class="alert alert-danger">Keyword must be given
-          </div>
-        </div>
 
         <div class="row" style="margin-top: 3%;">
 
+          <div class="col-md-3 recipe-filter">
+            <label>Search recipe by: </label>
+            <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
+                   ngModel #keyword="ngModel" placeholder="eg.Ingredient" required>
+            <div [hidden]="keyword.valid || keyword.pristine"
+                 class="alert alert-danger">Keyword must be given
+            </div>
+          </div>
 
-          <div class="col-md-4 recipe-filter" >
+          <div class="col-md-3 recipe-filter" >
             <label>Diet</label>
             <select #diet (change)="setOption('diet', diet.value)">
               <option *ngFor="let item of diet_options">
@@ -23,7 +22,7 @@
             </select>
           </div>
 
-          <div class="col-md-4 recipe-filter" >
+          <div class="col-md-3 recipe-filter" >
             <label>Cuisine</label>
             <select #cuisine (change)="setOption('cuisine', cuisine.value)">
               <option *ngFor="let item of cuisine_options">
@@ -32,7 +31,7 @@
             </select>
           </div>
 
-          <div class="col-md-4 recipe-filter" >
+          <div class="col-md-3 recipe-filter" >
             <label>Intolerance</label>
             <select #intolerance (change)="setOption('intolerance', intolerance.value)">
               <option *ngFor="let item of intolerance_options">

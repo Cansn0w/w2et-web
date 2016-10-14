@@ -19,9 +19,14 @@ body {
   padding-left:30px;
 }
 
+.mid-container{
+  max-width: 950px;
+  padding-right:30px;
+  padding-left:30px;
+}
 
 .recipe-filter{
-  /*width: auto;*/
+  width: auto;
   padding-bottom: 10px ;
 }
 
