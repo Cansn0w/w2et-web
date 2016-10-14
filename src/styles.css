@@ -19,16 +19,36 @@ body {
   padding-left:30px;
 }
 
-.midnarrow-container{
-  max-width: 950px;
-  padding-right:20px;
-  padding-left:20px;
-}
 
-.recipe_filter{
-  width: auto;
+.recipe-filter{
+  /*width: auto;*/
   padding-bottom: 10px ;
 }
+
+
+.login-header{
+  background-color:gray;
+  margin-bottom:0;
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+  border:none;
+  padding-top:2.5px;
+  padding-bottom:5px;
+}
+
+.login-content{
+  padding-top:5%;
+  background-color:white;
+  margin-top:0;
+  border-top-left-radius:0px;
+  border-top-right-radius:0px;
+  border-bottom-left-radius:6px;
+  border-bottom-right-radius:6px;
+  border:none;
+}
+
 .header_navbar{
   background-color: #EF4105;
 }
