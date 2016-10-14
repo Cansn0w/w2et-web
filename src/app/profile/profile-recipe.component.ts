@@ -21,7 +21,7 @@ export class ProfileRecipeComponent implements OnInit {
   private userService: UserService){ }
 
   favRec(): void {
-    this.userService.getFavRec().then(recipes => this.recipes = recipes);
+    this.userService.get_fav_recipe().then(recipes => this.recipes = recipes);   //token 是什么?
   }
   ngOnInit() {
     this.favRec();
