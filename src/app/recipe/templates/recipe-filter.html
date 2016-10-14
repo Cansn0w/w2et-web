@@ -1,19 +1,27 @@
-<div class="container narrow-container">
+<div class="container midnarrow-container">
   <h1 style="padding-top: 10%;">Select filters:</h1>
   <div class = "well" style="background-color:white;">
-        <div class="row">
-            <div class="col-md-12">
+    <!--
+    <div class="container">
+      <button type="button" class="navbar-toggle col-xs-12" data-toggle="collapse" data-target="#myNavbar">
+        <a class="btn btn-default btn-lg" style="display: block; margin: auto;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Filter_font_awesome.svg/512px-Filter_font_awesome.svg.png" style="width:24px;height:24px;">
+          Filter</a>
+      </button>
+    </div>
+    -->
+
+        <div class="row" style="margin-top: 3%;">
+          <div class="col-md-3 recipe_filter" >
             <label>Keyword</label>
             <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
                    ngModel #keyword="ngModel" required>
-                <div [hidden]="keyword.valid || keyword.pristine"
-                     class="alert alert-danger">Keyword must be given
-                </div>
+            <div [hidden]="keyword.valid || keyword.pristine"
+                 class="alert alert-danger">Keyword must be given
             </div>
-        </div>
+          </div>
 
-        <div class="row" style="margin-top: 3%;">
-          <div class="col-md-4">
+          <div class="col-md-3 recipe_filter" >
             <label>Diet</label>
             <select #diet (change)="setOption('diet', diet.value)">
               <option *ngFor="let item of diet_options">
@@ -22,7 +30,7 @@
             </select>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-3 recipe_filter" >
             <label>Cuisine</label>
             <select #cuisine (change)="setOption('cuisine', cuisine.value)">
               <option *ngFor="let item of cuisine_options">
@@ -31,7 +39,7 @@
             </select>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-3 recipe_filter" >
             <label>Intolerance</label>
             <select #intolerance (change)="setOption('intolerance', intolerance.value)">
               <option *ngFor="let item of intolerance_options">
@@ -39,6 +47,7 @@
               </option>
             </select>
           </div>
+
         </div>
 
   </div>
