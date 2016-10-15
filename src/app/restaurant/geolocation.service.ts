@@ -11,9 +11,12 @@ export class marker {
 	draggable?: boolean;
 	addr?: string;
 
-	constructor(lat: number, lng:number) {
+	constructor(lat: number, lng: number, label?: string, draggable?: boolean, addr?: string) {
 		this.lat = lat;
 		this.lng = lng;
+		this.label = label;
+		this.draggable = draggable;
+		this.addr = addr;
 	}
 }
 
@@ -35,8 +38,8 @@ export class GeolocationService {
 		return Promise.reject(error.message || error);
 	}
 
-	public convert_geo(geoinfo: any, reverse=false): Observable<any> {
-		let formatted_url = reverse?
+	public convert_geo(geoinfo: any, reverse = false): Observable<any> {
+		let formatted_url = reverse ?
 			`https://maps.googleapis.com/maps/api/geocode/json?latlng=${geoinfo.lat},${geoinfo.lng}&key=${GOOGLE_MAP_API_KEY}` :
 			`https://maps.googleapis.com/maps/api/geocode/json?address=${geoinfo}&key=${GOOGLE_MAP_API_KEY}`;
 		return this.http.get(formatted_url)

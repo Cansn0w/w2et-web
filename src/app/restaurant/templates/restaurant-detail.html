@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-xs-5">
                     <h4><b>Address</b></h4>
-                    <p> RESTAURANT RETURN DOESN'T CONTAIN ADDRESSS YET...  </p>
+                    <p>{{restaurant.address}}</p>
                 </div>
                 <div class="col-xs-2" style="float:right;">
                     <i class="material-icons" style="font-size:36px;">bookmark_border</i>
@@ -32,7 +32,6 @@
 
 
     <div style="dispaly: block; height: 400px;">
-        <google-map [current_loc]="loc"></google-map>
+        <google-map [loc]="{ lat: restaurant.lat, lng: restaurant.lng}"></google-map>
     </div>
-
 </div>

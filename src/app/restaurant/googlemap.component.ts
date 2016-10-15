@@ -1,6 +1,9 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Input, Output} from '@angular/core';
+import {EventEmitter, OnInit, OnChanges, SimpleChange} from '@angular/core';
+import {Router} from '@angular/router';
+
 import {RestaurantService, Restaurant} from './restaurant.service'
-import {GeolocationService, marker} from './geolocation.service'
+import {marker} from './geolocation.service'
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
@@ -10,27 +13,27 @@ import {Subject} from 'rxjs/Subject';
 	styleUrls: ['./templates/googlemap.css']
 })
 
-export class GoogleMapComponent implements OnInit {
+export class GoogleMapComponent implements OnInit, OnChanges {
 
 	// user's current location
-	loc: marker;
 	zoom: number = 15;
 
 	restaurants: Observable<Restaurant[]>;
 	loc_emitter = new Subject<marker>();
+	rst_icon_path: string = 'assets/restaurant_icon.png';
 
-	@Input()
-	set current_loc(current_loc: marker) {
-		this.loc = current_loc;
-		this.loc_emitter.next(this.loc);
-	}
-	get current_loc() { return this.loc; }
-
+	@Input() loc: marker;
 	@Output() onSelectLocation = new EventEmitter<any>();
 
 
-	constructor(private geoService: GeolocationService,
-	            private restService: RestaurantService) {
+	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+		let new_loc = changes['loc']['currentValue'];
+		this.loc_emitter.next(new marker(new_loc.lat, new_loc.lng));
+	}
+
+
+	constructor(private restService: RestaurantService,
+	            private router: Router) {
 	}
 
 	ngOnInit() {
@@ -45,15 +48,15 @@ export class GoogleMapComponent implements OnInit {
 			});
 	}
 
+	// Events
 	locDragEnd($event: any): void {
-		// let m = new marker(
-		// 	$event.coords.lat,
-		// 	$event.coords.lng,
-		// );
-		// tell parent component here is something new ...
 		this.onSelectLocation.emit({
 			lat: $event.coords.lat,
 			lng: $event.coords.lng
 		});
+	}
+
+	onClickRestaurant(rst: Restaurant): void {
+		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
 }

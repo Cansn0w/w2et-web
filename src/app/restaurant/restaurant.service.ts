@@ -16,9 +16,9 @@ export class Restaurant {
 	id: string;
 	url: string;
 	image: string;
-	coordinate: string;
-	lat = -33.8858032;
-	lng = 151.1883326;
+	lat: number;
+	lng: number;
+	address: string;
 
 	constructor() {}
 }

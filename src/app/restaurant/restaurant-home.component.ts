@@ -13,14 +13,9 @@ import {Subject} from 'rxjs/Subject';
 })
 export class RestauranteHomeComponent implements OnInit {
 
-	current_loc: marker = {
-		// init geoloc (dummy)
-		lat: -33.8858032,
-		lng: 151.1883326,
-		draggable: true,
-		label: 'You',
-		addr: '',
-	};
+	current_loc: marker = new marker(
+		-33.8858032, 151.1883326, 'You', true, ''
+	);
 
 	searchAddr = new Subject<string>();
 
@@ -40,7 +35,7 @@ export class RestauranteHomeComponent implements OnInit {
 					pos.coords.longitude
 				));
 			}, (error) => {
-				console.error('Location is bad :( ', error);
+				alert(error);
 			}, () => {
 				console.log('geo location service has done its job!');
 			});
@@ -54,30 +49,31 @@ export class RestauranteHomeComponent implements OnInit {
 							let loc = resp['results'][0]['geometry']['location'];
 							this.current_loc.lat = loc['lat'];
 							this.current_loc.lng = loc['lng'];
-							this.update_address(this.current_loc);
+							this.update_address(this.current_loc, (addr) => this.current_loc.addr = addr);
 						}
 					}, error => console.log(error));
 			}
 		);
 	}
 
-	update_address(loc: marker): void {
-		this.geoService.convert_geo(loc, true)
+	update_address(loc: marker, callback): void {
+		this.geoService.convert_geo(loc, true) // true: reverse_geocoding, i.e, get address name by lat & lng
 			.subscribe(resp => {
 				if (resp.hasOwnProperty('results')) {
-					this.current_loc.addr = resp['results'] ?
+					callback(resp['results'] ?
 						resp['results'][0]['formatted_address'] :
-						'Sorry, I can\t find the address for this location';
+						'Sorry, I can\t find the address for this location');
 				}
 			});
 	}
 
 	// EVENTS
 	onSelectLocation(loc: marker): void {
-		// This event is hooked to the locDragEnd function in the child component (google-map)
-		this.current_loc.lat = loc.lat;
-		this.current_loc.lng = loc.lng;
-		this.update_address(this.current_loc);
+		this.update_address(loc, (addr) => {
+			this.current_loc = new marker(
+				loc.lat, loc.lng, 'You', true, addr
+			)
+		});
 	}
 
 	onInputAddress(addr: string): void {

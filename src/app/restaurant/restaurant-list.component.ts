@@ -33,7 +33,6 @@ export class RestaurantListComponent implements OnInit {
 	}
 
 	onSelectRestaurant(rst: Restaurant): void {
-		console.log(rst);
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
 }

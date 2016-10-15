@@ -1,17 +1,17 @@
-<sebm-google-map [latitude]="current_loc.lat"
-                 [longitude]="current_loc.lng"
+<sebm-google-map [latitude]="loc.lat"
+                 [longitude]="loc.lng"
                  [zoom]="zoom">
 
     <!--User's current location-->
     <sebm-google-map-marker
-            [latitude]="current_loc.lat"
-            [longitude]="current_loc.lng"
-            [markerDraggable]="current_loc.draggable"
-            [label]="current_loc.label"
+            [latitude]="loc.lat"
+            [longitude]="loc.lng"
+            [markerDraggable]="loc.draggable"
+            [label]="loc.label"
             (dragEnd)="locDragEnd($event)">
         <sebm-google-map-info-window>
             <strong>
-                {{ current_loc.addr }}
+                {{ loc.addr }}
             </strong>
         </sebm-google-map-info-window>
 
@@ -20,14 +20,17 @@
     <!--Nearby restaurants..-->
     <sebm-google-map-marker
             *ngFor="let r of restaurants | async"
-            [latitude]="+(r.coordinate.split(',')[0])"
-            [longitude]="+(r.coordinate.split(',')[1])">
+            [latitude]="r.lat"
+            [longitude]="r.lng"
+            [iconUrl]="rst_icon_path">
         <sebm-google-map-info-window>
-            <strong>
-                {{ r.name }}
-            </strong>
+            <a (click)="onClickRestaurant(r)">{{r.name}}</a>
         </sebm-google-map-info-window>
 
     </sebm-google-map-marker>
 
 </sebm-google-map>
+
+<!--<p *ngFor="let r of restaurants | async">-->
+    <!--{{ r.name }} {{ r.lat }} {{ r.lng }}-->
+<!--</p>-->

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Restaurant, RestaurantService} from './restaurant.service'
-import {marker} from './geolocation.service'
+import {Restaurant, RestaurantService} from './restaurant.service';
 
 @Component({
 	selector: 'restaurant-detail',
@@ -11,13 +10,12 @@ import {marker} from './geolocation.service'
 export class RestaurantDetailComponent implements OnInit {
 
 	restaurant: Restaurant;
-	loc: marker;
-
 
 	constructor(private restService: RestaurantService,
 	            private route: ActivatedRoute,
 	            private router: Router,) {
 	}
+
 
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {
@@ -26,10 +24,6 @@ export class RestaurantDetailComponent implements OnInit {
 				.subscribe(
 					restaurant => {
 						this.restaurant = restaurant;
-						this.loc = {
-							lat: +this.restaurant.coordinate.split(',')[0],
-							lng: +this.restaurant.coordinate.split(',')[1]
-						}
 					},
 					error => console.log(error)
 				);
