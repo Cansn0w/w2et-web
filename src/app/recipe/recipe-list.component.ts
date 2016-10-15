@@ -3,7 +3,6 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Recipe} from './recipe.service';
 import {RecipeService} from './recipe.service'
-import {RecipeFilter} from './recipe-filter.component'
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 
@@ -81,7 +80,7 @@ export class RecipeListComponent implements OnInit {
 		});
 	}
 
-	// ______
+	// Display to user the result of no recipe found
 	notify_empty_result(): void {
 		// todo
 	}

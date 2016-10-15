@@ -21,6 +21,7 @@ export class Recipe {
 
 	ingredients: any[];
 	instructions: string;
+	duration: number;
 
 	constructor() {
 	}

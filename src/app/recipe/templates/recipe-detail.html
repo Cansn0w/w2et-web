@@ -6,8 +6,6 @@
     <ul>
         <li>Name:  {{ recipe.name }}</li>
         <li>Url:  {{ recipe.url}}</li>
-        <li>dairy free:  {{ recipe.dairyFree}}</li>
-        <li>gluten free:  {{ recipe.glutenFree}}</li>
         <li>
             <ul>
                 <li *ngFor="let ingrd of recipe.ingredients">

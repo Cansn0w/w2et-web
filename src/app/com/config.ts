@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 
-// export const HOST = 'http://192.168.43.241:8000';
+// export const HOST = 'http://192.168.0.200:8000';
 export const HOST = 'http://127.0.0.1:8000';
 export const WEBURL = 'localhost:4200';
+export const GOOGLE_MAP_API_KEY = 'AIzaSyBynD4V-DFroy61rWE8GeKTfDC34rznRqI';

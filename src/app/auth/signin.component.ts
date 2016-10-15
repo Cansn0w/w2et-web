@@ -8,7 +8,7 @@ import {Cookie} from 'ng2-cookies/ng2-cookies'
 
 @Component({
 	selector: 'app-login',
-	templateUrl: './templates/signin.component.html',
+	templateUrl: './templates/signin.html',
 })
 export class SigninComponent implements OnInit {
 

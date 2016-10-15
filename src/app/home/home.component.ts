@@ -6,8 +6,8 @@ import {UserService} from '../user.service'
 
 @Component({
 	selector: 'app-home',
-	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.css']
+	templateUrl: './home.html',
+	styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
 
@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
 		private router: Router,
 		private user: UserService) {
 	}
-
 
 	ngOnInit() {
 		// sign-in for user if the auto-login is set by user

@@ -1,0 +1,33 @@
+<sebm-google-map [latitude]="current_loc.lat"
+                 [longitude]="current_loc.lng"
+                 [zoom]="zoom">
+
+    <!--User's current location-->
+    <sebm-google-map-marker
+            [latitude]="current_loc.lat"
+            [longitude]="current_loc.lng"
+            [markerDraggable]="current_loc.draggable"
+            [label]="current_loc.label"
+            (dragEnd)="locDragEnd($event)">
+        <sebm-google-map-info-window>
+            <strong>
+                {{ current_loc.addr }}
+            </strong>
+        </sebm-google-map-info-window>
+
+    </sebm-google-map-marker>
+
+    <!--Nearby restaurants..-->
+    <sebm-google-map-marker
+            *ngFor="let r of restaurants | async"
+            [latitude]="+(r.coordinate.split(',')[0])"
+            [longitude]="+(r.coordinate.split(',')[1])">
+        <sebm-google-map-info-window>
+            <strong>
+                {{ r.name }}
+            </strong>
+        </sebm-google-map-info-window>
+
+    </sebm-google-map-marker>
+
+</sebm-google-map>

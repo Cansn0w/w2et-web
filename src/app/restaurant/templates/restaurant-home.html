@@ -1,0 +1,10 @@
+<google-map [current_loc]="current_loc"
+            (onSelectLocation)="onSelectLocation($event)">
+</google-map>
+
+<p> Your location: {{ current_loc.addr }}</p>
+<button (click)="gotoRestaurantSuggestion()">This is where I am after!</button>
+
+<label for="input_addr">This is where I want to go!</label>
+<input type="text" name="input_addr" id="input_addr"
+       (input)="onInputAddress($event.target.value)">

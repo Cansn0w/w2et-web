@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'restaurant',
-  templateUrl: './restaurant.component.html'
+  template: `<router-outlet></router-outlet>`
 })
 export class RestaurantComponent implements OnInit {
 
@@ -10,5 +10,4 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
