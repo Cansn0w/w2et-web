@@ -24,13 +24,11 @@
             [longitude]="r.lng"
             [iconUrl]="rst_icon_path">
         <sebm-google-map-info-window>
-            <a (click)="onClickRestaurant(r)">{{r.name}}</a>
+            <strong>
+                <a (click)="onClickRestaurant(r)">{{r.name}}</a>
+            </strong>
         </sebm-google-map-info-window>
 
     </sebm-google-map-marker>
 
 </sebm-google-map>
-
-<!--<p *ngFor="let r of restaurants | async">-->
-    <!--{{ r.name }} {{ r.lat }} {{ r.lng }}-->
-<!--</p>-->

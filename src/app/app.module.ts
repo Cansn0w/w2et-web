@@ -13,7 +13,6 @@ import {SigninComponent} from './auth/signin.component';
 
 import {UserService} from './user.service'
 import {AuthService} from './auth/auth.service'
-import {LoginGuard} from './com/login.guard'
 import {app_routing} from './app-routing'
 
 @NgModule({
@@ -38,7 +37,6 @@ import {app_routing} from './app-routing'
 	providers: [
 		UserService,
 		AuthService,
-		LoginGuard
 	],
 	bootstrap: [AppComponent]
 })

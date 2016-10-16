@@ -25,8 +25,6 @@ import { profileRouting } from './profile.routing'
    // RecipeDetailComponent,
     ProfileComponent,
     ProfileRecipeComponent
-
-
   ],
 
   providers: [

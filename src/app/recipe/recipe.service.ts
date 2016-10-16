@@ -46,7 +46,26 @@ export class RecipeService {
 		}
 	}
 
-	// Url builders
+	// Recipe Filter handlers
+	resetFilter(): void {
+		this.filter = new RecipeFilter();
+	}
+
+	validateFilter(): boolean {
+		return this.filter.keyword != '';
+	}
+
+	getFilter(): RecipeFilter {
+		return this.filter;
+	}
+
+	updateFilter(k, y): void {
+		if (this.filter.hasOwnProperty(k))
+			this.filter[k] = y;
+	}
+
+
+	// / Url builders
 	build_search_url(): string {
 		let f = this.filter; // for simplicity
 		return HOST + `/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
@@ -54,20 +73,6 @@ export class RecipeService {
 
 	build_rcp_url(id: number): string {
 		return HOST + `/recipe/${id}`;
-	}
-
-	// Recipe Filter handlers
-	setFilter(filter) {
-		this.filter = filter;
-	}
-
-	getFilter() {
-		return this.filter;
-	}
-
-	updateFilter(k, y) {
-		if (this.filter.hasOwnProperty(k))
-			this.filter[k] = y;
 	}
 
 	// Server communication handlers

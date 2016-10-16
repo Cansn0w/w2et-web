@@ -16,13 +16,18 @@ export class RecipeHomeComponent implements OnInit {
 
 
 	ngOnInit() {
-		// stub
+		this.recipeService.resetFilter();
 	}
 
 	gotoList(): void {
-		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toJson()])
+		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toUrl()])
 	}
 
+	isValidFiilter(): boolean {
+		return this.recipeService.validateFilter();
+	}
+
+	// EVENTS
 	onFilterOptionSet(choice: any) {
 		this.recipeService.updateFilter(choice.key, choice.value);
 	}

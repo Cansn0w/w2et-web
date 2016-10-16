@@ -6,6 +6,7 @@ import {RestaurantComponent} from './restaurant.component'
 import {RestauranteHomeComponent} from './restaurant-home.component'
 import {RestaurantDetailComponent} from './restaurant-detail.component'
 import {RestaurantListComponent} from './restaurant-list.component'
+import {RestaurantFilterComponent} from './restaurant-filter.component';
 
 import {GoogleMapComponent} from './googlemap.component'
 
@@ -29,6 +30,7 @@ import {GOOGLE_MAP_API_KEY} from '../com/config'
 		RestauranteHomeComponent,
 		RestaurantListComponent,
 		RestaurantDetailComponent,
+		RestaurantFilterComponent,
 		GoogleMapComponent,
 	],
 

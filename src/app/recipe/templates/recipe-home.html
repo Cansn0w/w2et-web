@@ -1,9 +1,10 @@
 <body class="full">
 <div class="container" style="padding-top:10%; ">
 
-    <recipe-filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
+    <recipe-filter #filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
 
     <button class="btn btn-lg dine-button" style="display: block; margin: auto; margin-bottom: 140px"
+            [disabled]="!isValidFiilter()"
             (click)="gotoList()">
         Get my recipes!
     </button>

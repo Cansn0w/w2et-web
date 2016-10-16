@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
-import {RestaurantService, Restaurant} from './restaurant.service'
-import {UserService} from '../user.service'
+import {RestaurantService} from './restaurant.service'
 import {GeolocationService, marker} from './geolocation.service'
 
 import {Subject} from 'rxjs/Subject';
@@ -19,8 +18,7 @@ export class RestauranteHomeComponent implements OnInit {
 
 	searchAddr = new Subject<string>();
 
-	constructor(private user: UserService,
-	            private restService: RestaurantService,
+	constructor(private restService: RestaurantService,
 	            private geoService: GeolocationService,
 	            private router: Router) {
 	}
@@ -43,37 +41,40 @@ export class RestauranteHomeComponent implements OnInit {
 		// config address search
 		this.searchAddr.debounceTime(1000).distinctUntilChanged().subscribe(
 			addr => {
-				this.geoService.convert_geo(addr)
+				this.geoService.convert_geo(addr) // get lat and lng by address name
 					.subscribe(resp => {
 						if (resp.hasOwnProperty('results')) {
 							let loc = resp['results'][0]['geometry']['location'];
-							this.current_loc.lat = loc['lat'];
-							this.current_loc.lng = loc['lng'];
-							this.update_address(this.current_loc, (addr) => this.current_loc.addr = addr);
+							this.update_loc(loc);
 						}
 					}, error => console.log(error));
 			}
 		);
 	}
 
-	update_address(loc: marker, callback): void {
+	// UPDATERS
+	update_loc(loc: marker): void {
 		this.geoService.convert_geo(loc, true) // true: reverse_geocoding, i.e, get address name by lat & lng
 			.subscribe(resp => {
 				if (resp.hasOwnProperty('results')) {
-					callback(resp['results'] ?
+					// get address
+					let addr = (resp['results'] ?
 						resp['results'][0]['formatted_address'] :
 						'Sorry, I can\t find the address for this location');
+
+					// update current location and update filter
+					this.current_loc = new marker(loc.lat, loc.lng, 'Y', true, addr);
+					this.restService.updateFilter(
+						['lat', this.current_loc.lat],
+						['lng', this.current_loc.lng]
+					);
 				}
 			});
 	}
 
 	// EVENTS
 	onSelectLocation(loc: marker): void {
-		this.update_address(loc, (addr) => {
-			this.current_loc = new marker(
-				loc.lat, loc.lng, 'You', true, addr
-			)
-		});
+		this.update_loc(loc);
 	}
 
 	onInputAddress(addr: string): void {
@@ -81,9 +82,6 @@ export class RestauranteHomeComponent implements OnInit {
 	}
 
 	gotoRestaurantSuggestion(): void {
-		this.router.navigate(['/restaurant/list', {
-			lat: this.current_loc.lat,
-			lng: this.current_loc.lng
-		}]);
+		this.router.navigate(['/restaurant/list', this.restService.getFilter().toUrl()]);
 	}
 }

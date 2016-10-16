@@ -8,7 +8,7 @@ import {UserService} from '../user.service'
  * accessible for logged-in users, e.g, profile pages.
  */
 @Injectable()
-export class LoginGuard implements CanActivate {
+export class ProfileGuard implements CanActivate {
 	constructor(
 		private user: UserService,
 		private router: Router) {

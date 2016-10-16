@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-import {LoginGuard} from './login.guard';
+import {ProfileGuard} from './profile.guard';
+import {AutoLoginGuard} from './auto.login.guard';
+
 import {FacebookShareButton} from './fbshare.component';
 import {SafePipe} from './safe-url.pipe';
 
@@ -18,7 +20,8 @@ import {SafePipe} from './safe-url.pipe';
 		SafePipe
 	],
 	providers: [
-		LoginGuard
+		ProfileGuard,
+		AutoLoginGuard
 	]
 })
 

@@ -30,7 +30,7 @@ export class RecipeDetailComponent implements OnInit {
 	}
 
 	go_back(): void {
-		this.router.navigate(['/recipe/list', this.recipeService.last_filter.toJson()]);
+		this.router.navigate(['/recipe/list', this.recipeService.last_filter.toUrl()]);
 	}
 
 	go_next(): void {

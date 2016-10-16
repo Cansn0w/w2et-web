@@ -31,14 +31,12 @@ export class RecipeFilter {
 	constructor() {
 	}
 
-
-	public toJson = (): {} => {
-		let injson = {};
-
-		for (let key in this) {
+	public toUrl = (): string => {
+		let options = [];
+		for (let key in this)
 			if (this[key] && typeof this[key] !== 'function')
-				injson[key] = this[key];
-		}
-		return injson;
-	}
+				options.push(key + '=' + this[key]);
+
+		return options.join(';')
+	};
 }

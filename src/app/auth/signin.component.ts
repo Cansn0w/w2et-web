@@ -63,16 +63,26 @@ export class SigninComponent implements OnInit {
 			})
 	}
 
+	// Redirection
+	redirect(): void {
+		// redirect user to the cached url or homepage, which is the defualt redirect url in auth service
+		let url = this.auth.redirectUrl;
+		this.router.navigate([url]);
+
+		// restore auth state
+		this.auth.restore();
+	}
+
 	// submit login credentials and obtain access token
 	submitLogin(loginData: any): void {
 		this.auth.login(loginData)
 			.then(response => {
-				// set user info & redirect to homepage
+				// set user info, then redirect user
 				this.loadUserData(response.key, () => {
 					// set login cookies if user wishes
 					if (this.isRemembered)
 						this.set_login_cookie(loginData['email'], loginData['password']);
-					this.router.navigate(['']);
+					this.redirect();
 				});
 			})
 			.catch(err => {
@@ -96,7 +106,7 @@ export class SigninComponent implements OnInit {
 			.then(response => {
 				// set user info & redirect to homepage
 				this.loadUserData(response.key, () => {
-					this.router.navigate(['']);
+					this.redirect();
 				});
 			})
 			.catch(error => {
@@ -105,6 +115,22 @@ export class SigninComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		/*
+		 * There are 3 reasons why user is interacting with the signin component:
+		 * 1. User wants to login or sign up:
+		 *      - no real redirection (user is always guided to the homepage);
+		 *      - no auto signin by cookie;
+		 *
+		 * 2. User visits some page:
+		 *      - redirect to the page to visit;
+		 *      - cookie is checked; auto-login if account credential is set in cookies
+		 *
+		 * 3. User manually type in profile url: redirection needed:
+		 *      - redirect to profile page
+		 *      - cookie is checked;
+		 *          > auto-login if account credential is set in cookies
+		 *          > login or signup is needed before viewing user profile
+		 */
 		let cookies = Cookie.getAll();
 		if ('email' in cookies && 'password' in cookies) {
 			this.loginData = {email: cookies['email'],  password: cookies['password']};

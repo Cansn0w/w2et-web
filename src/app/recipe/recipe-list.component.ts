@@ -16,7 +16,7 @@ export class RecipeListComponent implements OnInit {
 	selectedRecipe: Recipe;
 	recipes: Recipe[] = [];
 
-	private searchTerms = new Subject<{key: string, value: string}>();
+	private searchTerm = new Subject<{key: string, value: string}>();
 	private searched_ids: Observable<number[]>;
 
 	constructor(private recipeService: RecipeService,
@@ -44,8 +44,8 @@ export class RecipeListComponent implements OnInit {
 
 	ngOnInit() {
 		// config search stream
-		this.searched_ids = this.searchTerms
-			.debounceTime(300)      // wait for 0.5s pause in event
+		this.searched_ids = this.searchTerm
+			.debounceTime(500)      // wait for 0.5s pause in event
 			.distinctUntilChanged() // ignore if next search option is the same as previous
 			.switchMap(
 				(choice) => {
@@ -73,10 +73,17 @@ export class RecipeListComponent implements OnInit {
 
 		// update filter by url specification (useful for bookmarking and re-do search)
 		this.route.params.forEach((params: Params) => {
-			for (let param in params)
-				this.recipeService.updateFilter(param, params[param]);
+			// parse filter url components
+			let options = params['options'].split(';');
+
+			for (let opt in options) {
+				let key = options[opt].split('=')[0];
+				let value = options[opt].split('=')[1];
+				this.recipeService.updateFilter(key, value);
+			}
+
 			// kick off an init search
-			this.searchTerms.next({key: '', value: ''})
+			this.searchTerm.next({key: '', value: ''})
 		});
 	}
 
@@ -88,7 +95,7 @@ export class RecipeListComponent implements OnInit {
 	// Events
 	onFilterOptionSet(choice: any): void {
 		// todo: in-place url update should be implemented
-		this.searchTerms.next(choice);
+		this.searchTerm.next(choice);
 	}
 
 	onSelectRecipe(recipe: Recipe): void {

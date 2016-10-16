@@ -1,5 +1,6 @@
 <google-map [loc]="current_loc"
-            (onSelectLocation)="onSelectLocation($event)">
+            (onSelectLocation)="onSelectLocation($event)"
+            [showNearbyRestaurants]="true">
 </google-map>
 
 <p> Your location: {{ current_loc.addr }}</p>

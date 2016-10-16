@@ -6,13 +6,16 @@ import { RestauranteHomeComponent } from './restaurant-home.component'
 import { RestaurantDetailComponent } from './restaurant-detail.component'
 import { RestaurantListComponent } from './restaurant-list.component'
 
+import {AutoLoginGuard} from '../com/auto.login.guard';
+
 const restaurantRoutes: Routes = [
 	{
 		path: 'restaurant',
 		component: RestaurantComponent,
+		canActivate: [AutoLoginGuard],
 		children: [
 			{ path: '', component: RestauranteHomeComponent },
-			{ path: 'list', component: RestaurantListComponent },
+			{ path: 'list/:options', component: RestaurantListComponent },
 			{ path: 'detail/:id', component: RestaurantDetailComponent },
 		]
 	}

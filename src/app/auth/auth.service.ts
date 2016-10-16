@@ -7,10 +7,10 @@ import 'rxjs/add/operator/toPromise'
 @Injectable()
 export class AuthService {
 
+	redirectUrl: string = '';
 
 	constructor(private http: Http) {
 	}
-
 
 	private get_endpoint(type: string): string {
 		let path = '';
@@ -81,6 +81,11 @@ export class AuthService {
 			.toPromise()
 			.then(response => response)
 			.catch(this.handleError);
+	}
+
+	// Restore everything
+	restore(): void {
+		this.redirectUrl = '';
 	}
 
 	// THIRD-PARTY SIGNUP - FB

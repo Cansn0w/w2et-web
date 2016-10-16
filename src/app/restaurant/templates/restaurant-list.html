@@ -1,4 +1,6 @@
 <div class="container">
+    <restaurant-filter (onFilterOptionSet)="onFilterOptionSet($event)"></restaurant-filter>
+
     <ul>
         <!--Recipe Brief Info-->
         <li *ngFor="let rst of restaurants"

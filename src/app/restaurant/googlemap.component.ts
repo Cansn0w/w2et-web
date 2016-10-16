@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {RestaurantService, Restaurant} from './restaurant.service'
 import {marker} from './geolocation.service'
 import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
 
 @Component({
 	selector: 'google-map',
@@ -19,33 +18,23 @@ export class GoogleMapComponent implements OnInit, OnChanges {
 	zoom: number = 15;
 
 	restaurants: Observable<Restaurant[]>;
-	loc_emitter = new Subject<marker>();
 	rst_icon_path: string = 'assets/restaurant_icon.png';
 
+	@Input() showNearbyRestaurants: boolean;
 	@Input() loc: marker;
 	@Output() onSelectLocation = new EventEmitter<any>();
 
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-		let new_loc = changes['loc']['currentValue'];
-		this.loc_emitter.next(new marker(new_loc.lat, new_loc.lng));
+		if (this.showNearbyRestaurants)
+			this.restaurants = this.restService.fetchRestaurants();
 	}
-
 
 	constructor(private restService: RestaurantService,
 	            private router: Router) {
 	}
 
 	ngOnInit() {
-		this.restaurants = this.loc_emitter
-			.distinctUntilChanged()
-			.switchMap(loc => {
-				return this.restService.fetchRestaurant(loc);
-			})
-			.catch(error => {
-				console.error('Opps!', error);
-				return Observable.of<Restaurant[]>([]);
-			});
 	}
 
 	// Events
