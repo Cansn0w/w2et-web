@@ -1,35 +1,34 @@
 
-<div style="margin-top: 10%;">
-    <recipe-filter (onFilterOptionSet)="onFilterOptionSet($event)" ></recipe-filter>
+<div style="margin-top: 5%;">
+    <recipe-filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
 </div>
 
-<div class="container">
-    <ul>
+<div class="container mid-container">
         <!--Recipe Brief Info-->
-        <li *ngFor="let recipe of recipes"
+        <div *ngFor="let recipe of recipes"
             [class.selected]="recipe === selectedRecipe"
             (click)="onSelectRecipe(recipe)">
 
-            <div class="col-xs-12 well">
+            <div class="col-xs-12 well" style="background-color:white;">
                 <div class="row">
                     <!--Recipe Image & Name-->
                     <div class="col-xs-4">
-                        <img src="{{ recipe.image }}" class="img-rounded img-responsive" alt="Opps!" style=" height: 100px;
-    width: 100px;">
+                        <img src="{{ recipe.image }}" class="img-rounded img-responsive" alt="Opps!" style=" height: 200px;
+    width: 200px;">
                     </div>
                     <div class="col-xs-5">
                         <h4><b> {{ recipe.name }} </b></h4>
                     </div>
                     <!--Recipe Bookmark/share icons-->
                     <div class="col-xs-2" style="float:right;">
-                        <i class="material-icons" style="font-size:20px;">bookmark_border</i>
-                        <facebook-share-btn  *ngIf="recipe.url !== null"  [url]="recipe.url"></facebook-share-btn>
-                        <!--when click on the icon, change to the one below
-                        <i class="material-icons">bookmark</i>-->
+                        <i (click)="bookmark($event, recipe) " class="material-icons" style="font-size:32px; cursor: pointer;">
+                          {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
+                        </i>
+                        <facebook-share-btn  *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
                     </div>
                 </div>
             </div>
-        </li>
+        </div>
+      <h1 class="narrow-container">Loading</h1>
 
-    </ul>
 </div>

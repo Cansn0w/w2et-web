@@ -6,13 +6,16 @@
     <ul>
         <li>Name:  {{ recipe.name }}</li>
         <li>Url:  {{ recipe.url}}</li>
-        <li>
-            <ul>
-                <li *ngFor="let ingrd of recipe.ingredients">
-                    {{ ingrd.name }}
-                </li>
-            </ul>
+        <li>Duration: {{recipe.duration}} minutes</li>
+        <li *ngFor="let ingrd of recipe.ingredients">
+          {{ ingrd.name }}
         </li>
     </ul>
+
+  <ul>
+    <li *ngFor="let ingrd of recipe.ingredients">
+      {{ ingrd.name }}
+    </li>
+  </ul>
     <img src="{{recipe.image}}">
 </div>
