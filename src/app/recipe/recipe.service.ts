@@ -23,7 +23,10 @@ export class Recipe {
 	instructions: string;
 	duration: number;
 
+  bookmarked: boolean;
+
 	constructor() {
+	  this.bookmarked = false;  // todo: fetch from backend;
 	}
 }
 

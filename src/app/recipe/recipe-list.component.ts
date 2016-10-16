@@ -94,4 +94,10 @@ export class RecipeListComponent implements OnInit {
 	onSelectRecipe(recipe: Recipe): void {
 		this.router.navigate(['/recipe/detail', recipe.spoonacular_id])
 	}
+
+  bookmark($event, recipe): void {
+    $event.stopPropagation();
+    recipe.bookmarked = !recipe.bookmarked;
+  }
+
 }
