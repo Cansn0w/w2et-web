@@ -29,4 +29,8 @@ export class RestaurantDetailComponent implements OnInit {
 				);
 		});
 	}
+
+  bookmark(rst): void {
+    rst.bookmarked = !rst.bookmarked;
+  }
 }

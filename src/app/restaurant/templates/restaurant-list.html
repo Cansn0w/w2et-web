@@ -1,29 +1,29 @@
-<div class="container">
-    <restaurant-filter (onFilterOptionSet)="onFilterOptionSet($event)"></restaurant-filter>
-
-    <ul>
+<div style="margin-top: 5%;">
+<restaurant-filter (onFilterOptionSet)="onFilterOptionSet($event)"></restaurant-filter>
+</div>
+<div class="container mid-container">
         <!--Recipe Brief Info-->
-        <li *ngFor="let rst of restaurants"
+        <div *ngFor="let rst of restaurants"
             (click)="onSelectRestaurant(rst)">
 
-            <div class="col-xs-12 well">
+            <div class="col-xs-12 well"  style="background-color:white;">
                 <div class="row">
                     <!--Recipe Image & Name-->
                     <div class="col-xs-4">
-                        <img src="{{ rst.image }}" class="img-rounded img-responsive" alt="Opps!" style=" height: 100px;
-    width: 100px;">
+                        <img src="{{ rst.image }}" class="img-rounded img-responsive" alt="Opps!" style=" height: 200px;
+    width: 200px;">
                     </div>
                     <div class="col-xs-5">
                         <h4><b> {{ rst.name }} </b></h4>
                     </div>
                     <!--Recipe Bookmark/share icons-->
                     <div class="col-xs-2" style="float:right;">
-                        <i class="material-icons" style="font-size:20px;">bookmark_border</i>
+                        <i (click)="bookmark($event, rst) " class="material-icons" style="font-size:32px; cursor: pointer;">
+                          {{ rst.bookmarked ? 'bookmark' : 'bookmark_border' }}
+                        </i>
                         <facebook-share-btn  *ngIf="rst.url !== null"  [url]="rst.url"></facebook-share-btn>
                     </div>
                 </div>
             </div>
-        </li>
-
-    </ul>
+        </div>
 </div>

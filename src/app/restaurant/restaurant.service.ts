@@ -24,8 +24,12 @@ export class Restaurant {
 	distance: number;
 	address: string;
 
+  bookmarked: boolean;
 
-	constructor() {}
+  constructor() {
+    this.bookmarked = false;  // todo: fetch from backend;
+  }
+
 }
 
 

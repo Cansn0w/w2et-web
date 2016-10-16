@@ -111,4 +111,10 @@ export class RestaurantListComponent implements OnInit {
 	onSelectRestaurant(rst: Restaurant): void {
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
+
+  bookmark($event, rst): void {
+    $event.stopPropagation();
+    rst.bookmarked = !rst.bookmarked;
+  }
+
 }
