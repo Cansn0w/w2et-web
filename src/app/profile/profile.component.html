@@ -1,6 +1,24 @@
 <div class="container narrow-container">
-  <a routerLink="/profile/recipe" routerLinkActive="active"
-     class="btn btn-default col-md-6 dine-button">Get my favorite recipe</a>
-  <a routerLink="/profile/restaurant" routerLinkActive="active"
-     class="btn btn-default col-md-6 dine-button">Get my favorite restaurant</a>
+  <div class="well" style="background-color: white; margin-top: 5%;">
+    <div class="row">
+      <div class="col-xs-3">
+        <img src="http://www.freelanceme.net/Images/default%20profile%20picture.png" class="img-rounded img-responsive" style="width: 200px;">
+      </div>
+      <div class="col-xs-6">
+        <h3 >User Name</h3>
+        <p>{{ username }}</p>
+        <h3>Email</h3>
+        <p>{{ email }}</p>
+      </div>
+      <div class="col-xs-3">
+        <p style="cursor:pointer;">Update Details</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <a routerLink="/profile/recipe" routerLinkActive="active"
+       class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite recipes</a>
+    <a routerLink="/profile/restaurant" routerLinkActive="active"
+       class="btn btn-lg col-md-6 dine-button"style="margin-left: 5%;">Favorite restaurants</a>
+  </div>
 </div>
