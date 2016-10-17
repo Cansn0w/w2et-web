@@ -9,7 +9,7 @@ import {RecipeFilter} from './recipe-filter.component'
 
 // Recipe object
 export class Recipe {
-	spoonacular_id: any;
+	id: any;
 
 	name: string;
 	image: string;
@@ -94,7 +94,7 @@ export class RecipeService {
 	fetchRecipeDetails(id: number): Observable<Recipe> {
 		// first see if there is any luck in local cache..
 		for (let recipe of this.last_recipes) {
-			if (recipe.spoonacular_id == id)
+			if (recipe.id == id)
 				return Observable.of<Recipe>(recipe);
 		}
 
