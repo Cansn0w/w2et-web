@@ -16,20 +16,12 @@ export class ProfileComponent {
 
   { }
 
-  // favReci() {
-  //   return this.user.getFavRec;
-  // }
-  //
-  // favRest() {
-  //   return this.user.getFavRest;
-  // }
+  get email() {
+    return this.user.getEmail();
+  }
 
-  // gotoRecipe(): void {
-  //   this.router.navigate(['/profile/recipe'])
-  // }
-  //
-  // gotoRestaurent(): void {
-  //   this.router.navigate(['/profile/restaurant'])
-  // }
+  get username(){
+    return this.user.getUsername();
+  }
 
 }

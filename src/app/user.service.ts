@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Recipe} from "./recipe/recipe.service";
+import {Restaurant} from './restaurant/restaurant.service'
 import {HOST} from './com/config';
 import 'rxjs/add/operator/toPromise';
+
 
 import {Http, Headers, RequestOptions} from '@angular/http';
 
@@ -10,8 +12,9 @@ export class UserService {
   private _loggedIn: boolean = false;
   private _email: string;
   private _token: string;
+  private _username: string;
   private _fav_recipe : Recipe[];
-  private _fav_restaurant: number[];
+  private _fav_restaurant: Restaurant[];
 
 
   constructor(private http: Http){
@@ -45,14 +48,14 @@ export class UserService {
   reset(): void {
     this._token = '';
     this._email = '';
+    this._username = '';
     this._loggedIn = false;
   }
 
   login(userdata: {}): boolean {
     this._email = userdata['email'];
     this._token = userdata['token'];
-    // this._fav_recipe = userdata['fav_recipe'];
-    // this._fav_restaurant = userdata['fav_restaurant'];
+    this._username = userdata['username'];
     this._loggedIn = true;
     return true;
   }
@@ -69,14 +72,10 @@ export class UserService {
   getEmail() {
     return this._email;
   }
-  // getFavRec(): Promise<Recipe[]> {
-  //
-  //     let rcp = new Recipe();
-  //   rcp.spoonacular_id = 10086;
-  //   rcp.name = 'beef';
-  //   return Promise.resolve([rcp]);
-  //   //return this._fav_recipe;
-  // }
+
+  getUsername(){
+    return this._username;
+  }
 
   get_fav_recipe(): Promise<Recipe[]> {
     let options = new RequestOptions({
@@ -84,6 +83,17 @@ export class UserService {
     });
 
     return this.http.get(this.get_endpoint('favoriterecipe'), options)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  get_fav_restaurant(): Promise<Restaurant[]> {
+    let options = new RequestOptions({
+      headers: new Headers({'Authorization': 'Token ' + this._token})
+    });
+
+    return this.http.get(this.get_endpoint('favoriterestautant'), options)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -110,20 +120,27 @@ export class UserService {
       .catch(this.handleError);
   }
 
-
-  get_fav_restaurant(token: string): Promise<any> {
+  set_fav_restaurant(id : number, callback): void {
     let options = new RequestOptions({
-      headers: new Headers({'Authorization': 'Token ' + this._token})
+      headers: new Headers({
+        'Authorization': 'Token ' + this._token
+      })
     });
 
-    return this.http.get(this.get_endpoint('favoriterestautant'), options)
+
+    this.http.put(this.get_endpoint('setfavoriterestaurant') + id, options)
       .toPromise()
-      .then(response => response.json())
+      .then(response => (response) => {
+        console.log(response);
+        if (response.status == 204) {
+          callback(true);
+        } else {
+          callback(false);
+        }
+      })
       .catch(this.handleError);
   }
 
-  // getFavRest(): Promise<number[]>{
-  //   return Promise.resolve([10086]);
-  //   //return this._fav_restaurant;
-  // }
+
+
 }

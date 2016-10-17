@@ -1,7 +1,6 @@
 <h2>My Restaurants</h2>
 <ul class="restaurants">
   <li *ngFor="let restaurant of restaurants">
-    <a [routerLink]="['/restaurant/detail', restaurant.yelp_id]">{{restaurants.name}}</a>
-    <!--{{recipe.spoonacular_id}}-->
+    <a [routerLink]="['/restaurant/detail', restaurant.id]">{{restaurants.id}}</a>
   </li>
 </ul>

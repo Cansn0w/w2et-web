@@ -6,11 +6,12 @@ import { RecipeModule } from '../recipe/recipe.module'
 
 import { ProfileComponent } from './profile.component';
 import { ProfileRecipeComponent } from './profile-recipe.component';
-//import { RecipeDetailComponent } from '../recipe/recipe-detail.component';
+import { ProfileRestaurantComponent } from './profile-restaurant.component';
 
 
 import { UserService } from '../user.service';
 import { RecipeService } from '../recipe/recipe.service';
+import { RestaurantService} from '../restaurant/restaurant.service'
 import { profileRouting } from './profile.routing'
 
 @NgModule({
@@ -22,13 +23,15 @@ import { profileRouting } from './profile.routing'
   ],
 
   declarations: [
-   // RecipeDetailComponent,
     ProfileComponent,
-    ProfileRecipeComponent
+    ProfileRecipeComponent,
+    ProfileRestaurantComponent
+
   ],
 
   providers: [
     RecipeService,
+    RestaurantService,
     UserService
   ]
 })
