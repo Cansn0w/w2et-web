@@ -34,6 +34,15 @@ import {GOOGLE_MAP_API_KEY} from '../com/config'
 		GoogleMapComponent,
 	],
 
+	exports: [
+		RestaurantComponent,
+		RestauranteHomeComponent,
+		RestaurantListComponent,
+		RestaurantDetailComponent,
+		RestaurantFilterComponent,
+		GoogleMapComponent,
+	],
+
 	providers: [
 		GeolocationService,
 		RestaurantService

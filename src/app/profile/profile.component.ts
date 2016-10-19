@@ -4,24 +4,24 @@ import {Router} from '@angular/router'
 import {UserService} from '../user.service'
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',  //<a routerLink="/recipes" routerLinkActive="active">Recipes</a>
-  //styleUrls: ['./profile.component.css']
+	selector: 'app-profile',
+	templateUrl: './templates/profile.html',
 })
-export class ProfileComponent {
-  constructor(
-    private user: UserService,
-    private router: Router
-  )
+export class ProfileComponent implements OnInit{
+	constructor(private user: UserService,
+	            private router: Router) {
+	}
 
-  { }
+	ngOnInit() {
 
-  get email() {
-    return this.user.getEmail();
-  }
+	}
 
-  get username(){
-    return this.user.getUsername();
-  }
+	get email() {
+		return this.user.getEmail();
+	}
+
+	get username() {
+		return this.user.getUsername();
+	}
 
 }

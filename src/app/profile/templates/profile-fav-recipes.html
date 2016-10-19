@@ -1,0 +1,6 @@
+<h2>My Recipes</h2>
+<ul class="recipes">
+    <li *ngFor="let recipe of recipes">
+        <a [routerLink]="['/recipe/detail', recipe.id]">{{recipe.name}}</a>
+    </li>
+</ul>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
+import {UserService} from '../user.service';
 import {Recipe} from './recipe.service';
 import {RecipeService} from './recipe.service'
 import {Observable} from "rxjs/Observable";
@@ -19,7 +20,8 @@ export class RecipeListComponent implements OnInit {
 	private searchTerm = new Subject<{key: string, value: string}>();
 	private searched_ids: Observable<number[]>;
 
-	constructor(private recipeService: RecipeService,
+	constructor(private user: UserService,
+	            private recipeService: RecipeService,
 	            private router: Router,
 	            private route: ActivatedRoute,) {
 	}
@@ -92,6 +94,10 @@ export class RecipeListComponent implements OnInit {
 		// todo
 	}
 
+	trackByID(index: number, recipe: Recipe) {
+		return recipe.id;
+	}
+
 	// Events
 	onFilterOptionSet(choice: any): void {
 		// todo: in-place url update should be implemented
@@ -102,9 +108,14 @@ export class RecipeListComponent implements OnInit {
 		this.router.navigate(['/recipe/detail', recipe.id])
 	}
 
-  bookmark($event, recipe): void {
-    $event.stopPropagation();
-    recipe.bookmarked = !recipe.bookmarked;
-  }
+	bookmark($event, recipe): void {
+		$event.stopPropagation();
 
+		this.user.set_fav('recipe', recipe.id, (succ) => {
+			if (succ)
+				recipe.bookmarked = !recipe.bookmarked;
+			else
+				alert('Sorry this recipe could not be addded to your favorite list...');
+		});
+	}
 }

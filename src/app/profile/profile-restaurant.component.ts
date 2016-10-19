@@ -1,32 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ProfileComponent} from './profile.component'
+import {Restaurant} from  '../restaurant/restaurant.service'
 
-import { Restaurant } from  '../restaurant/restaurant.service'
-import { RestaurantService } from  '../restaurant/restaurant.service'
-import { UserService } from '../user.service';
+import {UserService} from '../user.service';
+
 @Component({
-  selector: 'profile-restaurant',
-  templateUrl: 'profile-restaurant.component.html',
-  // styleUrls: [ 'profile-recipe.component.css' ]
+	selector: 'profile-restaurant',
+	templateUrl: './templates/profile-fav-restaurants.html',
+	// templateUrl: '../restaurant/templates/restaurant-list.html'
 })
 export class ProfileRestaurantComponent implements OnInit {
-  selectedRestaurant: Restaurant;
-  restaurants: Restaurant[];
+	// indicator to tell the template not to include filter component
+	atProfile: boolean = true;
 
-  constructor (
-    private router: Router,
-    private userService: UserService){ }
+	restaurants: Restaurant[] = [];
 
-  favRest(): void {
-    this.userService.get_fav_restaurant().then(restaurants => this.restaurants = restaurants);
-  }
-  ngOnInit() {
-    this.favRest();
-  }
+	constructor(private router: Router,
+	            private userService: UserService) {
+	}
 
+	ngOnInit() {
+		this.favRest();
+	}
 
+	favRest(): void {
+		this.userService.get_fav('restaurants').then(restaurants => this.restaurants = restaurants);
+	}
 }
-
-

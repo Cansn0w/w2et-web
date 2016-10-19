@@ -5,6 +5,7 @@ import {RestaurantFilterComponent} from './restaurant-filter.component'
 import {Subject} from 'rxjs/Subject';
 
 import {RestaurantService, Restaurant} from './restaurant.service'
+import {UserService} from '../user.service';
 
 @Component({
 	selector: 'restaurant-list',
@@ -20,7 +21,8 @@ export class RestaurantListComponent implements OnInit {
 	private searchTerm = new Subject<{key: string, value: string}>();
 
 
-	constructor(private router: Router,
+	constructor(private user: UserService,
+	            private router: Router,
 	            private route: ActivatedRoute,
 	            private restService: RestaurantService) {
 	}
@@ -112,9 +114,14 @@ export class RestaurantListComponent implements OnInit {
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
 
-  bookmark($event, rst): void {
-    $event.stopPropagation();
-    rst.bookmarked = !rst.bookmarked;
-  }
+	bookmark($event, restaurant): void {
+		$event.stopPropagation();
 
+		this.user.set_fav('restaurant', restaurant.id, (succ) => {
+			if (succ)
+				restaurant.bookmarked = !restaurant.bookmarked;
+			else
+				alert('Sorry this restaurant could not be addded to your favorite list...');
+		});
+	}
 }

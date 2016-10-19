@@ -25,9 +25,14 @@ import { recipeRouting } from './recipe.routing'
 		RecipeListComponent,
 		RecipeDetailComponent,
 		RecipeFilterComponent,
+	],
 
-		// FacebookShareButton,
-		// SafePipe
+	exports: [
+		RecipeComponent,
+		RecipeHomeComponent,
+		RecipeListComponent,
+		RecipeDetailComponent,
+		RecipeFilterComponent,
 	],
 
 	providers: [

@@ -1,33 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ProfileComponent} from './profile.component'
+import {Recipe} from  '../recipe/recipe.service'
+import {UserService} from '../user.service';
 
-import { Recipe } from  '../recipe/recipe.service'
-import { RecipeService } from  '../recipe/recipe.service'
-import { UserService } from '../user.service';
 @Component({
-  selector: 'profile-recipe',
-  templateUrl: 'profile-recipe.component.html',
- // styleUrls: [ 'profile-recipe.component.css' ]
+	selector: 'profile-recipe',
+	templateUrl: './templates/profile-fav-recipes.html',
+	// templateUrl: '../recipe/templates/recipe-list.html',
 })
 export class ProfileRecipeComponent implements OnInit {
-  selectedRecipe: Recipe;
-  recipes: Recipe[];
+	// indicator to tell the template not to include filter component
+	atProfile: boolean = true;
 
-  constructor (
-  private router: Router,
-  private recipeService: RecipeService,
-  private userService: UserService){ }
+	selectedRecipe: Recipe;
+	recipes: Recipe[] = [];
 
-  favRec(): void {
-    this.userService.get_fav_recipe().then(recipes => this.recipes = recipes);   //token 是什么?
-  }
-  ngOnInit() {
-    this.favRec();
-  }
+	constructor(private router: Router,
+	            private userService: UserService) {
+	}
 
+	ngOnInit() {
+		this.favRec();
+	}
 
+	favRec(): void {
+		this.userService.get_fav('recipes').then(recipes => this.recipes = recipes);
+	}
 }
 
 
