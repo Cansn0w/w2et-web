@@ -14,8 +14,8 @@ export class UserService {
 	private _email: string;
 	private _token: string;
 	private _username: string;
-	private _fav_recipe: Recipe[] = [];
-	private _fav_restaurant: Restaurant[] = [];
+	private _fav_recipes: Recipe[] = [];
+	private _fav_restaurants: Restaurant[] = [];
 
 	constructor(private http: Http,
 	            private helper: HelperService) {
@@ -43,6 +43,9 @@ export class UserService {
 			case 'setfavoriterestaurant':
 				path = '/restaurant/';
 				break;
+			case 'setuserdata':
+				path = '/account/profile/';
+				break;
 		}
 		return HOST + path;
 	}
@@ -57,8 +60,8 @@ export class UserService {
 		this._token = '';
 		this._email = '';
 		this._username = '';
-		this._fav_recipe = [];
-		this._fav_restaurant = [];
+		this._fav_recipes = [];
+		this._fav_restaurants = [];
 		this._loggedIn = false;
 	}
 
@@ -94,17 +97,17 @@ export class UserService {
 	}
 
 	getFavRecipes() {
-		return this._fav_recipe;
+		return this._fav_recipes;
 	}
 
 	getFavRestaurants() {
-		return this._fav_restaurant;
+		return this._fav_restaurants;
 	}
 
 
 	// GET USER FAV
 	get_fav(term: string): Promise<any[]> {
-		let local = term == 'recipes' ? this._fav_recipe : this._fav_restaurant;
+		let local: any[] = term == 'recipes' ? this._fav_recipes : this._fav_restaurants;
 		if (local.length != 0) {
 			return Promise.resolve(local);
 		}
@@ -113,9 +116,13 @@ export class UserService {
 				.toPromise()
 				.then(response => {
 					// save data of user fav to local copy;
-					let data = response.json();
-					term == 'recipes' ? this._fav_recipe = data : this._fav_restaurant = data;
-					return data;
+					response.json()
+						.map(r => {
+							r['bookmarked'] = true;
+							let newFav = term == 'recipes' ? new Recipe(r) : new Restaurant(r);
+							local.push(newFav);
+						});
+					return local;
 				})
 				.catch(this.handleError);
 		}
@@ -132,8 +139,8 @@ export class UserService {
 
 				if (response.status == 204) {
 					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipe.push(object);
-					if (term == 'restaurant') this._fav_restaurant.push(object);
+					if (term == 'recipe') this._fav_recipes.push(object);
+					if (term == 'restaurant') this._fav_restaurants.push(object);
 					succ = true;
 				}
 
@@ -151,8 +158,8 @@ export class UserService {
 
 				if (response.status == 204) {
 					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipe = this.helper.removeItem(this._fav_recipe, object);
-					if (term == 'restaurant') this._fav_restaurant = this.helper.removeItem(this._fav_restaurant, object);
+					if (term == 'recipe') this._fav_recipes = this.helper.removeItem(this._fav_recipes, object);
+					if (term == 'restaurant') this._fav_restaurants = this.helper.removeItem(this._fav_restaurants, object);
 					succ = true;
 				}
 
@@ -164,7 +171,12 @@ export class UserService {
 	// CHECK IF RECIPE/RESTAURANT IS FAVORED
 	hasFavored(object: Recipe | Restaurant): boolean {
 		return object.constructor.name == Recipe.name ?
-			this.helper.contains(this._fav_recipe, object, 'id') :
-			this.helper.contains(this._fav_restaurant, object, 'id')
+			this.helper.contains(this._fav_recipes, object, 'id') :
+			this.helper.contains(this._fav_restaurants, object, 'id')
+	}
+
+	// UPDATE USER DATA
+	updateData(data: {}): void {
+
 	}
 }

@@ -102,10 +102,6 @@ export class RestaurantListComponent implements OnInit {
 		this.searchTerm.next(choice);
 	}
 
-	onSelectRestaurant(rst: Restaurant): void {
-		this.router.navigate(['/restaurant/detail', rst.id]);
-	}
-
 	// todo: move this function to a higher level controller
 	bookmark($event, restaurant): void {
 		$event.stopPropagation();

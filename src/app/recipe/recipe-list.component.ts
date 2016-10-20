@@ -107,10 +107,6 @@ export class RecipeListComponent implements OnInit {
 		this.searchTerm.next(choice);
 	}
 
-	onSelectRecipe(recipe: Recipe): void {
-		this.router.navigate(['/recipe/detail', recipe.id])
-	}
-
 	// todo: move this function to a higher level controller
 	bookmark($event, recipe): void {
 		$event.stopPropagation();

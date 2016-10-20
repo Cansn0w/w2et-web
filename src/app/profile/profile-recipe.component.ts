@@ -6,8 +6,8 @@ import {UserService} from '../user.service';
 
 @Component({
 	selector: 'profile-recipe',
-	templateUrl: './templates/profile-fav-recipes.html',
-	// templateUrl: '../recipe/templates/recipe-list.html',
+	// templateUrl: './templates/profile-fav-recipes.html',
+	templateUrl: '../recipe/templates/recipe-list.html',
 })
 export class ProfileRecipeComponent implements OnInit {
 	// indicator to tell the template not to include filter component

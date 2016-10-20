@@ -52,6 +52,7 @@ export class SigninComponent implements OnInit {
 	// Retrieve user data using token
 	loadUserData(token: string, callback): void {
 		this.auth.get_user(token)
+			// Get username,
 			.then(userData => {
 				userData['token'] = token;
 				this.user.login(userData);
