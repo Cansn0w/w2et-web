@@ -16,9 +16,12 @@
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <div class="navbar-form navbar-right">
+      <div class="navbar-form navbar-right" style="padding-top: 8px;">
         <a *ngIf="!loggedIn()" routerLink="/login" class="btn btn-primary sign_in_btn">Sign in</a>
-        <a *ngIf="loggedIn()" routerLink="/profile">{{ email }}</a>
+        <a *ngIf="loggedIn()" routerLink="/profile" style="color:black;">
+          <img *ngIf="loggedIn()" src="http://www.freelanceme.net/Images/default%20profile%20picture.png"
+             style="width: 25px; padding-right:5px; display: inline;">
+          {{ username }}</a>
       </div>
     </div>
   </div>

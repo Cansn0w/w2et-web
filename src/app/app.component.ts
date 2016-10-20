@@ -14,7 +14,7 @@ export class AppComponent {
     return this.user.isLoggedIn();
   }
 
-  get email() {
-    return this.user.getEmail();
+  get username(){
+    return this.user.getUsername();
   }
 }

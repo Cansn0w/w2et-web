@@ -16,6 +16,10 @@ export class ProfileComponent implements OnInit{
 
 	}
 
+	logOut(): void {
+	  this.user.logout();
+  }
+
 	get email() {
 		return this.user.getEmail();
 	}
