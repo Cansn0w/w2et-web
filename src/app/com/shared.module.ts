@@ -7,6 +7,7 @@ import {AutoLoginGuard} from './auto.login.guard';
 
 import {FacebookShareButton} from './fbshare.component';
 import {SafePipe} from './safe-url.pipe';
+import {HelperService} from './helper.service';
 
 @NgModule({
 	declarations: [
@@ -17,11 +18,12 @@ import {SafePipe} from './safe-url.pipe';
 		CommonModule,
 		FormsModule,
 		FacebookShareButton,
-		SafePipe
+		SafePipe,
 	],
 	providers: [
 		ProfileGuard,
-		AutoLoginGuard
+		AutoLoginGuard,
+		HelperService
 	]
 })
 

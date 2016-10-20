@@ -23,10 +23,12 @@ export class Recipe {
 	instructions: string;
 	duration: number;
 
-  bookmarked: boolean;
+	bookmarked: boolean;
 
-	constructor() {
-	  this.bookmarked = false;  // todo: fetch from backend;
+	constructor(rcpData? : {}) {
+		if (rcpData)
+			for (let key in rcpData)
+				this[key] = rcpData[key];
 	}
 }
 
@@ -101,7 +103,8 @@ export class RecipeService {
 		// nope! then we need to send a request to server
 		let formatted_url = this.build_rcp_url(id);
 		return this.http.get(formatted_url)
-			.map((r: Response) => r.json() as Recipe)
+			// .map((r: Response) => r.json() as Recipe)
+			.map((r: Response) => new Recipe(r.json()))
 			.catch(this.handleError);
 	}
 }

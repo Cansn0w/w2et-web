@@ -17,15 +17,24 @@ export class ProfileRecipeComponent implements OnInit {
 	recipes: Recipe[] = [];
 
 	constructor(private router: Router,
-	            private userService: UserService) {
+	            private user: UserService) {
 	}
 
 	ngOnInit() {
-		this.favRec();
+		this.getFavRecipes();
 	}
 
-	favRec(): void {
-		this.userService.get_fav('recipes').then(recipes => this.recipes = recipes);
+	getFavRecipes(): void {
+		this.user.get_fav('recipes').then(recipes => this.recipes = recipes);
+	}
+
+	unfavRecipe(recipe: Recipe): void {
+		this.user.unfav(recipe, (succ) => {
+			if (succ)
+				this.getFavRecipes();
+			else
+				alert('Sorry this recipe could not be removed...');
+		})
 	}
 }
 

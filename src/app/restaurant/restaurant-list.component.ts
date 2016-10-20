@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 
 import {RestaurantService, Restaurant} from './restaurant.service'
 import {UserService} from '../user.service';
+import {HelperService} from '../com/helper.service';
 
 @Component({
 	selector: 'restaurant-list',
@@ -22,6 +23,7 @@ export class RestaurantListComponent implements OnInit {
 
 
 	constructor(private user: UserService,
+	            private helper: HelperService,
 	            private router: Router,
 	            private route: ActivatedRoute,
 	            private restService: RestaurantService) {
@@ -31,17 +33,6 @@ export class RestaurantListComponent implements OnInit {
 	get_category_list_of_rest(r: Restaurant): string[] {
 		return r['categories'].map((c) => c['category']);
 	}
-
-	contains(lst: any[], val: any): boolean {
-
-		// console.log(lst, val);
-		for (let i of lst)
-			if (i === val) {
-				return true;
-			}
-		return false;
-	}
-
 
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {
@@ -56,11 +47,12 @@ export class RestaurantListComponent implements OnInit {
 			// collect restaurants & set categories available for filtering
 			this.restService.fetchRestaurants()
 				.subscribe(restaurants => {
+					for (let r of restaurants)
+						this.user.hasFavored(r) ? r.bookmarked = true : r.bookmarked = false;
 					this.all_restaurants = restaurants;
 					this.restaurants = restaurants;
 					this.setCategoryOptions();
 				});
-
 		});
 
 		// config search
@@ -91,7 +83,7 @@ export class RestaurantListComponent implements OnInit {
 
 	filterByCategory(category: string): void {
 		this.restaurants = this.all_restaurants.filter((r) =>
-			this.contains(this.get_category_list_of_rest(r), category));
+			this.helper.contains(this.get_category_list_of_rest(r), category));
 	}
 
 	filterByDistance(maxDistance: number): void {
@@ -114,14 +106,26 @@ export class RestaurantListComponent implements OnInit {
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
 
+	// todo: move this function to a higher level controller
 	bookmark($event, restaurant): void {
 		$event.stopPropagation();
+		if (!this.user.isLoggedIn()) {
+			alert('Please login before setting your favorite restaurant');
+			return;
+		}
 
-		this.user.set_fav('restaurant', restaurant.id, (succ) => {
-			if (succ)
-				restaurant.bookmarked = !restaurant.bookmarked;
-			else
-				alert('Sorry this restaurant could not be addded to your favorite list...');
-		});
+		if (restaurant.bookmarked) {
+			this.user.unfav(restaurant, (succ) => {
+				succ ?
+					restaurant.bookmarked = !restaurant.bookmarked :
+					alert('Sorry we got a problem and could not unfav this restaurant for you :( ');
+			});
+		} else {
+			this.user.fav(restaurant, (succ) => {
+				succ ?
+					restaurant.bookmarked = !restaurant.bookmarked :
+					alert('Sorry this restaurant could not be added to your favorite list...');
+			})
+		}
 	}
 }

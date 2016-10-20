@@ -24,12 +24,13 @@ export class Restaurant {
 	distance: number;
 	address: string;
 
-  bookmarked: boolean;
+	bookmarked: boolean;
 
-  constructor() {
-    this.bookmarked = false;  // todo: fetch from backend;
-  }
-
+	constructor(restData? : {}) {
+		if (restData)
+			for (let key in restData)
+				this[key] = restData[key];
+	}
 }
 
 
@@ -38,7 +39,7 @@ export class RestaurantService {
 
 	private filter = new RestaurantFilter();
 
-	constructor(private http: Http){
+	constructor(private http: Http) {
 	}
 
 	private handleError(error: any): Promise<any> {
@@ -65,7 +66,7 @@ export class RestaurantService {
 	fetchRestaurantDetail(id: number): Observable<Restaurant> {
 		let formatted_url = HOST + `/restaurant/${id}`;
 		return this.http.get(formatted_url)
-			.map((r: Response) => r.json() as Restaurant)
+			.map((r: Response) => new Restaurant(r.json()))
 			.catch(this.handleError);
 	}
 
@@ -76,7 +77,8 @@ export class RestaurantService {
 		let formatted_url = HOST + `/restaurant/@${f.lat},${f.lng}?d=1500`;
 
 		return this.http.get(formatted_url)
-			.map((restaurants: Response) => restaurants.json() as Restaurant[])
+			// .map((restaurants: Response) => restaurants.json() as Restaurant[])
+			.map((restaurants: Response) => restaurants.json().map(r => new Restaurant(r)))
 			.catch(this.handleError);
 	}
 }

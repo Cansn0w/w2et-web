@@ -36,7 +36,10 @@ export class RecipeListComponent implements OnInit {
 		for (let id of ids) {
 			this.recipeService.fetchRecipeDetails(+id)
 				.subscribe(
-					recipe => this.recipes.push(recipe),
+					recipe => {
+						this.user.hasFavored(recipe) ? recipe.bookmarked = true : recipe.bookmarked = false;
+						this.recipes.push(recipe);
+					},
 					error => console.log(error)
 				)
 		}
@@ -108,14 +111,26 @@ export class RecipeListComponent implements OnInit {
 		this.router.navigate(['/recipe/detail', recipe.id])
 	}
 
+	// todo: move this function to a higher level controller
 	bookmark($event, recipe): void {
 		$event.stopPropagation();
+		if (!this.user.isLoggedIn()) {
+			alert('Please login before setting your favorite recipe');
+			return;
+		}
 
-		this.user.set_fav('recipe', recipe.id, (succ) => {
-			if (succ)
-				recipe.bookmarked = !recipe.bookmarked;
-			else
-				alert('Sorry this recipe could not be addded to your favorite list...');
-		});
+		if (recipe.bookmarked) {
+			this.user.unfav(recipe, (succ) => {
+				succ ?
+					recipe.bookmarked = !recipe.bookmarked :
+					alert('Sorry we got a problem and could not unfav this recipe for you :( ');
+			});
+		} else {
+			this.user.fav(recipe, (succ) => {
+				succ ?
+					recipe.bookmarked = !recipe.bookmarked :
+					alert('Sorry this recipe could not be added to your favorite list...');
+			})
+		}
 	}
 }

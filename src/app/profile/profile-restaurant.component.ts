@@ -17,14 +17,23 @@ export class ProfileRestaurantComponent implements OnInit {
 	restaurants: Restaurant[] = [];
 
 	constructor(private router: Router,
-	            private userService: UserService) {
+	            private user: UserService) {
 	}
 
 	ngOnInit() {
-		this.favRest();
+		this.getFavRestaurants();
 	}
 
-	favRest(): void {
-		this.userService.get_fav('restaurants').then(restaurants => this.restaurants = restaurants);
+	getFavRestaurants(): void {
+		this.user.get_fav('restaurants').then(restaurants => this.restaurants = restaurants);
+	}
+
+	unfavRestaurant(rest: Restaurant): void {
+		this.user.unfav(rest, (succ) => {
+			if (succ)
+				this.getFavRestaurants();
+			else
+				alert('Sorry this restaurant could not be removed...');
+		})
 	}
 }

@@ -52,11 +52,13 @@ export class SigninComponent implements OnInit {
 	// Retrieve user data using token
 	loadUserData(token: string, callback): void {
 		this.auth.get_user(token)
-			.then(userdata => {
-				userdata['token'] = token;
-				this.user.login(userdata);
-				callback();
+			.then(userData => {
+				userData['token'] = token;
+				this.user.login(userData);
 			})
+			.then(_ => this.user.get_fav('recipes'))
+			.then(_ => this.user.get_fav('restaurants'))
+			.then(_ => callback())
 			.catch(err => {
 				alert('Sorry something is very wrong....');
 				this.delete_cookies();
