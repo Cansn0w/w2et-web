@@ -35,7 +35,7 @@ export class RestauranteHomeComponent implements OnInit {
 			}, (error) => {
 				alert(error);
 			}, () => {
-				console.log('geo location service has done its job!');
+				console.log('geo location finished');
 			});
 
 		// config address search
@@ -63,9 +63,9 @@ export class RestauranteHomeComponent implements OnInit {
 						'Sorry, I can\t find the address for this location');
 
 					// update current location and update filter
+					this.restService.updateFilter('lat', loc.lat);
+					this.restService.updateFilter('lng', loc.lng);
 					this.current_loc = new marker(loc.lat, loc.lng, 'Y', true, addr);
-					this.restService.updateFilter('lat', this.current_loc.lat);
-					this.restService.updateFilter('lng', this.current_loc.lng);
 				}
 			});
 	}

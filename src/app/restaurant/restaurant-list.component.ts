@@ -21,7 +21,6 @@ export class RestaurantListComponent implements OnInit {
 	private restaurants: Restaurant[] = [];
 	private searchTerm = new Subject<{key: string, value: string}>();
 
-
 	constructor(public  user: UserService,
 	            private helper: HelperService,
 	            private route: ActivatedRoute,
@@ -31,14 +30,15 @@ export class RestaurantListComponent implements OnInit {
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {
 			let filter_url = params['options'];
-			this.restService.searchRestaurants(filter_url, (restaurants) => {
-				restaurants.map(r => this.user.hasFavored(r) ? r.bookmarked = true: r.bookmarked = false);
-				this.all_restaurants = restaurants;
-				this.restaurants= restaurants;
+			this.restService.searchRestaurants(filter_url)
+				.then(restaurants => {
+					restaurants.map(r => this.user.hasFavored(r) ? r.bookmarked = true: r.bookmarked = false);
+					this.all_restaurants = restaurants;
+					this.restaurants= restaurants;
 
-				this.setCategoryOptions();
-				this.restService.saveSearch(filter_url, restaurants);
-			});
+					this.setCategoryOptions();
+					this.restService.saveSearch(filter_url, restaurants);
+				});
 		});
 
 		// config search
@@ -54,6 +54,7 @@ export class RestaurantListComponent implements OnInit {
 		for (let r of this.all_restaurants) {
 			categories = categories.concat(r.flatterned_categories());
 		}
+
 		this.filterComponent.setCategories(Array.from(new Set(categories)));
 	}
 

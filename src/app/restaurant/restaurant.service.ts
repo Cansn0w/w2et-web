@@ -89,7 +89,7 @@ export class SearchHistory {
 export class RestaurantService {
 
 	private filter = new RestaurantFilter();
-	private history = new SearchHistory(10);
+	private history = new SearchHistory(5);
 
 	constructor(private http: Http,
 	            private helper: HelperService) {
@@ -143,18 +143,19 @@ export class RestaurantService {
 	}
 
 	// Main utility: search for a list of restaurants given the filter url
-	searchRestaurants(url: string, callback): void {
+	searchRestaurants(url: string): Promise<Restaurant[]> {
 
 		// look up history to try if there is any luck
 		let result = this.findSearch(url);
 		if (result != null) {
-			console.log('calling callback');
-			callback(result);
+			return Promise.resolve(result);
 		}
 
 		// bad luck! then we need to start from parsing filter components and do the actual search
 		let components = this.helper.parseUrlString(url);
 		for (let c of components) this.updateFilter(c.key, +c.value);
-		this.fetchRestaurants().subscribe(restaurants => callback(restaurants));
+		return this.fetchRestaurants()
+			.switchMap(res => Promise.resolve(res))
+			.toPromise();
 	}
 }
