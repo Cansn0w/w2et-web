@@ -1,11 +1,16 @@
-<google-map [loc]="current_loc"
-            (onSelectLocation)="onSelectLocation($event)"
-            [showNearbyRestaurants]="true">
-</google-map>
+<div class="container narrow-container" style="padding-top: 5%;">
+  <div class="searchbox" >
+    <label for="input_addr"></label>
+    <input type="text" name="input_addr" id="input_addr" placeholder="Search Your Location"
+           (input)="onInputAddress($event.target.value)" [value]="current_loc.addr" class="search-input">
+    <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
 
-<p> Your location: {{ current_loc.addr }}</p>
-<button (click)="gotoRestaurantSuggestion()">This is where I am after!</button>
+  </div>
+  <google-map [loc]="current_loc"
+              (onSelectLocation)="onSelectLocation($event)"
+              [showNearbyRestaurants]="true">
+  </google-map>
 
-<label for="input_addr">This is where I want to go!</label>
-<input type="text" name="input_addr" id="input_addr"
-       (input)="onInputAddress($event.target.value)">
+  <a class="btn btn-primary dine-button" style="display: inline-block;" (click)="gotoRestaurantSuggestion()">This is where I am after!</a>
+
+</div>

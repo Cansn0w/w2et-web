@@ -146,3 +146,25 @@ body {
   width: 100px;
   cursor: pointer;
 }
+
+.searchbox{
+  background: #fff;
+  border-radius: 2px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  border-bottom: 1px solid transparent;
+  padding: 12px 1px 5px 30px;
+  transition-property: background,box-shadow;
+  transition-duration: 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+  margin-bottom: 30px;
+}
+.search-input,
+.search-input:focus,
+textarea:focus{
+  border: none;
+  float: left;
+  width:90%;
+  outline: none;
+}
