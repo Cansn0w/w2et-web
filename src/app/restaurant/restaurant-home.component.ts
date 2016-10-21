@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 import {RestaurantService} from './restaurant.service'
 import {GeolocationService, marker} from './geolocation.service'
@@ -64,10 +64,8 @@ export class RestauranteHomeComponent implements OnInit {
 
 					// update current location and update filter
 					this.current_loc = new marker(loc.lat, loc.lng, 'Y', true, addr);
-					this.restService.updateFilter(
-						['lat', this.current_loc.lat],
-						['lng', this.current_loc.lng]
-					);
+					this.restService.updateFilter('lat', this.current_loc.lat);
+					this.restService.updateFilter('lng', this.current_loc.lng);
 				}
 			});
 	}
@@ -82,6 +80,6 @@ export class RestauranteHomeComponent implements OnInit {
 	}
 
 	gotoRestaurantSuggestion(): void {
-		this.router.navigate(['/restaurant/list', this.restService.getFilter().toUrl()]);
+		this.router.navigate(['/restaurant/suggestion', this.restService.getFilter().url]);
 	}
 }

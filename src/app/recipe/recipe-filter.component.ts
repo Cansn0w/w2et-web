@@ -31,12 +31,12 @@ export class RecipeFilter {
 	constructor() {
 	}
 
-	public toUrl = (): string => {
+	get url(): string {
 		let options = [];
 		for (let key in this)
 			if (this[key] && typeof this[key] !== 'function')
 				options.push(key + '=' + this[key]);
 
 		return options.join(';')
-	};
+	}
 }

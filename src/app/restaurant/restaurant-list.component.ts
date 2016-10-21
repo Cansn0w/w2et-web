@@ -30,23 +30,15 @@ export class RestaurantListComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {
-			// parse filter url components
-			let latlng = params['options'].split(';');
+			let filter_url = params['options'];
+			this.restService.searchRestaurants(filter_url, (restaurants) => {
+				restaurants.map(r => this.user.hasFavored(r) ? r.bookmarked = true: r.bookmarked = false);
+				this.all_restaurants = restaurants;
+				this.restaurants= restaurants;
 
-			for (let opt in latlng) {
-				let key = latlng[opt].split('=')[0];
-				let value = latlng[opt].split('=')[1];
-				this.restService.updateFilter([key, +value]);
-			}
-			// collect restaurants & set categories available for filtering
-			this.restService.fetchRestaurants()
-				.subscribe(restaurants => {
-					for (let r of restaurants)
-						this.user.hasFavored(r) ? r.bookmarked = true : r.bookmarked = false;
-					this.all_restaurants = restaurants;
-					this.restaurants = restaurants;
-					this.setCategoryOptions();
-				});
+				this.setCategoryOptions();
+				this.restService.saveSearch(filter_url, restaurants);
+			});
 		});
 
 		// config search
@@ -64,7 +56,6 @@ export class RestaurantListComponent implements OnInit {
 		}
 		this.filterComponent.setCategories(Array.from(new Set(categories)));
 	}
-
 
 	doFiltering(choice): void {
 		switch(choice.key) {

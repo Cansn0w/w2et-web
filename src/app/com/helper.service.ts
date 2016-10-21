@@ -24,4 +24,16 @@ export class HelperService {
 		console.error('Oppps!', error);
 		return Promise.reject(error.message || error);
 	}
+
+	parseUrlString(url: string): any[] {
+		let parts = url.split(';');
+		let results = [];
+		for (let i in parts) {
+			let key = parts[i].split('=')[0];
+			let value = parts[i].split('=')[1];
+			results.push({key: key, value: value});
+		}
+
+		return results;
+	}
 }

@@ -1,0 +1,25 @@
+<div class="container narrow-container">
+    <h1 style="padding-top: 10%;">How about this restaurant?</h1>
+    <div *ngIf="suggestedRestaurant" class="row">
+        <div class="col-xs-12 well" style="background-color:white;">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="{{suggestedRestaurant.image}}" class="img-rounded img-responsive" alt="Restaurant" style="">
+                </div>
+                <div class="col-xs-5">
+                    <h4><b>{{ suggestedRestaurant.name }}</b></h4>
+                    <p>{{ suggestedRestaurant.address }}</p>
+                </div>
+                <div class="col-xs-2" style="float:right;">
+                    <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons"
+                       style="font-size:32px; cursor: pointer;">
+                        {{ suggestedRestaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
+                    </i>
+                    <facebook-share-btn *ngIf="suggestedRestaurant.url !== null" [url]="suggestedRestaurant.url"></facebook-share-btn>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a (click)="gotoRestaurantList()" class="btn btn-lg dine-button" style="display: block; margin: auto; margin-bottom:5%;">View
+        More</a>
+</div>

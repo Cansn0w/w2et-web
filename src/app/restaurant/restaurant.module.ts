@@ -2,10 +2,11 @@ import {NgModule} from '@angular/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {SharedModule} from '../com/shared.module';
 
-import {RestaurantComponent} from './restaurant.component'
-import {RestauranteHomeComponent} from './restaurant-home.component'
-import {RestaurantDetailComponent} from './restaurant-detail.component'
-import {RestaurantListComponent} from './restaurant-list.component'
+import {RestaurantComponent} from './restaurant.component';
+import {RestauranteHomeComponent} from './restaurant-home.component';
+import {RestaurantDetailComponent} from './restaurant-detail.component';
+import {RestaurantSuggestionComponent} from './restaurant-suggestion.component';
+import {RestaurantListComponent} from './restaurant-list.component';
 import {RestaurantFilterComponent} from './restaurant-filter.component';
 
 import {GoogleMapComponent} from './googlemap.component'
@@ -28,6 +29,7 @@ import {GOOGLE_MAP_API_KEY} from '../com/config'
 	declarations: [
 		RestaurantComponent,
 		RestauranteHomeComponent,
+		RestaurantSuggestionComponent,
 		RestaurantListComponent,
 		RestaurantDetailComponent,
 		RestaurantFilterComponent,

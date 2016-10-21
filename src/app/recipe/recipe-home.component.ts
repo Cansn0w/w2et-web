@@ -29,6 +29,6 @@ export class RecipeHomeComponent implements OnInit {
 	}
 
 	gotoList(): void {
-		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toUrl()])
+		this.router.navigate(['/recipe/list', this.recipeService.getFilter().url])
 	}
 }
