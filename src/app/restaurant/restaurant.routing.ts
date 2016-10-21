@@ -6,13 +6,13 @@ import { RestauranteHomeComponent } from './restaurant-home.component'
 import { RestaurantDetailComponent } from './restaurant-detail.component'
 import { RestaurantListComponent } from './restaurant-list.component'
 
-import {AutoLoginGuard} from '../com/auto.login.guard';
+import {SessionGuard} from '../com/widgets/session.guard';
 
 const restaurantRoutes: Routes = [
 	{
 		path: 'restaurant',
 		component: RestaurantComponent,
-		canActivate: [AutoLoginGuard],
+		canActivate: [SessionGuard],
 		children: [
 			{ path: '', component: RestauranteHomeComponent },
 			{ path: 'list/:options', component: RestaurantListComponent },

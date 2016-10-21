@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantService} from './restaurant.service';
+import {UserService} from '../user.service';
 
 @Component({
 	selector: 'restaurant-detail',
@@ -13,7 +14,7 @@ export class RestaurantDetailComponent implements OnInit {
 
 	constructor(private restService: RestaurantService,
 	            private route: ActivatedRoute,
-	            private router: Router,) {
+	            public user: UserService) {
 	}
 
 
@@ -23,6 +24,7 @@ export class RestaurantDetailComponent implements OnInit {
 			this.restService.fetchRestaurantDetail(id)
 				.subscribe(
 					restaurant => {
+						if (this.user.hasFavored(restaurant)) restaurant.bookmarked = true;
 						this.restaurant = restaurant;
 					},
 					error => console.log(error)

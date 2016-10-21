@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router'
+import {Cookie} from 'ng2-cookies/ng2-cookies'
 
 import {UserService} from '../user.service'
 import {AuthService} from './auth.service'
 
-import {Cookie} from 'ng2-cookies/ng2-cookies'
 
 @Component({
 	selector: 'app-login',
@@ -13,7 +13,7 @@ import {Cookie} from 'ng2-cookies/ng2-cookies'
 export class SigninComponent implements OnInit {
 
 	islogin: boolean = true;
-	isRemembered: boolean = false;
+	keepLoggedin: boolean = false;
 
 	loginData: {
 		email: string,
@@ -32,14 +32,20 @@ export class SigninComponent implements OnInit {
 	            private router: Router) {
 	}
 
-	remember_user(choice: boolean): void {
-		this.isRemembered = choice;
+	ngOnInit() {
+		this.islogin = window.location.href.endsWith('signup') ? false : true;
+		this.loginData = {email: '', password: ''};
+		this.regData = {username: '', email: '', password1: '', password2: ''};
+	}
+
+	keep_login(choice: boolean): void {
+		this.keepLoggedin = choice;
 	}
 
 	// COOKIE SET/GET/DELETE
-	set_login_cookie(email: string, password: string): void {
-		Cookie.set('email', email, 10);
-		Cookie.set('password', password, 10);
+	set_cookie(name: string, val: string, dur?: number): void {
+		let duration = dur ? dur: 10;
+		Cookie.set(name, val, duration);
 	}
 
 	delete_cookies(cookie_name?: string): void {
@@ -52,6 +58,7 @@ export class SigninComponent implements OnInit {
 	// Retrieve user data using token
 	loadUserData(token: string, callback): void {
 		this.auth.get_user(token)
+			// Get username,
 			.then(userData => {
 				userData['token'] = token;
 				this.user.login(userData);
@@ -81,14 +88,13 @@ export class SigninComponent implements OnInit {
 			.then(response => {
 				// set user info, then redirect user
 				this.loadUserData(response.key, () => {
-					// set login cookies if user wishes
-					if (this.isRemembered)
-						this.set_login_cookie(loginData['email'], loginData['password']);
+					// set session cookies if user wishes
+					if (this.keepLoggedin) this.set_cookie('token', response.key);
 					this.redirect();
 				});
 			})
 			.catch(err => {
-				if (err.status != 200) {
+				if (err.status == 403) {
 					alert('Invalid Credential!');
 					this.delete_cookies();
 				}
@@ -111,37 +117,21 @@ export class SigninComponent implements OnInit {
 					this.redirect();
 				});
 			})
-			.catch(error => {
-				alert(error.toString());
-			})
+			.catch(error => alert(error.toString()))
 	}
 
-	ngOnInit() {
-		/*
-		 * There are 3 reasons why user is interacting with the signin component:
-		 * 1. User wants to login or sign up:
-		 *      - no real redirection (user is always guided to the homepage);
-		 *      - no auto signin by cookie;
-		 *
-		 * 2. User visits some page:
-		 *      - redirect to the page to visit;
-		 *      - cookie is checked; auto-login if account credential is set in cookies
-		 *
-		 * 3. User manually type in profile url: redirection needed:
-		 *      - redirect to profile page
-		 *      - cookie is checked;
-		 *          > auto-login if account credential is set in cookies
-		 *          > login or signup is needed before viewing user profile
-		 */
-		let cookies = Cookie.getAll();
-		if ('email' in cookies && 'password' in cookies) {
-			this.loginData = {email: cookies['email'],  password: cookies['password']};
-			this.submitLogin(this.loginData);
+	// EVENTS
+	facebookLogin(fbresponse: any): void {
+		if (fbresponse.code == 200) {
+			this.auth.fb_signup(fbresponse.data.accessToken)
+				.then(response => response.key)
+				.then(token => this.loadUserData(token, () => {
+					this.redirect();
+				}))
+				.catch(error => alert(error.toString()));
 		}
 		else {
-			this.islogin = window.location.href.endsWith('signup') ? false : true;
-			this.loginData = {email: '', password: ''};
-			this.regData = {username: '', email: '', password1: '', password2: ''};
+			alert(fbresponse.message);
 		}
 	}
 }

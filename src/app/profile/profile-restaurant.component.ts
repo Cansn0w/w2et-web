@@ -7,8 +7,7 @@ import {UserService} from '../user.service';
 
 @Component({
 	selector: 'profile-restaurant',
-	templateUrl: './templates/profile-fav-restaurants.html',
-	// templateUrl: '../restaurant/templates/restaurant-list.html'
+	templateUrl: '../restaurant/templates/restaurant-list.html'
 })
 export class ProfileRestaurantComponent implements OnInit {
 	// indicator to tell the template not to include filter component
@@ -16,8 +15,7 @@ export class ProfileRestaurantComponent implements OnInit {
 
 	restaurants: Restaurant[] = [];
 
-	constructor(private router: Router,
-	            private user: UserService) {
+	constructor(public user: UserService) {
 	}
 
 	ngOnInit() {

@@ -3,24 +3,24 @@
 </div>
 <div class="container mid-container">
     <!--Recipe Brief Info-->
-    <div *ngFor="let rst of restaurants"
-         (click)="onSelectRestaurant(rst)">
+    <div *ngFor="let restaurant of restaurants"
+         routerLink="/restaurant/detail/{{restaurant.id}}" routerLinkActive="active">
 
-        <div class="col-xs-12 well" style="background-color:white;">
+        <div class="col-xs-12 well" style="background-color:white; cursor:pointer;">
             <div class="row">
                 <!--Recipe Image & Name-->
                 <div class="col-xs-2">
-                    <img src="{{ rst.image }}" class="img-rounded img-responsive list-image" alt="Opps!">
+                    <img src="{{ restaurant.image }}" class="img-rounded img-responsive list-image" alt="Opps!">
                 </div>
                 <div class="col-xs-8">
-                    <h4><b> {{ rst.name }} </b></h4>
+                    <h4><b> {{ restaurant.name }} </b></h4>
                 </div>
                 <!--Recipe Bookmark/share icons-->
                 <div class="col-xs-2" style="float:right;">
-                    <i (click)="bookmark($event, rst) " class="material-icons" style="font-size:32px; cursor: pointer;">
-                        {{ rst.bookmarked ? 'bookmark' : 'bookmark_border' }}
+                    <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons" style="font-size:32px; cursor: pointer;">
+                        {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>
-                    <facebook-share-btn *ngIf="rst.url !== null" [url]="rst.url"></facebook-share-btn>
+                    <facebook-share-btn *ngIf="restaurant.url !== null" [url]="restaurant.url"></facebook-share-btn>
                 </div>
             </div>
         </div>

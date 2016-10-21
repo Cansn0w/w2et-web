@@ -6,18 +6,16 @@ import {UserService} from '../user.service';
 
 @Component({
 	selector: 'profile-recipe',
-	templateUrl: './templates/profile-fav-recipes.html',
-	// templateUrl: '../recipe/templates/recipe-list.html',
+	templateUrl: '../recipe/templates/recipe-list.html',
 })
 export class ProfileRecipeComponent implements OnInit {
-	// indicator to tell the template not to include filter component
+	// indicator to tell the template not to include the filter component
 	atProfile: boolean = true;
 
 	selectedRecipe: Recipe;
 	recipes: Recipe[] = [];
 
-	constructor(private router: Router,
-	            private user: UserService) {
+	constructor(public user: UserService) {
 	}
 
 	ngOnInit() {

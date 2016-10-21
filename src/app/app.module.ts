@@ -31,8 +31,6 @@ import {app_routing} from './app-routing'
 		AppComponent,
 		HomeComponent,
 		SigninComponent,
-		// FacebookShareButton,
-		// SafePipe
 	],
 	providers: [
 		UserService,

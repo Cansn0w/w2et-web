@@ -23,17 +23,11 @@ export class RecipeDetailComponent implements OnInit {
 			let id = +params['id'];
 			this.recipeService.fetchRecipeDetails(id)
 				.subscribe(
-					recipe => this.recipe = recipe,
+					recipe => {
+						this.recipe = recipe
+					},
 					error => console.log(error)
 				);
 		});
-	}
-
-	go_back(): void {
-		this.router.navigate(['/recipe/list', this.recipeService.last_filter.toUrl()]);
-	}
-
-	go_next(): void {
-		alert('this is a to-do')
 	}
 }

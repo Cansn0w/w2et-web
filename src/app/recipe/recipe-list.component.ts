@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
+
+import {Observable} from "rxjs/Observable";
+import {Subject} from "rxjs/Subject";
+
 
 import {UserService} from '../user.service';
 import {Recipe} from './recipe.service';
 import {RecipeService} from './recipe.service'
-import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
-
+import {HelperService} from '../com/helper.service';
 
 @Component({
 	selector: 'recipe-list',
@@ -14,15 +16,14 @@ import {Subject} from "rxjs/Subject";
 })
 export class RecipeListComponent implements OnInit {
 
-	selectedRecipe: Recipe;
 	recipes: Recipe[] = [];
 
 	private searchTerm = new Subject<{key: string, value: string}>();
 	private searched_ids: Observable<number[]>;
 
-	constructor(private user: UserService,
+	constructor(public user: UserService,
+	            private helper: HelperService,
 	            private recipeService: RecipeService,
-	            private router: Router,
 	            private route: ActivatedRoute,) {
 	}
 
@@ -37,7 +38,7 @@ export class RecipeListComponent implements OnInit {
 			this.recipeService.fetchRecipeDetails(+id)
 				.subscribe(
 					recipe => {
-						this.user.hasFavored(recipe) ? recipe.bookmarked = true : recipe.bookmarked = false;
+						if (this.user.hasFavored(recipe)) recipe.bookmarked = true;
 						this.recipes.push(recipe);
 					},
 					error => console.log(error)
@@ -66,7 +67,7 @@ export class RecipeListComponent implements OnInit {
 				}
 			)
 			.catch(error => {
-				console.log(error);
+				this.helper.handleError(error);
 				return Observable.of<number[]>([]);
 			});
 		// subscribe to the search results (a list of ids whose recipes matches the filter specifications)
@@ -97,40 +98,9 @@ export class RecipeListComponent implements OnInit {
 		// todo
 	}
 
-	trackByID(index: number, recipe: Recipe) {
-		return recipe.id;
-	}
-
 	// Events
 	onFilterOptionSet(choice: any): void {
 		// todo: in-place url update should be implemented
 		this.searchTerm.next(choice);
-	}
-
-	onSelectRecipe(recipe: Recipe): void {
-		this.router.navigate(['/recipe/detail', recipe.id])
-	}
-
-	// todo: move this function to a higher level controller
-	bookmark($event, recipe): void {
-		$event.stopPropagation();
-		if (!this.user.isLoggedIn()) {
-			alert('Please login before setting your favorite recipe');
-			return;
-		}
-
-		if (recipe.bookmarked) {
-			this.user.unfav(recipe, (succ) => {
-				succ ?
-					recipe.bookmarked = !recipe.bookmarked :
-					alert('Sorry we got a problem and could not unfav this recipe for you :( ');
-			});
-		} else {
-			this.user.fav(recipe, (succ) => {
-				succ ?
-					recipe.bookmarked = !recipe.bookmarked :
-					alert('Sorry this recipe could not be added to your favorite list...');
-			})
-		}
 	}
 }

@@ -20,4 +20,8 @@ export class HelperService {
 		return lst;
 	}
 
+	handleError(error: any): Promise<any> {
+		console.error('Oppps!', error);
+		return Promise.reject(error.message || error);
+	}
 }

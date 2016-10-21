@@ -7,6 +7,7 @@ import {Restaurant} from './restaurant/restaurant.service'
 import {HOST} from './com/config';
 
 import {HelperService} from './com/helper.service';
+import {Cookie} from 'ng2-cookies/src/cookie'
 
 @Injectable()
 export class UserService {
@@ -14,17 +15,12 @@ export class UserService {
 	private _email: string;
 	private _token: string;
 	private _username: string;
-	private _fav_recipe: Recipe[] = [];
-	private _fav_restaurant: Restaurant[] = [];
+	private _fav_recipes: Recipe[] = [];
+	private _fav_restaurants: Restaurant[] = [];
 
 	constructor(private http: Http,
 	            private helper: HelperService) {
 		this.reset();
-	}
-
-	private handleError(error: any): Promise<any> {
-		console.error('Oppps!', error);
-		return Promise.reject(error.message || error);
 	}
 
 	// HELPERS
@@ -43,6 +39,12 @@ export class UserService {
 			case 'setfavoriterestaurant':
 				path = '/restaurant/';
 				break;
+			case 'setuserdata':
+				path = '/account/profile/';
+				break;
+			case 'changepassword':
+				path =  '/account/password/change/';
+				break;
 		}
 		return HOST + path;
 	}
@@ -57,8 +59,8 @@ export class UserService {
 		this._token = '';
 		this._email = '';
 		this._username = '';
-		this._fav_recipe = [];
-		this._fav_restaurant = [];
+		this._fav_recipes = [];
+		this._fav_restaurants = [];
 		this._loggedIn = false;
 	}
 
@@ -71,9 +73,9 @@ export class UserService {
 		return true;
 	}
 
-	logout(): boolean {
+	logout(): void {
 		this.reset();
-		return true;
+		if (Cookie.check('token')) Cookie.delete('token');
 	}
 
 	isLoggedIn(): boolean {
@@ -94,17 +96,16 @@ export class UserService {
 	}
 
 	getFavRecipes() {
-		return this._fav_recipe;
+		return this._fav_recipes;
 	}
 
 	getFavRestaurants() {
-		return this._fav_restaurant;
+		return this._fav_restaurants;
 	}
 
-
-	// GET USER FAV
+	// USER PREFERENCES -> FAV OR UNFAV
 	get_fav(term: string): Promise<any[]> {
-		let local = term == 'recipes' ? this._fav_recipe : this._fav_restaurant;
+		let local: any[] = term == 'recipes' ? this._fav_recipes : this._fav_restaurants;
 		if (local.length != 0) {
 			return Promise.resolve(local);
 		}
@@ -113,17 +114,18 @@ export class UserService {
 				.toPromise()
 				.then(response => {
 					// save data of user fav to local copy;
-					let data = response.json();
-					term == 'recipes' ? this._fav_recipe = data : this._fav_restaurant = data;
-					return data;
+					response.json()
+						.map(r => {
+							r['bookmarked'] = true;
+							local.push(term == 'recipes' ? new Recipe(r) : new Restaurant(r));
+						});
+					return local;
 				})
-				.catch(this.handleError);
+				.catch(this.helper.handleError);
 		}
 	}
 
-	// SET USER FAV RECIPE/RESTAURANT
 	fav(object: any, callback): void {
-
 		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
 		this.http.put(this.get_endpoint('setfavorite' + term) + object.id, {}, this.request_option())
 			.toPromise()
@@ -132,14 +134,14 @@ export class UserService {
 
 				if (response.status == 204) {
 					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipe.push(object);
-					if (term == 'restaurant') this._fav_restaurant.push(object);
+					if (term == 'recipe') this._fav_recipes.push(object);
+					if (term == 'restaurant') this._fav_restaurants.push(object);
 					succ = true;
 				}
 
 				callback(succ);
 			})
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
 	}
 
 	unfav(object: any, callback): void {
@@ -151,20 +153,55 @@ export class UserService {
 
 				if (response.status == 204) {
 					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipe = this.helper.removeItem(this._fav_recipe, object);
-					if (term == 'restaurant') this._fav_restaurant = this.helper.removeItem(this._fav_restaurant, object);
+					if (term == 'recipe') this._fav_recipes = this.helper.removeItem(this._fav_recipes, object);
+					if (term == 'restaurant') this._fav_restaurants = this.helper.removeItem(this._fav_restaurants, object);
 					succ = true;
 				}
 
 				callback(succ);
 			})
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
+	}
+
+	// this is a tmp solution ...
+	bookmark(object: any) : void {
+
+		if (! this._loggedIn) {
+			alert('Please login before setting your favorite recipe');
+			return;
+		}
+		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
+		let method = object.bookmarked ? this.unfav : this.fav;
+
+		method.call(this, object, (succ) => {
+			succ ?
+				object.bookmarked = !object.bookmarked :
+				alert('Sorry we got a problem and could not edit ' + term + ' favorite for you :( .. ');
+		});
 	}
 
 	// CHECK IF RECIPE/RESTAURANT IS FAVORED
 	hasFavored(object: Recipe | Restaurant): boolean {
 		return object.constructor.name == Recipe.name ?
-			this.helper.contains(this._fav_recipe, object, 'id') :
-			this.helper.contains(this._fav_restaurant, object, 'id')
+			this.helper.contains(this._fav_recipes, object, 'id') :
+			this.helper.contains(this._fav_restaurants, object, 'id')
+	}
+
+	// UPDATE USER DATA
+	updateData(newUserData: {}, callback, partial?: boolean): void {
+		let body = JSON.stringify(newUserData);
+		let request_method = partial ? this.http.patch : this.http.put;
+		request_method(this.get_endpoint('setuserdata'), body, this.request_option())
+			.toPromise()
+			.then(response => callback(response.status == 200))
+			.catch(this.helper.handleError);
+	}
+
+	changePassword(pswData: {}, callback): void {
+		let body = JSON.stringify(pswData);
+		this.http.post(this.get_endpoint('changepassword'), body, this.request_option())
+			.toPromise()
+			.then(response => callback(response.status == 200))
+			.catch(this.helper.handleError);
 	}
 }
