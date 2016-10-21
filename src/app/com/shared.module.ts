@@ -2,28 +2,36 @@ import { NgModule } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 
-import {ProfileGuard} from './profile.guard';
-import {AutoLoginGuard} from './auto.login.guard';
+import {FacebookShareButton} from './facebook/fbshare.component';
+import {FacebookLoginButton} from './facebook/fblogin.component';
 
-import {FacebookShareButton} from './fbshare.component';
-import {SafePipe} from './safe-url.pipe';
+import {ProfileGuard} from './widgets/profile.guard';
+import {SessionGuard} from './widgets/session.guard';
+import {SafePipe} from './widgets/safe-url.pipe';
+
 import {HelperService} from './helper.service';
+import {FacebookService} from 'ng2-facebook-sdk/dist';
+import {FacebookInitialiser} from './facebook/fb.initialiser';
 
 @NgModule({
 	declarations: [
 		FacebookShareButton,
+		FacebookLoginButton,
 		SafePipe
 	],
 	exports: [
 		CommonModule,
 		FormsModule,
 		FacebookShareButton,
+		FacebookLoginButton,
 		SafePipe,
 	],
 	providers: [
 		ProfileGuard,
-		AutoLoginGuard,
-		HelperService
+		SessionGuard,
+		HelperService,
+		FacebookService,
+		FacebookInitialiser
 	]
 })
 

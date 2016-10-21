@@ -4,8 +4,7 @@
 
 <div class="container mid-container">
     <!--Recipe Brief Info-->
-    <div *ngFor="let recipe of recipes; trackBy: trackByID"
-         [class.selected]="recipe === selectedRecipe"
+    <div *ngFor="let recipe of recipes"
          routerLink="/recipe/detail/{{recipe.id}}" routerLinkActive="active">
 
         <div class="col-xs-12 well" style="background-color:white; cursor:pointer;">
@@ -19,7 +18,11 @@
                 </div>
                 <!--Recipe Bookmark/share icons-->
                 <div class="col-xs-2" style="float:right;">
-                    <i (click)="bookmark($event, recipe) " class="material-icons"
+                    <!--<i (click)="bookmark($event, recipe) " class="material-icons"-->
+                       <!--style="font-size:32px; cursor: pointer;">-->
+                        <!--{{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}-->
+                    <!--</i>-->
+                    <i (click)="user.bookmark(recipe); $event.stopPropagation();" class="material-icons"
                        style="font-size:32px; cursor: pointer;">
                         {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>

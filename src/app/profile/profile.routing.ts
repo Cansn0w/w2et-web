@@ -5,8 +5,7 @@ import { ProfileComponent } from './profile.component';
 import { ProfileRecipeComponent } from './profile-recipe.component';
 import { ProfileRestaurantComponent } from './profile-restaurant.component';
 
-import { ProfileGuard } from '../com/profile.guard';
-// import { AutoLoginGuard } from '../com/auto.login.guard';
+import { ProfileGuard } from '../com/widgets/profile.guard';
 
 const profileRoutes: Routes = [
 	{

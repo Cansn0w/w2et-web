@@ -6,13 +6,13 @@ import { RecipeHomeComponent } from './recipe-home.component'
 import { RecipeDetailComponent } from './recipe-detail.component'
 import { RecipeListComponent } from './recipe-list.component'
 
-import {AutoLoginGuard} from '../com/auto.login.guard';
+import {SessionGuard} from '../com/widgets/session.guard';
 
 const recipeRoutes: Routes = [
 	{
 		path: 'recipe',
 		component: RecipeComponent,
-		canActivate: [AutoLoginGuard],
+		canActivate: [SessionGuard],
 		children: [
 			{ path: '', component: RecipeHomeComponent },
 			{ path: 'list/:options', component: RecipeListComponent },

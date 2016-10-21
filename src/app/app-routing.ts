@@ -5,27 +5,20 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {SigninComponent} from './auth/signin.component';
 
+import {SessionGuard} from './com/widgets/session.guard';
+
+
 const routes: Routes = [
 	{
-		path: 'signin',
-		component: SigninComponent
-	},
-	{
-		path: 'login',
-		component: SigninComponent
-	},
-	{
-		path: 'signup',
-		component: SigninComponent
-	},
-	{
 		path: '',
-		component: HomeComponent
-	},
-	{
-		path: '**',
-		redirectTo: '',
-		pathMatch: 'full'
+		canActivate: [SessionGuard],
+		children: [
+			{ path: 'signin', component: SigninComponent },
+			{ path: 'signup', component: SigninComponent },
+			{ path: 'login', component: SigninComponent },
+			{ path: '', component: HomeComponent },
+			{ path: '**', redirectTo: '',  pathMatch: 'full'},
+		]
 	}
 ];
 

@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs'
+import {Observable} from 'rxjs';
 
-import '../com/config'
-import {HOST} from '../com/config'
+import '../com/config';
+import {HOST} from '../com/config';
 
-import {RecipeFilter} from './recipe-filter.component'
+import {RecipeFilter} from './recipe-filter.component';
+import {HelperService} from '../com/helper.service';
 
 // Recipe object
 export class Recipe {
@@ -25,7 +26,7 @@ export class Recipe {
 
 	bookmarked: boolean;
 
-	constructor(rcpData? : {}) {
+	constructor(rcpData?: {}) {
 		if (rcpData)
 			for (let key in rcpData)
 				this[key] = rcpData[key];
@@ -41,7 +42,8 @@ export class RecipeService {
 
 	private filter = new RecipeFilter();
 
-	constructor(private http: Http) {
+	constructor(private http: Http,
+	            private helper: HelperService) {
 	}
 
 	saveSearch(recipes: Recipe[]): void {
@@ -80,17 +82,11 @@ export class RecipeService {
 		return HOST + `/recipe/${id}`;
 	}
 
-	// Server communication handlers
-	private handleError(error: any): Promise<any> {
-		console.error('Oppps!', error);
-		return Promise.reject(error.message || error);
-	}
-
 	fetchRecipesIDs(): Observable<number[]> {
 		let formatted_url = this.build_search_url();
 		return this.http.get(formatted_url)
 			.map((r: Response) => r.json() as number[])
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
 	}
 
 	fetchRecipeDetails(id: number): Observable<Recipe> {
@@ -103,8 +99,7 @@ export class RecipeService {
 		// nope! then we need to send a request to server
 		let formatted_url = this.build_rcp_url(id);
 		return this.http.get(formatted_url)
-			// .map((r: Response) => r.json() as Recipe)
 			.map((r: Response) => new Recipe(r.json()))
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
 	}
 }

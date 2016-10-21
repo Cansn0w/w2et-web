@@ -1,5 +1,5 @@
 import {Component, ViewChild, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
 import {RestaurantFilterComponent} from './restaurant-filter.component'
 
 import {Subject} from 'rxjs/Subject';
@@ -22,16 +22,10 @@ export class RestaurantListComponent implements OnInit {
 	private searchTerm = new Subject<{key: string, value: string}>();
 
 
-	constructor(private user: UserService,
+	constructor(public  user: UserService,
 	            private helper: HelperService,
-	            private router: Router,
 	            private route: ActivatedRoute,
 	            private restService: RestaurantService) {
-	}
-
-	// TMP helper
-	get_category_list_of_rest(r: Restaurant): string[] {
-		return r['categories'].map((c) => c['category']);
 	}
 
 	ngOnInit() {
@@ -66,8 +60,7 @@ export class RestaurantListComponent implements OnInit {
 	setCategoryOptions(): void {
 		let categories = [''];
 		for (let r of this.all_restaurants) {
-			let c = this.get_category_list_of_rest(r);
-			categories = categories.concat(c);
+			categories = categories.concat(r.flatterned_categories());
 		}
 		this.filterComponent.setCategories(Array.from(new Set(categories)));
 	}
@@ -83,7 +76,7 @@ export class RestaurantListComponent implements OnInit {
 
 	filterByCategory(category: string): void {
 		this.restaurants = this.all_restaurants.filter((r) =>
-			this.helper.contains(this.get_category_list_of_rest(r), category));
+			this.helper.contains(r.flatterned_categories(), category));
 	}
 
 	filterByDistance(maxDistance: number): void {
@@ -100,28 +93,5 @@ export class RestaurantListComponent implements OnInit {
 	// EVENTS
 	onFilterOptionSet(choice: any): void {
 		this.searchTerm.next(choice);
-	}
-
-	// todo: move this function to a higher level controller
-	bookmark($event, restaurant): void {
-		$event.stopPropagation();
-		if (!this.user.isLoggedIn()) {
-			alert('Please login before setting your favorite restaurant');
-			return;
-		}
-
-		if (restaurant.bookmarked) {
-			this.user.unfav(restaurant, (succ) => {
-				succ ?
-					restaurant.bookmarked = !restaurant.bookmarked :
-					alert('Sorry we got a problem and could not unfav this restaurant for you :( ');
-			});
-		} else {
-			this.user.fav(restaurant, (succ) => {
-				succ ?
-					restaurant.bookmarked = !restaurant.bookmarked :
-					alert('Sorry this restaurant could not be added to your favorite list...');
-			})
-		}
 	}
 }

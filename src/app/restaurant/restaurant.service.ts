@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {HOST} from '../com/config';
 
 import '../com/config'
+import {HelperService} from '../com/helper.service';
 
 // Restaurant
 export class Restaurant {
@@ -31,6 +32,10 @@ export class Restaurant {
 			for (let key in restData)
 				this[key] = restData[key];
 	}
+
+	flatterned_categories(): string[] {
+		return this.categories.map((c) => c['category']);
+	}
 }
 
 
@@ -39,12 +44,8 @@ export class RestaurantService {
 
 	private filter = new RestaurantFilter();
 
-	constructor(private http: Http) {
-	}
-
-	private handleError(error: any): Promise<any> {
-		console.error('Oppps!', error);
-		return Promise.reject(error.message || error);
+	constructor(private http: Http,
+	            private helper: HelperService) {
 	}
 
 	// Restaurant Filter handlers
@@ -67,18 +68,15 @@ export class RestaurantService {
 		let formatted_url = HOST + `/restaurant/${id}`;
 		return this.http.get(formatted_url)
 			.map((r: Response) => new Restaurant(r.json()))
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
 	}
 
-
 	fetchRestaurants(): Observable<Restaurant[]> {
-		// url pattern: /restaurant/@LAT,LNG?DISTANCE=__s
 		let f = this.filter;
 		let formatted_url = HOST + `/restaurant/@${f.lat},${f.lng}?d=1500`;
 
 		return this.http.get(formatted_url)
-			// .map((restaurants: Response) => restaurants.json() as Restaurant[])
 			.map((restaurants: Response) => restaurants.json().map(r => new Restaurant(r)))
-			.catch(this.handleError);
+			.catch(this.helper.handleError);
 	}
 }

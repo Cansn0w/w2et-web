@@ -19,10 +19,6 @@ export class RecipeHomeComponent implements OnInit {
 		this.recipeService.resetFilter();
 	}
 
-	gotoList(): void {
-		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toUrl()])
-	}
-
 	isValidFiilter(): boolean {
 		return this.recipeService.validateFilter();
 	}
@@ -30,5 +26,9 @@ export class RecipeHomeComponent implements OnInit {
 	// EVENTS
 	onFilterOptionSet(choice: any) {
 		this.recipeService.updateFilter(choice.key, choice.value);
+	}
+
+	gotoList(): void {
+		this.router.navigate(['/recipe/list', this.recipeService.getFilter().toUrl()])
 	}
 }
