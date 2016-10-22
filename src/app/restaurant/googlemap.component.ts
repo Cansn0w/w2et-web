@@ -45,6 +45,13 @@ export class GoogleMapComponent implements OnInit, OnChanges {
 		});
 	}
 
+	onClickMap($event: any) {
+		this.onSelectLocation.emit({
+			lat: $event.coords.lat,
+			lng: $event.coords.lng,
+		})
+	}
+
 	onClickRestaurant(rst: Restaurant): void {
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}

@@ -7,7 +7,6 @@ import {Restaurant} from './restaurant/restaurant.service'
 import {HOST} from './com/config';
 
 import {HelperService} from './com/helper.service';
-import {Cookie} from 'ng2-cookies/src/cookie'
 
 @Injectable()
 export class UserService {
@@ -42,6 +41,9 @@ export class UserService {
 			case 'setuserdata':
 				path = '/account/profile/';
 				break;
+			case 'getuser':
+				path = '/account/user/';
+				break;
 			case 'changepassword':
 				path =  '/account/password/change/';
 				break;
@@ -65,46 +67,28 @@ export class UserService {
 	}
 
 	// LOGIN/LOGOUT
-	login(userdata: {}): boolean {
+	loadUserData(userdata: {}): void {
 		this._email = userdata['email'];
-		this._token = userdata['token'];
 		this._username = userdata['username'];
 		this._loggedIn = true;
-		return true;
-	}
-
-	logout(): void {
-		this.reset();
-		if (Cookie.check('token')) Cookie.delete('token');
 	}
 
 	isLoggedIn(): boolean {
 		return this._loggedIn;
 	}
 
+	// SETTERS
+	setToken(token: string) { this._token = token; }
+
 	// GETTERS
-	getToken() {
-		return this._token;
-	}
-
-	getEmail() {
-		return this._email;
-	}
-
-	getUsername() {
-		return this._username;
-	}
-
-	getFavRecipes() {
-		return this._fav_recipes;
-	}
-
-	getFavRestaurants() {
-		return this._fav_restaurants;
-	}
+	getToken() { return this._token; }
+	getEmail() { return this._email; }
+	getUsername() { return this._username; }
+	getFavRecipes() { return this._fav_recipes; }
+	getFavRestaurants() { return this._fav_restaurants; }
 
 	// USER PREFERENCES -> FAV OR UNFAV
-	get_fav(term: string): Promise<any[]> {
+	fetchFav(term: string): Promise<any[]> {
 		let local: any[] = term == 'recipes' ? this._fav_recipes : this._fav_restaurants;
 		if (local.length != 0) {
 			return Promise.resolve(local);
@@ -187,7 +171,23 @@ export class UserService {
 			this.helper.contains(this._fav_restaurants, object, 'id')
 	}
 
-	// UPDATE USER DATA
+	// FETCH & UPDATE USER DATA
+	fetchUserData(token: string, callback): void {
+		this._token = token;
+
+		this.http.get(this.get_endpoint('getuser'), this.request_option())
+			.toPromise()
+			.then(response => this.loadUserData(response.json()))
+			.then(_ => this.fetchFav('recipes'))
+			.then(_ => this.fetchFav('restaurants'))
+			.then(_ => callback(true))
+			.catch(err => {
+				this.helper.handleError(err);
+				this.reset();
+				callback(false);
+			})
+	}
+
 	updateData(newUserData: {}, callback, partial?: boolean): void {
 		let body = JSON.stringify(newUserData);
 		let request_method = partial ? this.http.patch : this.http.put;

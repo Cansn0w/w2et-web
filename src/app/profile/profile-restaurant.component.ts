@@ -23,7 +23,7 @@ export class ProfileRestaurantComponent implements OnInit {
 	}
 
 	getFavRestaurants(): void {
-		this.user.get_fav('restaurants').then(restaurants => this.restaurants = restaurants);
+		this.user.fetchFav('restaurants').then(restaurants => this.restaurants = restaurants);
 	}
 
 	unfavRestaurant(rest: Restaurant): void {

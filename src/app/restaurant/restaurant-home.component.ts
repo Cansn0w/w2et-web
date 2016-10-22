@@ -39,7 +39,7 @@ export class RestauranteHomeComponent implements OnInit {
 			});
 
 		// config address search
-		this.searchAddr.debounceTime(1000).distinctUntilChanged().subscribe(
+		this.searchAddr.debounceTime(1700).distinctUntilChanged().subscribe(
 			addr => {
 				this.geoService.convert_geo(addr) // get lat and lng by address name
 					.subscribe(resp => {

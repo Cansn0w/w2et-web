@@ -23,7 +23,7 @@ export class ProfileRecipeComponent implements OnInit {
 	}
 
 	getFavRecipes(): void {
-		this.user.get_fav('recipes').then(recipes => this.recipes = recipes);
+		this.user.fetchFav('recipes').then(recipes => this.recipes = recipes);
 	}
 
 	unfavRecipe(recipe: Recipe): void {

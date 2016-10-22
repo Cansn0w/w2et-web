@@ -56,21 +56,30 @@ export class SigninComponent implements OnInit {
 	}
 
 	// Retrieve user data using token
-	loadUserData(token: string, callback): void {
-		this.auth.get_user(token)
-			// Get username,
-			.then(userData => {
-				userData['token'] = token;
-				this.user.login(userData);
-			})
-			.then(_ => this.user.get_fav('recipes'))
-			.then(_ => this.user.get_fav('restaurants'))
-			.then(_ => callback())
-			.catch(err => {
-				alert('Sorry something is very wrong....');
-				this.delete_cookies();
-			})
-	}
+	// loadUserData(token: string, callback): void {
+	// 	this.user.setToken(token);
+	// 	this.user.fetchUserData((succ) => {
+	// 		if (!succ) {
+	// 			this.delete_cookies();
+	// 			this.user.reset();
+	// 			alert('Sorry something is very wrong ... ');
+	// 		}
+	// 	});
+	//
+	// 	this.auth.get_user(token)
+	// 		// Get username,
+	// 		.then(userData => {
+	// 			userData['token'] = token;
+	// 			this.user.login(userData);
+	// 		})
+	// 		.then(_ => this.user.fetchFav('recipes'))
+	// 		.then(_ => this.user.fetchFav('restaurants'))
+	// 		.then(_ => callback())
+	// 		.catch(err => {
+	// 			alert('Sorry something is very wrong....');
+	// 			this.delete_cookies();
+	// 		})
+	// }
 
 	// Redirection
 	redirect(): void {
@@ -87,8 +96,7 @@ export class SigninComponent implements OnInit {
 		this.auth.login(loginData)
 			.then(response => {
 				// set user info, then redirect user
-				this.loadUserData(response.key, () => {
-					// set session cookies if user wishes
+				this.user.fetchUserData(response.key, (succ) => {
 					if (this.keepLoggedin) this.set_cookie('token', response.key);
 					this.redirect();
 				});
@@ -113,7 +121,7 @@ export class SigninComponent implements OnInit {
 		this.auth.signup(regData)
 			.then(response => {
 				// set user info & redirect to homepage
-				this.loadUserData(response.key, () => {
+				this.user.fetchUserData(response.key, (succ) => {
 					this.redirect();
 				});
 			})
@@ -125,7 +133,7 @@ export class SigninComponent implements OnInit {
 		if (fbresponse.code == 200) {
 			this.auth.fb_signup(fbresponse.data.accessToken)
 				.then(response => response.key)
-				.then(token => this.loadUserData(token, () => {
+				.then(token => this.user.fetchUserData(token, (succ) => {
 					this.redirect();
 				}))
 				.catch(error => alert(error.toString()));

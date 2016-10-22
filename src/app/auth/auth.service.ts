@@ -71,15 +71,6 @@ export class AuthService {
 			.catch(this.helper.handleError);
 	}
 
-	// RETRIEVE USERDATA
-	get_user(token: string): Promise<any> {
-		let options = this.cred_header_opt(token);
-		return this.http.get(this.get_endpoint('getuser'), options)
-			.toPromise()
-			.then(response => response.json())
-			.catch(this.helper.handleError);
-	}
-
 	// LOGOUT
 	logout(token: string): Promise<any> {
 		let options = this.cred_header_opt(token);

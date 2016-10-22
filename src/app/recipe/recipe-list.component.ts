@@ -100,7 +100,6 @@ export class RecipeListComponent implements OnInit {
 
 	// Events
 	onFilterOptionSet(choice: any): void {
-		// todo: in-place url update should be implemented
 		this.searchTerm.next(choice);
 	}
 }

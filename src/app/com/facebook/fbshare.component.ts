@@ -12,7 +12,6 @@ import {FacebookInitialiser} from './fb.initialiser';
 			[src]="iframe_url() | safe"
 			width="73" height="28" style="border:none;overflow:hidden" scrolling="no"
 			frameborder="0" allowTransparency="true"></iframe>`,
-	// providers: [FacebookInitialiser]
 })
 
 export class FacebookShareButton {

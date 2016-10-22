@@ -1,6 +1,7 @@
 <sebm-google-map [latitude]="loc.lat"
                  [longitude]="loc.lng"
-                 [zoom]="zoom">
+                 [zoom]="zoom"
+                 (mapClick)="onClickMap($event)">
 
     <!--User's current location-->
     <sebm-google-map-marker

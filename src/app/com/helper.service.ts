@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class HelperService {
-	constructor() {}
+	constructor() {
+	}
 
 	contains(lst: any[], val: any, identifier?: any): boolean {
 		if (identifier) {

@@ -1,6 +1,7 @@
 <div class="container narrow-container">
     <h1 style="padding-top: 10%;">How about this restaurant?</h1>
-    <div *ngIf="suggestedRestaurant" class="row">
+    <div *ngIf="suggestedRestaurant" class="row"
+         routerLink="/restaurant/detail/{{suggestedRestaurant.id}}" routerLinkActive="active">
         <div class="col-xs-12 well" style="background-color:white;">
             <div class="row">
                 <div class="col-xs-4">
@@ -8,7 +9,9 @@
                 </div>
                 <div class="col-xs-5">
                     <h4><b>{{ suggestedRestaurant.name }}</b></h4>
-                    <p>{{ suggestedRestaurant.address }}</p>
+                    <h5>Rating: {{suggestedRestaurant.rating}}</h5>
+                    <h5>Address: {{suggestedRestaurant.address}}</h5>
+                    <h5>Distance: {{suggestedRestaurant.distance | number: '1.0-0'}} m</h5>
                 </div>
                 <div class="col-xs-2" style="float:right;">
                     <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons"
