@@ -67,6 +67,36 @@ body {
   background-size: cover;
 }
 
+.home-button,
+.home-button:focus{
+  color: #fff;
+  background-color: #EF4105;
+  border: none;
+  text-align: center;
+  letter-spacing: .3px;
+  height: 2.5em;
+  line-height: 1.5em;
+  display: block;
+  margin-top: 2em;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 300 !important;
+}
+
+.home-button:hover{
+  background-color: #C83704;
+  color: #fff;
+
+}
+
+.home-button:active:hover,
+.home-button:active:focus{
+  background-color: #C83704;
+  color: #fff;
+
+}
+
+
 .dine-button,
 .dine-button:focus{
   color: #fff;
@@ -76,10 +106,8 @@ body {
   letter-spacing: .3px;
   height: 2.5em;
   line-height: 1.5em;
-  width: 17em;
-  margin-left: 15%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  display: block;
+  margin-top: 2em;
   font-size: 18px;
   font-family: 'Roboto', sans-serif !important;
   font-weight: 300 !important;
@@ -97,7 +125,6 @@ body {
   color: #fff;
 
 }
-
 .sign_in_btn,
 .sign_in_btn:focus{
   background-color: #EF4105;
