@@ -1,38 +1,38 @@
 
 <div class="container mid-container" style="padding-bottom: 100px">
-    <div class = "well" style="background-color:white;">
+  <div class = "well" style="background-color:white; margin-top: 3%;">
 
-        <div class="row" style="margin-top: 3%;">
+    <div class="row">
 
-            <div class="col-md-3" >
-                <label>Min Rating</label>
-                <!--todo-->
-                <select #rating (change)="setOption('rating', rating.value)">
-                    <option *ngFor="let r of ratings">
-                        {{ r }}
-                    </option>
-                </select>
-            </div>
+      <div class="col-md-4" >
+        <label>Min Rating</label>
+        <!--todo-->
+        <select #rating (change)="setOption('rating', rating.value)">
+          <option *ngFor="let r of ratings">
+            {{ r }}
+          </option>
+        </select>
+      </div>
 
-            <div class="col-md-3" >
-                <label>Max Distance</label>
-                <select #maxdistance (change)="setOption('distance', maxdistance.value)">
-                    <option *ngFor="let d of distances">
-                        {{ d }}
-                    </option>
-                </select>
-            </div>
+      <div class="col-md-4" >
+        <label>Max Distance(m)</label>
+        <select #maxdistance (change)="setOption('distance', maxdistance.value)">
+          <option *ngFor="let d of distances">
+            {{ d }}
+          </option>
+        </select>
+      </div>
 
-            <div class="col-md-3" >
-                <label>Category</label>
-                <select #category (change)="setOption('category', category.value)">
-                    <option *ngFor="let c of categories">
-                        {{ c }}
-                    </option>
-                </select>
-            </div>
-
-        </div>
+      <div class="col-md-4" >
+        <label>Category</label>
+        <select #category (change)="setOption('category', category.value)">
+          <option *ngFor="let c of categories">
+            {{ c }}
+          </option>
+        </select>
+      </div>
 
     </div>
+
+  </div>
 </div>

@@ -9,10 +9,10 @@ export class RestaurantFilterComponent {
 	@Output() onFilterOptionSet = new EventEmitter<any>();
 
 	// ratings and distance are fixed standards
-	ratings: any[] = [1, 2, 3, 4, 5];
-	distances: any [] = [1500, 1250, 1000, 750, 500, 250];
+	ratings: any[] = [ , 1, 2, 3, 4, 5];
+	distances: any [] = [ , 1500, 1250, 1000, 750, 500, 250];
 
-	// categories depdend on the restaurants found by geo-location
+	// categories depend on the restaurants found by geo-location
 	categories: string[] = [];
 
 	constructor() {
