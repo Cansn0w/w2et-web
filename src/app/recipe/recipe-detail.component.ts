@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+
 import { Recipe, RecipeService } from './recipe.service';
-
-
+import {UserService} from '../com/user.service';
 
 @Component({
 	selector: 'recipe-detail',
@@ -10,12 +10,13 @@ import { Recipe, RecipeService } from './recipe.service';
 })
 export class RecipeDetailComponent implements OnInit {
 
-	recipe: Recipe = new Recipe();
+	recipe: Recipe;
+	size: number = 4;
 
 	constructor(
 		private route: ActivatedRoute,
-	    private router: Router,
 	    private recipeService: RecipeService,
+		public user: UserService
 	) { }
 
 	ngOnInit() {
@@ -24,10 +25,18 @@ export class RecipeDetailComponent implements OnInit {
 			this.recipeService.fetchRecipeDetails(id)
 				.subscribe(
 					recipe => {
-						this.recipe = recipe
+						this.recipe = recipe;
+						console.log(recipe.ingredients);
 					},
 					error => console.log(error)
 				);
 		});
+	}
+
+	icon_yes_no(isYes: boolean) {
+		if (isYes)
+			return "glyphicon glyphicon-ok-circle";
+		else
+			return "glyphicon glyphicon-remove-sign";
 	}
 }

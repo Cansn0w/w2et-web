@@ -51,6 +51,7 @@ export class AuthService {
 
 	// LOGIN
 	login(loginData: {}): Promise<any> {
+		console.log(loginData);
 		let body = JSON.stringify(loginData);
 		let options = this.json_header_opt();
 

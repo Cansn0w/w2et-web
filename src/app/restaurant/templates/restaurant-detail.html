@@ -17,8 +17,6 @@
                     <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons" style="font-size:32px; cursor: pointer;">
                         {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>
-                    <!--when click on the icon, change to the one below
-                    <i class="material-icons">bookmark</i>-->
                   <facebook-share-btn *ngIf="restaurant.url !== null" [url]="restaurant.url"></facebook-share-btn>
                 </div>
             </div>

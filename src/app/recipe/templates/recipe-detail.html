@@ -1,19 +1,63 @@
-<div class="container narrow-container">
+<div *ngIf="recipe" class="container narrow-container">
+    <h1 style="padding-top: 5%;">{{recipe.name}}</h1>
+    <div class="row">
+        <div class = "col-xs-12 well" style="background-color:white;">
+            <!-- MAIN ROW [0]-->
+            <div class="row">
+                <!-- COL 4: IMAGE-->
+                <div class="col-xs-4">
+                    <img src="{{recipe.image}}" class="img-rounded img-responsive" alt="Restaurant" style="">
+                </div>
+                <!-- COL 5: ATTRIBUTES -->
+                <div class="col-xs-5">
+                    <div class="row">
+                        <div class="col-xs-7"><h5><b>Ready in minutes</b></h5></div>
+                        <div class="col-xs-3"><h5>{{recipe.duration}}</h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7"><h5><b>Vegetarian</b></h5></div>
+                        <div class="col-xs-3"><h5><span [class]="icon_yes_no(recipe.vegetarian)"></span></h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7"><h5><b>Dairy Free</b></h5></div>
+                        <div class="col-xs-3"><h5><span [class]="icon_yes_no(recipe.dairyFree)"></span></h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7"><h5><b>Gluten Free</b></h5></div>
+                        <div class="col-xs-3"><h5><span [class]="icon_yes_no(recipe.glutenFree)"></span></h5></div>
+                    </div>
+                </div>
+                <!-- COL 3: BOOKMARK / FACEBOOK SHARE -->
+                <div class="col-xs-3" style="float:right;">
+                    <div class="row">
+                        <i (click)="user.bookmark(recipe); $event.stopPropagation();"
+                           class="material-icons"
+                           style="font-size:32px; cursor: pointer;">
+                            {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
+                        </i>
+                            <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
+                    </div>
+                </div>
+            </div>
 
-    <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
-    <ul>
-        <li>Name:  {{ recipe.name }}</li>
-        <li>Url:  {{ recipe.url}}</li>
-        <li>Duration: {{recipe.duration}} minutes</li>
-        <li *ngFor="let ingrd of recipe.ingredients">
-          {{ ingrd.name }}
-        </li>
-    </ul>
+            <!--MAIN ROW [1]-->
+            <div class="row" style="margin-top:5%;">
+                <!--Show four ingredients per row-->
+                <div *ngFor="let i of (recipe.ingredients.length/size) | range"
+                     class="row">
+                    <div *ngFor="let j of size | range"
+                         class="col-xs-3">
+                        <div *ngIf="i*size +j < recipe.ingredients.length">
+                            <h5><b>{{recipe.ingredients[i*size +j]['name']}}</b></h5>
+                            <img src="{{recipe.ingredients[i*size+j]['image']}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <ul>
-    <li *ngFor="let ingrd of recipe.ingredients">
-      {{ ingrd.name }}
-    </li>
-  </ul>
-    <img src="{{recipe.image}}">
+    <a href="{{recipe.url}}" class="btn btn-lg dine-button" style="display: block; margin: auto; margin-top:5%; margin-bottom:5%;">
+        Click to view instructions on Spoonacular
+    </a>
 </div>

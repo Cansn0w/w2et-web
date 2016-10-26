@@ -8,6 +8,7 @@ import {FacebookLoginButton} from './facebook/fblogin.component';
 import {ProfileGuard} from './widgets/profile.guard';
 import {SessionGuard} from './widgets/session.guard';
 import {SafePipe} from './widgets/safe-url.pipe';
+import {RangePipe} from './widgets/range.pipe';
 
 import {HelperService} from './helper.service';
 import {FacebookService} from 'ng2-facebook-sdk/dist';
@@ -17,7 +18,8 @@ import {FacebookInitialiser} from './facebook/fb.initialiser';
 	declarations: [
 		FacebookShareButton,
 		FacebookLoginButton,
-		SafePipe
+		SafePipe,
+		RangePipe,
 	],
 	exports: [
 		CommonModule,
@@ -25,6 +27,7 @@ import {FacebookInitialiser} from './facebook/fb.initialiser';
 		FacebookShareButton,
 		FacebookLoginButton,
 		SafePipe,
+		RangePipe
 	],
 	providers: [
 		ProfileGuard,
