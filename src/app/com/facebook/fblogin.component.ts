@@ -27,7 +27,7 @@ export class FacebookLoginButton {
 	}
 
 	onFacebookLoginClick(): void {
-		this.fb.login().then(
+		this.fb.login({scope: 'public_profile,email'}).then(
 			(response: FacebookLoginResponse) => {
 				if (response.status == 'connected')
 					this.onFacebookLogin.emit({code: 200, message: 'Successful', data: response.authResponse});

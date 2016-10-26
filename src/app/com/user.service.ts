@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import {Recipe} from "./recipe/recipe.service";
-import {Restaurant} from './restaurant/restaurant.service'
-import {HOST} from './com/config';
+import {Recipe} from "../recipe/recipe.service";
+import {Restaurant} from '../restaurant/restaurant.service'
+import {HOST} from './config';
 
-import {HelperService} from './com/helper.service';
+import {HelperService} from './helper.service';
 
 @Injectable()
 export class UserService {

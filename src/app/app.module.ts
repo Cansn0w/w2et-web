@@ -11,7 +11,7 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {SigninComponent} from './auth/signin.component';
 
-import {UserService} from './user.service'
+import {UserService} from './com/user.service'
 import {AuthService} from './auth/auth.service'
 import {app_routing} from './app-routing'
 

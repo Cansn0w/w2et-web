@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router'
 import {Cookie} from 'ng2-cookies/src/cookie';
 
-import {UserService} from '../user.service'
+import {UserService} from '../com/user.service'
 
 
 @Component({

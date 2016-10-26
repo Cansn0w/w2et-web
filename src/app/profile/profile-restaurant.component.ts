@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 
 import {Restaurant} from  '../restaurant/restaurant.service'
 
-import {UserService} from '../user.service';
+import {UserService} from '../com/user.service';
 
 @Component({
 	selector: 'profile-restaurant',

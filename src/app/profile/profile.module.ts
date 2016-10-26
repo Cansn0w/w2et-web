@@ -10,7 +10,7 @@ import {ProfileComponent} from './profile.component';
 import {ProfileRecipeComponent} from './profile-recipe.component';
 import {ProfileRestaurantComponent} from './profile-restaurant.component';
 
-import {UserService} from '../user.service';
+import {UserService} from '../com/user.service';
 import {RecipeService} from '../recipe/recipe.service';
 import {RestaurantService} from '../restaurant/restaurant.service'
 import {profileRouting} from './profile.routing'

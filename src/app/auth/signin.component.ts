@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router'
 import {Cookie} from 'ng2-cookies/ng2-cookies'
 
-import {UserService} from '../user.service'
+import {UserService} from '../com/user.service'
 import {AuthService} from './auth.service'
 
 
@@ -54,32 +54,6 @@ export class SigninComponent implements OnInit {
 		else
 			Cookie.deleteAll();
 	}
-
-	// Retrieve user data using token
-	// loadUserData(token: string, callback): void {
-	// 	this.user.setToken(token);
-	// 	this.user.fetchUserData((succ) => {
-	// 		if (!succ) {
-	// 			this.delete_cookies();
-	// 			this.user.reset();
-	// 			alert('Sorry something is very wrong ... ');
-	// 		}
-	// 	});
-	//
-	// 	this.auth.get_user(token)
-	// 		// Get username,
-	// 		.then(userData => {
-	// 			userData['token'] = token;
-	// 			this.user.login(userData);
-	// 		})
-	// 		.then(_ => this.user.fetchFav('recipes'))
-	// 		.then(_ => this.user.fetchFav('restaurants'))
-	// 		.then(_ => callback())
-	// 		.catch(err => {
-	// 			alert('Sorry something is very wrong....');
-	// 			this.delete_cookies();
-	// 		})
-	// }
 
 	// Redirection
 	redirect(): void {
@@ -134,6 +108,7 @@ export class SigninComponent implements OnInit {
 			this.auth.fb_signup(fbresponse.data.accessToken)
 				.then(response => response.key)
 				.then(token => this.user.fetchUserData(token, (succ) => {
+					if (this.keepLoggedin) this.set_cookie('token', token);
 					this.redirect();
 				}))
 				.catch(error => alert(error.toString()));

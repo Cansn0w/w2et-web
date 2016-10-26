@@ -5,7 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 
 
-import {UserService} from '../user.service';
+import {UserService} from '../com/user.service';
 import {Recipe} from './recipe.service';
 import {RecipeService} from './recipe.service'
 import {HelperService} from '../com/helper.service';

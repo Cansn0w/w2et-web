@@ -5,7 +5,7 @@ import {RestaurantFilterComponent} from './restaurant-filter.component'
 import {Subject} from 'rxjs/Subject';
 
 import {RestaurantService, Restaurant} from './restaurant.service'
-import {UserService} from '../user.service';
+import {UserService} from '../com/user.service';
 import {HelperService} from '../com/helper.service';
 
 @Component({

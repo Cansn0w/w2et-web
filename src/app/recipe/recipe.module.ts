@@ -9,7 +9,7 @@ import { RecipeDetailComponent } from './recipe-detail.component';
 import { RecipeListComponent } from './recipe-list.component';
 
 
-import { UserService } from '../user.service';
+import { UserService } from '../com/user.service';
 import { RecipeService } from './recipe.service';
 import { recipeRouting } from './recipe.routing'
 

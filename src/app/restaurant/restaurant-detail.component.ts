@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import {Restaurant, RestaurantService} from './restaurant.service';
-import {UserService} from '../user.service';
+import {UserService} from '../com/user.service';
 
 @Component({
 	selector: 'restaurant-detail',
