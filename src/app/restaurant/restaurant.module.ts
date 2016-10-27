@@ -18,7 +18,6 @@ import {restaurantRouting} from './restaurant.routing'
 import {GOOGLE_MAP_API_KEY} from '../com/config'
 
 
-
 @NgModule({
 	imports: [
 		SharedModule,

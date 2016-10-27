@@ -2,7 +2,7 @@ import {Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
 	selector: 'recipe-filter',
-	templateUrl: './templates/recipe-filter.html',
+	templateUrl: './templates/recipe-filter.html',  // todo: input validation styling
 })
 export class RecipeFilterComponent {
 

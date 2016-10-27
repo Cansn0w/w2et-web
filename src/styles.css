@@ -215,14 +215,14 @@ body {
   border-radius: 2px;
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
   border-bottom: 1px solid transparent;
-  padding: 12px 1px 5px 30px;
+  padding: 12px 30px;
   transition-property: background,box-shadow;
   transition-duration: 0.3s;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
   margin-bottom: 30px;
 }
+
 .search-input,
 .search-input:focus,
 textarea:focus{
@@ -301,4 +301,14 @@ textarea:focus{
 .dropdown-button:hover{
   background-color: #A20B1C !important;
   color: white !important;
+}
+
+.alert-danger{
+  border-radius: 0;
+}
+
+.alert{
+  padding: 8px;
+  margin-bottom: 0;
+  margin-top: 10px;
 }

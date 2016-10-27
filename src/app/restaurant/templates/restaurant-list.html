@@ -1,4 +1,4 @@
-<div *ngIf="!atProfile" style="margin-top: 5%;">
+<div *ngIf="!atProfile" style="margin-top: 20px;">
     <restaurant-filter (onFilterOptionSet)="onFilterOptionSet($event)"></restaurant-filter>
 </div>
 <div class="container mid-container">
@@ -6,10 +6,10 @@
     <div *ngFor="let restaurant of restaurants"
          routerLink="/restaurant/detail/{{restaurant.id}}" routerLinkActive="active">
 
-        <div class="col-xs-12 well" style="background-color:white; cursor:pointer;">
+        <div class="well" style="background-color:white; cursor:pointer;">
             <div class="row">
                 <!--Recipe Image & Name-->
-                <div class="col-xs-2">
+                <div class="col-md-2">
                     <img src="{{ restaurant.image }}" class="img-rounded img-responsive list-image" alt="Opps!">
                 </div>
                 <div class="col-xs-8">
@@ -18,7 +18,7 @@
                     <p><b>Address: </b>{{restaurant.address}}</p>
                 </div>
                 <!--Recipe Bookmark/share icons-->
-                <div class="col-xs-2" style="float:right;">
+                <div class="col-xs-2">
                     <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons bookmark">
                         {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>

@@ -1,11 +1,11 @@
 
-<div class="container mid-container" style="padding-bottom: 100px">
+<div class="container mid-container" style="padding-bottom: 10px">
   <div class="searchbox">
     <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
            ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input">
     <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
     <div [hidden]="keyword.valid || keyword.pristine"
-         class="alert alert-danger">Keyword must be given
+         class="alert alert-danger">Search ingredient is required
     </div>
   </div>
 
@@ -42,7 +42,7 @@
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-          <li *ngFor="let i of intolerance_options" role="menuitem" (click)="setOption('intolerance', i); selected_intolerance = i;">
+          <li *ngFor="let i of intolerance_options" role="menuitem" (click)="setOption('intolerance', i); selected_intolerance = 'No '+i;">
             <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
           </li>
         </ul>
