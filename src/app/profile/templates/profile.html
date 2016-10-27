@@ -1,111 +1,113 @@
 <div class="container mid-container">
-    <div class="well" style="background-color: white; margin-top: 5%;">
-        <div class="row">
-            <div class="col-xs-3">
-                <img *ngIf="accountdata.image"
-                     src="{{accountdata.image}}"
-                     class="img-rounded img-responsive" style="width: 200px;">
-                <img *ngIf="!accountdata.image"
-                     src="{{default_profile_img}}"
-                     class="img-rounded img-responsive" style="width: 200px;">
-            </div>
-            <div class="col-xs-6">
-                <h3>User Name</h3>
-                <p>{{ accountdata.username}}</p>
-                <h3>Email</h3>
-                <p>{{ accountdata.email }}</p>
-            </div>
-            <div class="col-xs-3">
-                <p style="cursor:pointer;" (click)="showEditModal()">Update Details</p>
-                <a routerLink="/" class="btn btn-primary" (click)="logOut()">Sign Out</a>
-            </div>
-        </div>
-    </div>
+  <div class="well" style="background-color: white; margin-top: 5%;">
     <div class="row">
-        <a routerLink="/profile/fav/recipe" routerLinkActive="active"
-           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite recipes</a>
-        <a routerLink="/profile/fav/restaurant" routerLinkActive="active"
-           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite restaurants</a>
+      <div class="col-xs-3">
+        <img *ngIf="accountdata.image"
+             src="{{accountdata.image}}"
+             class="img-rounded img-responsive" style="width: 200px;">
+        <img *ngIf="!accountdata.image"
+             src="{{default_profile_img}}"
+             class="img-rounded img-responsive" style="width: 200px;">
+      </div>
+      <div class="col-xs-6">
+        <h3>User Name</h3>
+        <p>{{ accountdata.username}}</p>
+        <h3>Email</h3>
+        <p>{{ accountdata.email }}</p>
+      </div>
+      <div class="col-xs-3">
+        <h3 style="cursor:pointer;" (click)="showEditModal()">Update Details</h3>
+        <a routerLink="/" class="btn btn-lg sign_in_btn" (click)="logOut()" style="color: white;">Sign Out</a>
+      </div>
     </div>
+  </div>
+  <!--Favourite recipe/restaurant-->
+    <tabset style="margin-top: 20px;">
+      <tab routerLink="/profile/fav/recipe" routerLinkActive="active" heading="Favourite Recipes">
+      </tab>
+      <tab routerLink="/profile/fav/restaurant" routerLinkActive="active" heading="Favourite Restaurants">
+      </tab>
+    </tabset>
 </div>
 
 
 <!-- Edit User Account Info Modal-->
 <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}"
      role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <!--HEADER-->
-            <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" (click)="hideEditModal(); reset()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Edit my account</h4>
-            </div>
-            <!--BODY-->
-            <div class="modal-body">
-                <tabset>
-                    <!--UPDATE NON-PASSWORD DATA-->
-                    <tab heading="My Account Info">
-                        <form #accForm (ngSubmit)="submitAccountUpdate(accountdata)">
-                            <div class="form-group">
-                                <!--USERNAME-->
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                       #username="ngModel" placeholder="{{accountdata.username}}"
-                                       [(ngModel)]="accountdata.username" >
-                                <!--IMAGE-->
-                                <label for="image">Profile Image (url)</label>
-                                <input type="text" class="form-control" id="image" name="image"
-                                       #email="ngModel"
-                                       [(ngModel)]="accountdata.image" >
-                                <!--SUBMIT BUTTON-->
-                                <button type="submit" class="btn btn-primary" aria-pressed="true">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </tab>
-                    <!--UPDATE PASSWORD DATA-->
-                    <tab heading="My Password">
-                        <form #pswForm="ngForm" (ngSubmit)="submitPasswordChange(passworddata)">
-                            <div class="form-group">
-                                <!--OLD PASSWORD-->
-                                <label for="old_password">Old Password</label>
-                                <input type="password" class="form-control" id="old_password" name="old_password"
-                                       #old_password="ngModel"
-                                       [(ngModel)]="passworddata.oldpassword" required>
-                                <div [hidden]="old_password.valid || old_password.pristine"
-                                     class="alert alert-danger">Old password must be given
-                                </div>
-                                <!--NEW PASSWORD-->
-                                <label for="new_password">New Password</label>
-                                <input type="password" class="form-control" id="new_password" name="new_password"
-                                       #new_password="ngModel"
-                                       [(ngModel)]="passworddata.new_password1" required>
-                                <div [hidden]="new_password.valid || new_password.pristine"
-                                     class="alert alert-danger">Please enter your new password.
-                                </div>
-                                <!--CONFIRM NEW PASSWORD-->
-                                <label for="confirm_password">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                       #confirm_password="ngModel"
-                                       [(ngModel)]="passworddata.new_password2" required>
-                                <div [hidden]="confirm_password.valid || confirm_password.pristine"
-                                     class="alert alert-danger">Please confirm your password
-                                </div>
-                                <!--SUBMIT BUTTON-->
-                                <button type="submit" class="btn btn-primary" aria-pressed="true"
-                                        [disabled]="!pswForm.form.valid">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
-                    </tab>
-                </tabset>
-            </div>
-        </div>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!--HEADER-->
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="hideEditModal(); reset()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit my account</h4>
+      </div>
+      <!--BODY-->
+      <div class="modal-body">
+        <tabset>
+          <!--UPDATE NON-PASSWORD DATA-->
+          <tab heading="My Account Info">
+            <form #accForm (ngSubmit)="submitAccountUpdate(accountdata)">
+              <div class="form-group">
+                <!--USERNAME-->
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username"
+                       #username="ngModel" placeholder="{{accountdata.username}}"
+                       [(ngModel)]="accountdata.username" >
+                <!--IMAGE-->
+                <label for="image">Profile Image (url)</label>
+                <input type="text" class="form-control" id="image" name="image"
+                       #email="ngModel"
+                       [(ngModel)]="accountdata.image" >
+              </div>
+              <!--SUBMIT BUTTON-->
+              <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true">
+                Submit
+              </button>
+            </form>
+          </tab>
+          <!--UPDATE PASSWORD DATA-->
+          <tab heading="My Password">
+            <form #pswForm="ngForm" (ngSubmit)="submitPasswordChange(passworddata)">
+              <div class="form-group">
+                <!--OLD PASSWORD-->
+                <label for="old_password">Old Password</label>
+                <input type="password" class="form-control" id="old_password" name="old_password"
+                       #old_password="ngModel"
+                       [(ngModel)]="passworddata.oldpassword" required>
+                <div [hidden]="old_password.valid || old_password.pristine"
+                     class="alert alert-danger">Old password must be given
+                </div>
+                <!--NEW PASSWORD-->
+                <label for="new_password">New Password</label>
+                <input type="password" class="form-control" id="new_password" name="new_password"
+                       #new_password="ngModel"
+                       [(ngModel)]="passworddata.new_password1" required>
+                <div [hidden]="new_password.valid || new_password.pristine"
+                     class="alert alert-danger">Please enter your new password.
+                </div>
+                <!--CONFIRM NEW PASSWORD-->
+                <label for="confirm_password">Confirm New Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                       #confirm_password="ngModel"
+                       [(ngModel)]="passworddata.new_password2" required>
+                <div [hidden]="confirm_password.valid || confirm_password.pristine"
+                     class="alert alert-danger">Please confirm your password
+                </div>
+
+              </div>
+              <!--SUBMIT BUTTON-->
+              <button type="submit" class="btn btn-primary sign_in_btn" aria-pressed="true"
+                      [disabled]="!pswForm.form.valid">
+                Submit
+              </button>
+            </form>
+          </tab>
+        </tabset>
+      </div>
     </div>
+  </div>
 </div>
 
 <router-outlet></router-outlet>
