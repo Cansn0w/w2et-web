@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UserService } from './com/user.service'
+import { Component, ViewContainerRef} from '@angular/core';
+import { UserService } from './com/user.service';
 import { Router } from '@angular/router'
 
 @Component({
@@ -9,7 +9,8 @@ import { Router } from '@angular/router'
 export class AppComponent {
   constructor(
     private user: UserService,
-    private router: Router
+    private router: Router,
+    private viewContainerRef: ViewContainerRef
   ) { }
 
   jump(link: string): void {

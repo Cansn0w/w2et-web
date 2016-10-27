@@ -51,14 +51,13 @@ export class AuthService {
 
 	// LOGIN
 	login(loginData: {}): Promise<any> {
-		console.log(loginData);
 		let body = JSON.stringify(loginData);
 		let options = this.json_header_opt();
 
 		return this.http.post(this.get_endpoint('login'), body, options)
 			.toPromise()
 			.then(response => response.json())
-			.catch(this.helper.handleError)
+			.catch(error => Promise.reject(error))
 	}
 
 	// SIGN-UP

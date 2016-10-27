@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {ModalModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {TabsModule} from 'ng2-bootstrap/ng2-bootstrap';
 
 import {RecipeModule} from '../recipe/recipe.module';
 import {RestaurantModule} from '../restaurant/restaurant.module';
@@ -22,6 +24,8 @@ import {profileRouting} from './profile.routing'
 		RecipeModule,
 		RestaurantModule,
 		SharedModule,
+		ModalModule,
+		TabsModule,
 		profileRouting
 	],
 
