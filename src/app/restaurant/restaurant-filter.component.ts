@@ -7,10 +7,13 @@ import {Component, Output, EventEmitter} from '@angular/core';
 export class RestaurantFilterComponent {
 
 	@Output() onFilterOptionSet = new EventEmitter<any>();
+  selected_rating = 'Filter by Rating';
+  selected_distance = 'Filter by Distances';
+  selected_category = 'Filter by Category';
 
-	// ratings and distance are fixed standards
-	ratings: any[] = [ , 1, 2, 3, 4, 5];
-	distances: any [] = [ , 1500, 1250, 1000, 750, 500, 250];
+  // ratings and distance are fixed standards
+	ratings: any[] = [1, 2, 3, 4, 5];
+	distances: any [] = [1500, 1250, 1000, 750, 500, 250];
 
 	// categories depend on the restaurants found by geo-location
 	categories: string[] = [];

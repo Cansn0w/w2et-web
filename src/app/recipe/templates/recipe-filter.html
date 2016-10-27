@@ -1,46 +1,54 @@
 
-    <div class="container mid-container" style="padding-bottom: 100px">
-      <div class = "well" style="background-color:white;">
+<div class="container mid-container" style="padding-bottom: 100px">
+  <div class="searchbox">
+    <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
+           ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input">
+    <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
+    <div [hidden]="keyword.valid || keyword.pristine"
+         class="alert alert-danger">Keyword must be given
+    </div>
+  </div>
 
-        <div class="row" style="margin-top: 3%;">
+    <div class = "well" style="background-color:white;">
 
-          <div class="col-md-3 recipe-filter">
-            <label>Search recipe by: </label>
-            <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
-                   ngModel #keyword="ngModel" placeholder="eg.Ingredient" required>
-            <div [hidden]="keyword.valid || keyword.pristine"
-                 class="alert alert-danger">Keyword must be given
-            </div>
-          </div>
+    <div class="row">
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_diet }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of diet_options" role="menuitem" (click)="setOption('diet', i); selected_diet = i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
+      </div>
 
-          <div class="col-md-3 recipe-filter" >
-            <label>Diet</label>
-            <select #diet (change)="setOption('diet', diet.value)">
-              <option *ngFor="let item of diet_options">
-                {{ item }}
-              </option>
-            </select>
-          </div>
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_cuisine }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of cuisine_options" role="menuitem" (click)="setOption('cuisine', i); selected_cuisine = i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
+      </div>
 
-          <div class="col-md-3 recipe-filter" >
-            <label>Cuisine</label>
-            <select #cuisine (change)="setOption('cuisine', cuisine.value)">
-              <option *ngFor="let item of cuisine_options">
-                {{ item }}
-              </option>
-            </select>
-          </div>
-
-          <div class="col-md-3 recipe-filter" >
-            <label>Intolerance</label>
-            <select #intolerance (change)="setOption('intolerance', intolerance.value)">
-              <option *ngFor="let item of intolerance_options">
-                {{ item }}
-              </option>
-            </select>
-          </div>
-
-        </div>
-
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_intolerance }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of intolerance_options" role="menuitem" (click)="setOption('intolerance', i); selected_intolerance = i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
       </div>
     </div>
+
+  </div>
+
+</div>

@@ -1,168 +1,198 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 @font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Roboto Thin'), local('Roboto-Thin'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfZBw1xU1rKptJj_0jans920.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Roboto Thin'), local('Roboto-Thin'), url(https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfZBw1xU1rKptJj_0jans920.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 @import 'https://fonts.googleapis.com/css?family=Oleo+Script';
 
 body {
-  padding-top: 50px;
-  background-color: #f5f5f5;
+    padding-top: 48px;
+    background-color: #f5f5f5;
 
 }
+
+
+.nav{
+    z-index: 10;
+    top: 0;
+    background-color: #EF4105;
+    height: 48px;
+    width:100%;
+    position: fixed;
+    overflow: hidden;
+    padding: 6px 40px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+}
+
+.brand{
+    color:white;
+    float: left;
+    display: inline-block;
+    margin: 4px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 .narrow-container{
-  max-width: 730px;
-  padding-right:30px;
-  padding-left:30px;
+    max-width: 730px;
+    padding-right:30px;
+    padding-left:30px;
 }
 
 .mid-container{
-  max-width: 950px;
-  padding-right:30px;
-  padding-left:30px;
+    max-width: 950px;
+    padding-right:30px;
+    padding-left:30px;
 }
 
 .recipe-filter{
-  width: auto;
-  padding-bottom: 10px ;
+    width: auto;
+    padding-bottom: 10px ;
 }
 
 /*Login*/
 .login-header{
-  background-color:#EF4105;
-  margin-bottom:0;
-  border-bottom-left-radius:0px;
-  border-bottom-right-radius:0px;
-  border-top-left-radius:6px;
-  border-top-right-radius:6px;
-  border:none;
-  padding-top:2.5px;
-  padding-bottom:5px;
+    background-color:#EF4105;
+    margin-bottom:0;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+    border:none;
+    padding-top:2.5px;
+    padding-bottom:5px;
 }
 
 .login-content{
-  padding-top:5%;
-  background-color:white;
-  margin-top:0;
-  border-top-left-radius:0px;
-  border-top-right-radius:0px;
-  border-bottom-left-radius:6px;
-  border-bottom-right-radius:6px;
-  border:none;
-}
-
-/*Header*/
-.header_navbar{
-  background-color: #EF4105;
+    padding-top:5%;
+    background-color:white;
+    margin-top:0;
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    border-bottom-left-radius:6px;
+    border-bottom-right-radius:6px;
+    border:none;
 }
 
 /*Background*/
 .full{
-  position:relative;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%), url('assets/restaurant-business.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+    position:relative;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%), url(/assets/background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 /*Home*/
 .home-button,
 .home-button:focus{
-  color: #fff;
-  background-color: #EF4105;
-  border: none;
-  text-align: center;
-  letter-spacing: .3px;
-  height: 2.5em;
-  line-height: 1.5em;
-  display: block;
-  margin-top: 2em;
-  font-size: 18px;
-  font-family: 'Roboto', sans-serif !important;
-  font-weight: 300 !important;
+    color: #fff;
+    background-color: #EF4105;
+    border: none;
+    text-align: center;
+    letter-spacing: .3px;
+    line-height: 1.5em;
+    display: block;
+    margin-top: 2em;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 300 !important;
+    box-shadow: 4px 6px 6px 0 rgba(0,0,0,0.2), 2px 2px 2px 0 rgba(0,0,0,0.4) ;
 }
 
 .home-button:hover{
-  background-color: #C83704;
-  color: #fff;
+    background-color: #C83704;
+    color: #fff;
 
 }
 
-.home-button:active:hover,
-.home-button:active:focus{
-  background-color: #C83704;
-  color: #fff;
-
+.home-button:active{
+    background-color: #C83704;
+    color: #fff;
+    transform: translateY(2px);
+    box-shadow: 2px 3px 2px 0 rgba(0,0,0,0.2);
+}
+.btn{
+    border-radius: 0 !important;
 }
 
+.well{
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+    border-radius: 0 !important;
+}
+
+.bookmark{
+    font-size:36px;
+    cursor: pointer;
+}
 /*Dine Button*/
 .dine-button,
 .dine-button:focus{
-  color: #fff;
-  background-color: #EF4105;
-  border: none;
-  text-align: center;
-  letter-spacing: .3px;
-  height: 2.5em;
-  line-height: 1.5em;
-  display: block;
-  margin-top: 2em;
-  font-size: 18px;
-  font-family: 'Roboto', sans-serif !important;
-  font-weight: 300 !important;
+    color: #fff;
+    background-color: #EF4105;
+    border: none;
+    line-height: 1.5em;
+    display: block;
+    margin-top: 2em;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 300 !important;
+    transition: 0.2s;
+    box-shadow: 4px 6px 6px 0 rgba(0,0,0,0.2), 2px 2px 2px 0 rgba(0,0,0,0.4) ;
 }
 
 .dine-button:hover{
-  background-color: #C83704;
-  color: #fff;
+    background-color: #C83704;
+    color: #fff;
 
 }
 
-.dine-button:active:hover,
-.dine-button:active:focus{
-  background-color: #C83704;
-  color: #fff;
-
+.dine-button:active{
+    background-color: #C83704;
+    color: #fff;
+    transition: 0.2s;
+    transform: translateY(2px);
+    box-shadow: 2px 3px 2px 0 rgba(0,0,0,0.2);
 }
 
 /*Sign Button*/
 .sign_in_btn,
 .sign_in_btn:focus{
-  background-color: #EF4105;
-  border-style: solid;
-  border-width: 1px;
-  border-color: white;
+    background-color: #EF4105;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
 }
 .sign_in_btn:hover,
 .sign_in_btn:active:hover,
 .sign_in_btn:active:focus{
-  background-color: #A20B1C;
-  border-style: solid;
-  border-width: 1px;
-  border-color: white;
+    background-color: #A20B1C;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
 }
 
 /*Footer*/
 .footer{
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #DBDBDB;
-  text-align: center;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #DBDBDB;
+    text-align: center;
 }
 
 .unclick-fav{
-  border:none;
+    border:none;
 }
 .vcenter{
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
 
 /*Validation indicator*/
@@ -175,31 +205,31 @@ body {
 }
 
 .list-image{
-  height: 100px;
-  width: 100px;
-  cursor: pointer;
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
 }
 
 .searchbox{
-  background: #fff;
-  border-radius: 2px;
-  box-sizing: border-box;
-  width: 100%;
-  height: 48px;
-  border-bottom: 1px solid transparent;
-  padding: 12px 1px 5px 30px;
-  transition-property: background,box-shadow;
-  transition-duration: 0.3s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-  margin-bottom: 30px;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    border-bottom: 1px solid transparent;
+    padding: 12px 1px 5px 30px;
+    transition-property: background,box-shadow;
+    transition-duration: 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+    margin-bottom: 30px;
 }
 .search-input,
 .search-input:focus,
 textarea:focus{
-  border: none;
-  float: left;
-  width:90%;
-  outline: none;
+    border: none;
+    float: left;
+    width:90%;
+    outline: none;
 }
 
 
@@ -260,4 +290,15 @@ textarea:focus{
     40% {
         box-shadow: 0 2.5em 0 0;
     }
+}
+
+.dropdown-button{
+    background-color: #EF4105 !important;
+    border: none;
+    color: white !important;
+    margin: 4px 0;
+}
+.dropdown-button:hover{
+    background-color: #A20B1C !important;
+    color: white !important;
 }

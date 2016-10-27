@@ -57,7 +57,7 @@ export class AuthService {
 		return this.http.post(this.get_endpoint('login'), body, options)
 			.toPromise()
 			.then(response => response.json())
-			.catch(error => Promise.reject(error));
+			.catch(error => Promise.reject(error))
 	}
 
 	// SIGN-UP

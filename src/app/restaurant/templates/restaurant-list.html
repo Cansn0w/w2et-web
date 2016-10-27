@@ -19,7 +19,7 @@
                 </div>
                 <!--Recipe Bookmark/share icons-->
                 <div class="col-xs-2" style="float:right;">
-                    <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons" style="font-size:32px; cursor: pointer;">
+                    <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons bookmark">
                         {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>
                     <facebook-share-btn *ngIf="restaurant.url !== null" [url]="restaurant.url"></facebook-share-btn>

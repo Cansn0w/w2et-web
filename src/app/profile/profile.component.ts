@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
 	accountdata: AccountData;
 	passworddata: PasswordData;
 
-	default_profile_img: string = 'assets/default_profile_picture.png';
+	default_profile_img: string = 'assets/default_profile.png';
 
 	constructor(private user: UserService) {
 	}
