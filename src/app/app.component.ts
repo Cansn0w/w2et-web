@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UserService } from './com/user.service'
+import { Component, ViewContainerRef} from '@angular/core';
+import { UserService } from './com/user.service';
 import { Router } from '@angular/router'
 
 @Component({

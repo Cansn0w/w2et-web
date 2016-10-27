@@ -12,16 +12,72 @@
                 <p>{{ email }}</p>
             </div>
             <div class="col-xs-3">
-                <p style="cursor:pointer;">Update Details</p>
-                <a routerLink="/" class="btn btn-primary" (click)="logOut()">Sign Out</a>
+                <p style="cursor:pointer;" (click)="showEditModal()">Update Details</p>
+                <a routerLink="/" class="btn btn-primary" (click)="logOut()">Sing Out</a>
             </div>
         </div>
     </div>
-    <div class="btn-group" role="group" style="margin-bottom: 10px; width: 100%">
+    <div class="row">
         <a routerLink="/profile/fav/recipe" routerLinkActive="active"
-           class="btn dine-button">Favorite recipes</a>
+           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite recipes</a>
         <a routerLink="/profile/fav/restaurant" routerLinkActive="active"
-           class="btn dine-button">Favorite restaurants</a>
+           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite restaurants</a>
     </div>
 </div>
+
+<!--Modal-->
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!--HEADER-->
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="hideEditModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Edit my account</h4>
+            </div>
+            <!--BODY-->
+            <div class="modal-body">
+                <tabset [vertical]="true" type="pills">
+                    <tab heading="Edit Personal Detail">
+                        <div class="container">
+                            <form>
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_email">Email Address</label>
+                                    <input type="email" class="form-control" id="new_email">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                        </div>
+                    </tab>
+                    <tab heading="Change Password">
+                        <div class="container">
+                            <form>
+                                <div class="form-group">
+                                    <label for="old_password">Old Password</label>
+                                    <input type="password" class="form-control" id="old_password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_password">New Password</label>
+                                    <input type="password" class="form-control" id="new_password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirm_password">
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>
+
 <router-outlet></router-outlet>
