@@ -54,15 +54,10 @@
                                 <input type="text" class="form-control" id="username" name="username"
                                        #username="ngModel" placeholder="{{accountdata.username}}"
                                        [(ngModel)]="accountdata.username" >
-                                <!--EMAIL-->
-                                <label for="email">E-mail</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                       #email="ngModel" placeholder="{{accountdata.email}}"
-                                       [(ngModel)]="accountdata.email" >
                                 <!--IMAGE-->
                                 <label for="image">Profile Image (url)</label>
                                 <input type="text" class="form-control" id="image" name="image"
-                                       #email="ngModel" placeholder="{{accountdata.image}}"
+                                       #email="ngModel"
                                        [(ngModel)]="accountdata.image" >
                                 <!--SUBMIT BUTTON-->
                                 <button type="submit" class="btn btn-primary" aria-pressed="true">

@@ -199,7 +199,6 @@ export class UserService {
 
 	updateAccountData(accountData: AccountData, callback): void {
 		let body = JSON.stringify(accountData);
-		console.log(body);
 
 		this.http.put(this.get_endpoint('setuserdata'), body, this.request_option())
 			.toPromise()

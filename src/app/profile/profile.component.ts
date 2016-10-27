@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 		this.accountdata = {
 			username: this.user.getUsername(),
 			image: this.user.getImage(),
-			email: this.user.getEmail(),
+			email: this.user.getEmail()
 		};
 		this.passworddata = {
 			oldpassword: null,
@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
 		this.editModal.hide();
 	}
 
-	submitAccountUpdate(data: any): void {
+	submitAccountUpdate(data: AccountData): void {
 		this.user.updateAccountData(data, (succ) => {
 			if (succ) {
 				this.hideEditModal();
