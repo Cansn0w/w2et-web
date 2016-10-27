@@ -30,18 +30,19 @@
                 <!-- COL 3: BOOKMARK / FACEBOOK SHARE -->
                 <div class="col-xs-3" style="float:right;">
                     <div class="row">
+
                         <i (click)="user.bookmark(recipe); $event.stopPropagation();"
-                           class="material-icons"
-                           style="font-size:32px; cursor: pointer;">
+                           class="material-icons bookmark">
                             {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
                         </i>
-                            <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
+
+                      <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
                     </div>
                 </div>
             </div>
 
             <!--MAIN ROW [1]-->
-            <div class="row" style="margin-top:5%;">
+            <div class="row" style="margin-top:5%; margin-left:10px;">
                 <!--Show four ingredients per row-->
                 <div *ngFor="let i of (recipe.ingredients.length/size) | range"
                      class="row">
@@ -57,7 +58,7 @@
         </div>
     </div>
 
-    <a href="{{recipe.url}}" class="btn btn-lg dine-button" style="display: block; margin: auto; margin-top:5%; margin-bottom:5%;">
-        Click to view instructions on Spoonacular
+    <a href="{{recipe.url}}" class="btn btn-lg dine-button" target="_blank" style="display: block; margin: auto; margin-top:5%; margin-bottom:5%;">
+        View instructions on Spoonacular
     </a>
 </div>

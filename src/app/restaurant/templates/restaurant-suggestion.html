@@ -17,8 +17,7 @@
                 </div>
                 <!--Bookmark or Facebook Share-->
                 <div class="col-xs-3" style="float:right;">
-                    <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons"
-                       style="font-size:32px; cursor: pointer;">
+                    <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons bookmark">
                         {{ suggestedRestaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
                     </i>
                     <facebook-share-btn *ngIf="suggestedRestaurant.url !== null" [url]="suggestedRestaurant.url"></facebook-share-btn>

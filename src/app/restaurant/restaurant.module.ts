@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
 import {SharedModule} from '../com/shared.module';
+import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {RestaurantComponent} from './restaurant.component';
 import {RestauranteHomeComponent} from './restaurant-home.component';
@@ -17,6 +18,7 @@ import {restaurantRouting} from './restaurant.routing'
 import {GOOGLE_MAP_API_KEY} from '../com/config'
 
 
+
 @NgModule({
 	imports: [
 		SharedModule,
@@ -24,6 +26,7 @@ import {GOOGLE_MAP_API_KEY} from '../com/config'
 			apiKey: GOOGLE_MAP_API_KEY
 		}),
 		restaurantRouting,
+    DropdownModule,
 	],
 
 	declarations: [

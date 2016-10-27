@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from './com/user.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,13 @@ import { UserService } from './com/user.service'
 })
 export class AppComponent {
   constructor(
-    private user: UserService
+    private user: UserService,
+    private router: Router
   ) { }
+
+  jump(link: string): void {
+    this.router.navigate([link]);
+  }
 
   loggedIn() {
     return this.user.isLoggedIn();

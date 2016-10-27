@@ -13,16 +13,15 @@
             </div>
             <div class="col-xs-3">
                 <p style="cursor:pointer;">Update Details</p>
-                <a routerLink="/" class="btn btn-primary" (click)="logOut()">Sing Out</a>
+                <a routerLink="/" class="btn btn-primary" (click)="logOut()">Sign Out</a>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="btn-group" role="group" style="margin-bottom: 10px; width: 100%">
         <a routerLink="/profile/fav/recipe" routerLinkActive="active"
-           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite recipes</a>
+           class="btn dine-button">Favorite recipes</a>
         <a routerLink="/profile/fav/restaurant" routerLinkActive="active"
-           class="btn btn-lg col-md-6 dine-button" style="margin-left: 5%;">Favorite restaurants</a>
-
+           class="btn dine-button">Favorite restaurants</a>
     </div>
 </div>
 <router-outlet></router-outlet>
