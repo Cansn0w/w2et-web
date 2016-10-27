@@ -42,7 +42,7 @@ export class RestaurantListComponent implements OnInit {
 					this.all_restaurants = restaurants;
 					this.restaurants= restaurants;
 
-					// filtering trackers
+					// filter option trackers
 					this.all_ids = restaurants.map(r => r.id);
 					this.ids_by_category = new Set(this.all_ids);
 					this.ids_by_distance = new Set(this.all_ids);

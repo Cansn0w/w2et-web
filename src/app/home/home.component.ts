@@ -1,8 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router'
 
-import {Cookie} from 'ng2-cookies/ng2-cookies'
-import {UserService} from '../com/user.service'
 
 @Component({
 	selector: 'app-home',
@@ -11,15 +8,10 @@ import {UserService} from '../com/user.service'
 })
 export class HomeComponent implements OnInit {
 
-	constructor(
-		private router: Router,
-		private user: UserService) {
+	constructor() {
 	}
 
 	ngOnInit() {
-		// sign-in for user if the auto-login is set by user
-		let cookies = Cookie.getAll();
-		if (!this.user.isLoggedIn() && 'email' in cookies && 'password' in cookies)
-			this.router.navigate(['/signin']);
+
 	}
 }

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {trigger, state, style, transition, animate} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 
 import {Observable} from "rxjs/Observable";
@@ -12,7 +13,28 @@ import {HelperService} from '../com/helper.service';
 
 @Component({
 	selector: 'recipe-list',
-	templateUrl: './templates/recipe-list.html'
+	templateUrl: './templates/recipe-list.html',
+	animations: [
+		trigger('flyInOut', [
+			state('in', style({height: '*'})),
+			transition('void => *', [
+				style({height: '*'}),
+				animate(3000, style({height: 0}))
+			])
+		])
+	]
+	// animations: [
+	// 	trigger('flyInOut', [
+	// 		state('in', style({transform: 'translateX(0)'})),
+	// 		transition('void => *', [
+	// 			style({transform: 'translateX(-100%)'}),
+	// 			animate(1000)
+	// 		]),
+	// 		transition('* => void', [
+	// 			animate(1000, style({transform: 'translateX(100%)'}))
+	// 		])
+	// 	])
+	// ]
 })
 export class RecipeListComponent implements OnInit {
 
@@ -27,10 +49,9 @@ export class RecipeListComponent implements OnInit {
 	            private route: ActivatedRoute,) {
 	}
 
-
 	getRecipeFullList(ids: number[]): void {
 		if (ids === []) {
-			this.notify_empty_result();
+			// todo: do something to tell user there is no result found
 			return;
 		}
 
@@ -51,7 +72,7 @@ export class RecipeListComponent implements OnInit {
 	ngOnInit() {
 		// config search stream
 		this.searched_ids = this.searchTerm
-			.debounceTime(500)      // wait for 0.5s pause in event
+			.debounceTime(500)      // trigger interval: 0.5s
 			.distinctUntilChanged() // ignore if next search option is the same as previous
 			.switchMap(
 				(choice) => {
@@ -80,22 +101,12 @@ export class RecipeListComponent implements OnInit {
 		// update filter by url specification (useful for bookmarking and re-do search)
 		this.route.params.forEach((params: Params) => {
 			// parse filter url components
-			let options = params['options'].split(';');
-
-			for (let opt in options) {
-				let key = options[opt].split('=')[0];
-				let value = options[opt].split('=')[1];
-				this.recipeService.updateFilter(key, value);
-			}
+			let components = this.helper.parseUrlString(params['options']);
+			for (let c of components) this.recipeService.updateFilter(c.key, c.value);
 
 			// kick off an init search
 			this.searchTerm.next({key: '', value: ''})
 		});
-	}
-
-	// Display to user the result of no recipe found
-	notify_empty_result(): void {
-		// todo
 	}
 
 	// Events

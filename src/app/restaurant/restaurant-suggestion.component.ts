@@ -20,6 +20,8 @@ export class RestaurantSuggestionComponent implements OnInit {
 
 
 	ngOnInit() {
+		console.log(this.route.params);
+
 		this.route.params.forEach((params: Params) => {
 			let filter_url = params['options'];
 			this.restService.searchRestaurants(filter_url)

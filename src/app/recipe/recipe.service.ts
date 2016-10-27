@@ -25,12 +25,17 @@ export class Recipe {
 	duration: number;
 
 	bookmarked: boolean;
+	// state: string;
 
 	constructor(rcpData?: {}) {
 		if (rcpData)
 			for (let key in rcpData)
 				this[key] = rcpData[key];
 	}
+
+	// toggleState(newState: string): void {
+	// 	this.state = newState;
+	// }
 }
 
 @Injectable()

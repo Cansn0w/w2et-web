@@ -30,7 +30,7 @@ body {
   padding-bottom: 10px ;
 }
 
-
+/*Login*/
 .login-header{
   background-color:#EF4105;
   margin-bottom:0;
@@ -54,10 +54,12 @@ body {
   border:none;
 }
 
+/*Header*/
 .header_navbar{
   background-color: #EF4105;
 }
 
+/*Background*/
 .full{
   position:relative;
   background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%,rgba(0,0,0,0.4) 100%), url(http://www.restaurant.org.au/wp-content/uploads/2016/03/restaurant-business-1024x682.jpg) no-repeat center center fixed;
@@ -67,6 +69,7 @@ body {
   background-size: cover;
 }
 
+/*Home*/
 .home-button,
 .home-button:focus{
   color: #fff;
@@ -96,7 +99,7 @@ body {
 
 }
 
-
+/*Dine Button*/
 .dine-button,
 .dine-button:focus{
   color: #fff;
@@ -125,6 +128,8 @@ body {
   color: #fff;
 
 }
+
+/*Sign Button*/
 .sign_in_btn,
 .sign_in_btn:focus{
   background-color: #EF4105;
@@ -141,6 +146,7 @@ body {
   border-color: white;
 }
 
+/*Footer*/
 .footer{
   right: 0;
   bottom: 0;
@@ -159,7 +165,7 @@ body {
   float: none;
 }
 
-/*Validation sign*/
+/*Validation indicator*/
 .ng-valid[required], .ng-valid.required  {
     border-left: 5px solid #42A948; /* green */
 }
@@ -194,4 +200,64 @@ textarea:focus{
   float: left;
   width:90%;
   outline: none;
+}
+
+
+/*Loader Bar*/
+.loader,
+.loader:before,
+.loader:after {
+    border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: load7 1.8s infinite ease-in-out;
+    animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+    color: #EF4105;
+    font-size: 10px;
+    margin: 80px auto;
+    position: relative;
+    text-indent: -9999em;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+    content: '';
+    position: absolute;
+    top: 0;
+}
+.loader:before {
+    left: -3.5em;
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+.loader:after {
+    left: 3.5em;
+}
+@-webkit-keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0;
+    }
+}
+@keyframes load7 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 2.5em 0 -1.3em;
+    }
+    40% {
+        box-shadow: 0 2.5em 0 0;
+    }
 }
