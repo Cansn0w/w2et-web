@@ -1,4 +1,4 @@
-import {Injectable, Inject} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs';
 
@@ -25,37 +25,20 @@ export class Recipe {
 	duration: number;
 
 	bookmarked: boolean;
-	// state: string;
 
 	constructor(rcpData?: {}) {
 		if (rcpData)
 			for (let key in rcpData)
 				this[key] = rcpData[key];
 	}
-
-	// toggleState(newState: string): void {
-	// 	this.state = newState;
-	// }
 }
 
 @Injectable()
 export class RecipeService {
-
-	// a one-step local cache of recipe search results
-	public last_recipes: Recipe[] = [];
-	public last_filter: RecipeFilter = new RecipeFilter();
-
 	private filter = new RecipeFilter();
 
 	constructor(private http: Http,
 	            private helper: HelperService) {
-	}
-
-	saveSearch(recipes: Recipe[]): void {
-		if (this.last_filter != this.filter) {
-			this.last_recipes = recipes;
-			this.last_filter = this.filter;
-		}
 	}
 
 	// Recipe Filter handlers
@@ -95,12 +78,6 @@ export class RecipeService {
 	}
 
 	fetchRecipeDetails(id: number): Observable<Recipe> {
-		// first see if there is any luck in local cache..
-		for (let recipe of this.last_recipes) {
-			if (recipe.id == id)
-				return Observable.of<Recipe>(recipe);
-		}
-
 		// nope! then we need to send a request to server
 		let formatted_url = this.build_rcp_url(id);
 		return this.http.get(formatted_url)
