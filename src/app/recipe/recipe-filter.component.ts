@@ -6,13 +6,9 @@ import {Component, Output, EventEmitter} from '@angular/core';
 })
 export class RecipeFilterComponent {
 
-  selected_diet = 'Filter by Diet';
-  selected_cuisine = 'Filter by Cuisine';
-  selected_intolerance = 'Exclude intolerance';
-
-  diet_options = ['Pescetarian', 'Vegetarian', 'Vegan', 'Paleo', 'Primal'];
-	cuisine_options = ['African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
-	intolerance_options = ['Dairy', 'Egg', 'Gluten', 'Peanut', 'Sesame', 'Seafood', 'Shellfish', 'Soy', 'Sulfite', 'Tree nut', 'And wheat'];
+	diet_options = ['', 'pescetarian', 'vegetarian', 'vegan', 'paleo', 'primal'];
+	cuisine_options = ['', 'african', 'chinese', 'japanese', 'korean', 'vietnamese', 'thai', 'indian', 'british', 'irish', 'french', 'italian', 'mexican', 'spanish', 'middle eastern', 'jewish', 'american', 'cajun', 'southern', 'greek', 'german', 'nordic', 'eastern european', 'caribbean', 'latin american'];
+	intolerance_options = ['', 'dairy', 'egg', 'gluten', 'peanut', 'sesame', 'seafood', 'shellfish', 'soy', 'sulfite', 'tree nut', 'and wheat'];
 
 	@Output() onFilterOptionSet = new EventEmitter<any>();
 

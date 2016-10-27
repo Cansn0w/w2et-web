@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {SharedModule} from '../com/shared.module';
 
@@ -16,8 +15,7 @@ import { recipeRouting } from './recipe.routing'
 @NgModule({
 	imports: [
 		SharedModule,
-		recipeRouting,
-    DropdownModule
+		recipeRouting
 	],
 
 	declarations: [

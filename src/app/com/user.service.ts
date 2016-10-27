@@ -8,9 +8,13 @@ import {HOST} from './config';
 
 import {HelperService} from './helper.service';
 
+export interface AccountData { username?: string, image?: string, email?: string }
+export interface PasswordData { oldpassword: string, new_password1: string, new_password2: string }
+
 @Injectable()
 export class UserService {
 	private _loggedIn: boolean = false;
+	private _image: string;
 	private _email: string;
 	private _token: string;
 	private _username: string;
@@ -53,7 +57,10 @@ export class UserService {
 
 	private request_option(): RequestOptions {
 		return new RequestOptions({
-			headers: new Headers({'Authorization': 'Token ' + this._token})
+			headers: new Headers({
+				'Content-Type': 'application/json',
+				'Authorization': 'Token ' + this._token
+			})
 		});
 	}
 
@@ -67,9 +74,10 @@ export class UserService {
 	}
 
 	// LOGIN/LOGOUT
-	loadUserData(userdata: {}): void {
+	loadUserData(userdata: AccountData): void {
 		this._email = userdata['email'];
 		this._username = userdata['username'];
+		this._image = userdata['image'];
 		this._loggedIn = true;
 	}
 
@@ -84,6 +92,7 @@ export class UserService {
 	getToken() { return this._token; }
 	getEmail() { return this._email; }
 	getUsername() { return this._username; }
+	getImage() { return this._image;  }
 	getFavRecipes() { return this._fav_recipes; }
 	getFavRestaurants() { return this._fav_restaurants; }
 
@@ -188,16 +197,17 @@ export class UserService {
 			})
 	}
 
-	updateData(newUserData: {}, callback, partial?: boolean): void {
-		let body = JSON.stringify(newUserData);
-		let request_method = partial ? this.http.patch : this.http.put;
-		request_method(this.get_endpoint('setuserdata'), body, this.request_option())
+	updateAccountData(accountData: AccountData, callback): void {
+		let body = JSON.stringify(accountData);
+		console.log(body);
+
+		this.http.put(this.get_endpoint('setuserdata'), body, this.request_option())
 			.toPromise()
 			.then(response => callback(response.status == 200))
 			.catch(this.helper.handleError);
 	}
 
-	changePassword(pswData: {}, callback): void {
+	changePassword(pswData: PasswordData, callback): void {
 		let body = JSON.stringify(pswData);
 		this.http.post(this.get_endpoint('changepassword'), body, this.request_option())
 			.toPromise()

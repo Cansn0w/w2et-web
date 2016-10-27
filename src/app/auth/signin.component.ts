@@ -76,7 +76,7 @@ export class SigninComponent implements OnInit {
 				});
 			})
 			.catch(err => {
-				if (err.status == 403) {
+				if (err.status == 403 || err.status == 400) {
 					alert('Invalid Credential!');
 					this.delete_cookies();
 				}
