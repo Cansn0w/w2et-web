@@ -2,7 +2,7 @@
 <div class="container mid-container" style="padding-bottom: 10px">
   <div class="searchbox">
     <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
-           ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input">
+           ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input" style="border-left: none;">
     <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
     <div [hidden]="keyword.valid || keyword.pristine"
          class="alert alert-danger">Search ingredient is required
