@@ -7,6 +7,8 @@ import { Router } from '@angular/router'
   templateUrl: './app.component.html',
 })
 export class AppComponent {
+  default_profile_img: string = 'assets/default_profile.png';
+
   constructor(
     private user: UserService,
     private router: Router,
