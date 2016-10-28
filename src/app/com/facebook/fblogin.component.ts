@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter} from '@angular/core';
-import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk/dist';
-import {FacebookInitialiser} from './fb.initialiser';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { FacebookService, FacebookLoginResponse } from 'ng2-facebook-sdk/dist';
+import { FacebookInitialiser } from './fb.initialiser';
 
-import {HelperService} from '../helper.service';
+import { HelperService } from '../helper.service';
 
 @Component({
 	selector: 'facebook-login',
@@ -21,8 +21,8 @@ export class FacebookLoginButton {
 
 	@Output() onFacebookLogin = new EventEmitter<any>();
 
-	constructor(private fb: FacebookService,
-	            private fb_init: FacebookInitialiser,
+	constructor(private fb_init: FacebookInitialiser,
+	            private fb: FacebookService,
 	            private helper: HelperService ) {
 	}
 

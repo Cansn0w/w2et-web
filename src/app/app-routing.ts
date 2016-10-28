@@ -7,7 +7,9 @@ import {SigninComponent} from './auth/signin.component';
 
 import {SessionGuard} from './com/widgets/session.guard';
 
-
+/*
+ * See the 'Router Map' section in frontend doc.
+ */
 const routes: Routes = [
 	{
 		path: '',

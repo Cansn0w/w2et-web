@@ -1,33 +1,49 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import {Recipe} from "../recipe/recipe.service";
-import {Restaurant} from '../restaurant/restaurant.service'
-import {HOST} from './config';
+import { Recipe } from "../recipe/recipe.service";
+import { Restaurant } from '../restaurant/restaurant.service'
+import { HOST } from './config';
 
-import {HelperService} from './helper.service';
+import { HelperService } from './helper.service';
 
 export interface AccountData { username?: string, image?: string, email?: string }
 export interface PasswordData { oldpassword: string, new_password1: string, new_password2: string }
 
+/*
+ * Maintains a local copy of user data and exposes interfaces to modify its states.
+ * All requests changing or retrieving user states are sent from to the server
+ * All requests must have an authentication header containing user token.
+ *
+ * Signatures:
+ *
+ * > updateAccountData(accountData: AccountData, callback):
+ * > changePassword(pswData: PasswordData, callback)
+ *
+ * > fetchFav(term: string): Promise<any[]>
+ * > fav(object: any, callback): void
+ * > unfav(object: any, callback): void
+ * > bookmark(object: any) : void
+ * > fetchUserData(token: string, callback): void
+ */
 @Injectable()
 export class UserService {
-	private _loggedIn: boolean = false;
-	private _image: string;
-	private _email: string;
-	private _token: string;
-	private _username: string;
-	private _fav_recipes: Recipe[] = [];
-	private _fav_restaurants: Restaurant[] = [];
+	private hasLoggedIn: boolean = false;
+	private image: string;
+	private email: string;
+	private token: string;
+	private username: string;
+	private favRecipes: Recipe[] = [];
+	private favRestaurants: Restaurant[] = [];
 
 	constructor(private http: Http,
 	            private helper: HelperService) {
 		this.reset();
 	}
 
-	// HELPERS
-	private get_endpoint(type: string): string {
+	// build access endpoint
+	private getEndpoint(type: string): string {
 		let path = '';
 		switch (type) {
 			case 'favoriterecipes':
@@ -55,55 +71,116 @@ export class UserService {
 		return HOST + path;
 	}
 
-	private request_option(): RequestOptions {
+	private requestOption(): RequestOptions {
 		return new RequestOptions({
 			headers: new Headers({
 				'Content-Type': 'application/json',
-				'Authorization': 'Token ' + this._token
+				'Authorization': 'Token ' + this.token
 			})
 		});
 	}
 
-	reset(): void {
-		this._token = '';
-		this._email = '';
-		this._username = '';
-		this._fav_recipes = [];
-		this._fav_restaurants = [];
-		this._loggedIn = false;
-	}
-
-	// LOGIN/LOGOUT
-	loadUserData(userdata: AccountData): void {
-		this._email = userdata['email'];
-		this._username = userdata['username'];
-		this._image = userdata['image'];
-		this._loggedIn = true;
-	}
-
 	isLoggedIn(): boolean {
-		return this._loggedIn;
+		return this.hasLoggedIn;
 	}
 
 	// SETTERS
-	setToken(token: string) { this._token = token; }
+	setToken(token: string) { this.token = token; }
 
 	// GETTERS
-	getToken() { return this._token; }
-	getEmail() { return this._email; }
-	getUsername() { return this._username; }
-	getImage() { return this._image;  }
-	getFavRecipes() { return this._fav_recipes; }
-	getFavRestaurants() { return this._fav_restaurants; }
+	getToken() { return this.token; }
+	getEmail() { return this.email; }
+	getUsername() { return this.username; }
+	getImage() { return this.image;  }
+	getFavRecipes() { return this.favRecipes; }
+	getFavRestaurants() { return this.favRestaurants; }
 
-	// USER PREFERENCES -> FAV OR UNFAV
+	reset(): void {
+		this.token = '';
+		this.email = '';
+		this.username = '';
+		this.favRecipes = [];
+		this.favRestaurants = [];
+		this.hasLoggedIn = false;
+	}
+
+
+	// Initialise user data content.
+	// Userdata should be first fetched from server
+	loadUserData(userdata: AccountData): void {
+		this.email = userdata['email'];
+		this.username = userdata['username'];
+		this.image = userdata['image'];
+		this.hasLoggedIn = true;
+	}
+
+	// Add a recipe/restaurant to user's fav list. Called by bookmark()
+	fav(object: any, callback): void {
+		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
+		this.http.put(this.getEndpoint('setfavorite' + term) + object.id, {}, this.requestOption())
+			.toPromise()
+			.then(response => {
+				let succ = false;
+
+				if (response.status == 204) {
+					// reset local copy of user's favorite term.
+					if (term == 'recipe') this.favRecipes.push(object);
+					if (term == 'restaurant') this.favRestaurants.push(object);
+					succ = true;
+				}
+
+				callback(succ);
+			})
+			.catch(this.helper.handleError);
+	}
+	// Remove a recipe/restaurant from user's fav list. Called by bookmark()
+	unfav(object: any, callback): void {
+		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
+		this.http.delete(this.getEndpoint('setfavorite' + term) + object.id, this.requestOption())
+			.toPromise()
+			.then(response => {
+				let succ = false;
+
+				if (response.status == 204) {
+					// reset local copy of user's favorite term.
+					if (term == 'recipe') this.favRecipes = this.helper.removeItem(this.favRecipes, object);
+					if (term == 'restaurant') this.favRestaurants = this.helper.removeItem(this.favRestaurants, object);
+					succ = true;
+				}
+
+				callback(succ);
+			})
+			.catch(this.helper.handleError);
+	}
+
+	fetchUserData(token: string, callback): void {
+		this.token = token;
+
+		this.http.get(this.getEndpoint('getuser'), this.requestOption())
+			.toPromise()
+			.then(response => this.loadUserData(response.json()))
+			.then(_ => this.fetchFav('recipes'))
+			.then(_ => this.fetchFav('restaurants'))
+			.then(_ => callback(true))
+			.catch(err => {
+				this.helper.handleError(err);
+				this.reset();
+				callback(false);
+			})
+	}
+
+	/*
+	 * Term: expected to be 'recipes' or 'restaurants'
+	 * Fetches a list of user favorite recipes/restaurants from server and set
+	 * the 'bookmarked' field as true.
+	 */
 	fetchFav(term: string): Promise<any[]> {
-		let local: any[] = term == 'recipes' ? this._fav_recipes : this._fav_restaurants;
+		let local: any[] = term == 'recipes' ? this.favRecipes : this.favRestaurants;
 		if (local.length != 0) {
 			return Promise.resolve(local);
 		}
 		else {
-			return this.http.get(this.get_endpoint('favorite' + term), this.request_option())
+			return this.http.get(this.getEndpoint('favorite' + term), this.requestOption())
 				.toPromise()
 				.then(response => {
 					// save data of user fav to local copy;
@@ -118,48 +195,10 @@ export class UserService {
 		}
 	}
 
-	fav(object: any, callback): void {
-		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
-		this.http.put(this.get_endpoint('setfavorite' + term) + object.id, {}, this.request_option())
-			.toPromise()
-			.then(response => {
-				let succ = false;
-
-				if (response.status == 204) {
-					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipes.push(object);
-					if (term == 'restaurant') this._fav_restaurants.push(object);
-					succ = true;
-				}
-
-				callback(succ);
-			})
-			.catch(this.helper.handleError);
-	}
-
-	unfav(object: any, callback): void {
-		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
-		this.http.delete(this.get_endpoint('setfavorite' + term) + object.id, this.request_option())
-			.toPromise()
-			.then(response => {
-				let succ = false;
-
-				if (response.status == 204) {
-					// reset local copy of user's favorite term.
-					if (term == 'recipe') this._fav_recipes = this.helper.removeItem(this._fav_recipes, object);
-					if (term == 'restaurant') this._fav_restaurants = this.helper.removeItem(this._fav_restaurants, object);
-					succ = true;
-				}
-
-				callback(succ);
-			})
-			.catch(this.helper.handleError);
-	}
-
-	// this is a tmp solution ...
+	// Fav/unfav a recipe or restaurant
 	bookmark(object: any) : void {
 
-		if (! this._loggedIn) {
+		if (! this.hasLoggedIn) {
 			alert('Please login before setting your favorite recipe');
 			return;
 		}
@@ -173,34 +212,17 @@ export class UserService {
 		});
 	}
 
-	// CHECK IF RECIPE/RESTAURANT IS FAVORED
+	// Check if a recipe/restaurant has been favoured by user
 	hasFavored(object: Recipe | Restaurant): boolean {
 		return object.constructor.name == Recipe.name ?
-			this.helper.contains(this._fav_recipes, object, 'id') :
-			this.helper.contains(this._fav_restaurants, object, 'id')
-	}
-
-	// FETCH & UPDATE USER DATA
-	fetchUserData(token: string, callback): void {
-		this._token = token;
-
-		this.http.get(this.get_endpoint('getuser'), this.request_option())
-			.toPromise()
-			.then(response => this.loadUserData(response.json()))
-			.then(_ => this.fetchFav('recipes'))
-			.then(_ => this.fetchFav('restaurants'))
-			.then(_ => callback(true))
-			.catch(err => {
-				this.helper.handleError(err);
-				this.reset();
-				callback(false);
-			})
+			this.helper.contains(this.favRecipes, object, 'id') :
+			this.helper.contains(this.favRestaurants, object, 'id')
 	}
 
 	updateAccountData(accountData: AccountData, callback): void {
 		let body = JSON.stringify(accountData);
 
-		this.http.put(this.get_endpoint('setuserdata'), body, this.request_option())
+		this.http.put(this.getEndpoint('setuserdata'), body, this.requestOption())
 			.toPromise()
 			.then(response => callback(response.status == 200))
 			.catch(this.helper.handleError);
@@ -208,7 +230,7 @@ export class UserService {
 
 	changePassword(pswData: PasswordData, callback): void {
 		let body = JSON.stringify(pswData);
-		this.http.post(this.get_endpoint('changepassword'), body, this.request_option())
+		this.http.post(this.getEndpoint('changepassword'), body, this.requestOption())
 			.toPromise()
 			.then(response => callback(response.status == 200))
 			.catch(this.helper.handleError);

@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'recipe-filter',
@@ -6,11 +6,12 @@ import {Component, Output, EventEmitter} from '@angular/core';
 })
 export class RecipeFilterComponent {
 
-  selected_diet = 'Filter by Diet';
-  selected_cuisine = 'Filter by Cuisine';
-  selected_intolerance = 'Exclude intolerance';
+	selected_diet = 'Filter by Diet';
+	selected_cuisine = 'Filter by Cuisine';
+	selected_intolerance = 'Exclude intolerance';
 
-  diet_options = ['', 'Pescetarian', 'Vegetarian', 'Vegan', 'Paleo', 'Primal'];
+	// These options are provided by Spoonacular recipe search API
+	diet_options = ['', 'Pescetarian', 'Vegetarian', 'Vegan', 'Paleo', 'Primal'];
 	cuisine_options = ['', 'African', 'Chinese', 'Japanese', 'Korean', 'Vietnamese', 'Thai', 'Indian', 'British', 'Irish', 'French', 'Italian', 'Mexican', 'Spanish', 'Middle eastern', 'Jewish', 'American', 'Cajun', 'Southern', 'Greek', 'German', 'Nordic', 'Eastern European', 'Caribbean', 'Latin American'];
 	intolerance_options = ['', 'Dairy', 'Egg', 'Gluten', 'Peanut', 'Sesame', 'Seafood', 'Shellfish', 'Soy', 'Sulfite', 'Tree nut', 'And wheat'];
 
@@ -26,12 +27,11 @@ export class RecipeFilter {
 	cuisine: string = '';
 	diet: string = '';
 	intolerance: string = '';
-	includedIngredieint: string = ''; // todo
-	excludedIngredieint: string = ''; // todo
 
 	constructor() {
 	}
 
+	// parse filter object to url string, which is then used in router params
 	get url(): string {
 		let options = [];
 		for (let key in this)

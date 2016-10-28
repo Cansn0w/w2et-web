@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {trigger, state, style, transition, animate} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {Recipe} from  '../recipe/recipe.service'
-import {UserService} from '../com/user.service';
+import { Recipe } from  '../recipe/recipe.service'
+import { UserService } from '../com/user.service';
 
+/*
+ * Reuses recipe-list template to display user's favorite recipes
+ */
 @Component({
 	selector: 'profile-recipe',
 	templateUrl: '../recipe/templates/recipe-list.html',

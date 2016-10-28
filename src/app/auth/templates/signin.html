@@ -39,14 +39,17 @@
                     </div>
                 </div>
 
+                <!--Options to save user token locally and keep him loggedin for 10 days-->
                 <div class="checkbox">
                     <label><input #chbox_keeplogin type="checkbox" (change)="keep_login(chbox_keeplogin.checked)">
                         Keep me logged-in for 10 days</label>
                 </div>
 
+                <!--Submit Login-->
                 <button type="submit" class="btn btn-primary btn-lg sign_in_btn" aria-pressed="true"
                         [disabled]="!loginForm.form.valid">Log in
                 </button>
+                <!--Goto Sign up-->
                 <a routerLink="/signup" style="margin:5%;">Sign up</a>
             </form>
         </div>

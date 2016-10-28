@@ -8,7 +8,7 @@ import {HOST} from '../com/config';
 import {RecipeFilter} from './recipe-filter.component';
 import {HelperService} from '../com/helper.service';
 
-// Recipe object
+// Recipe data structure
 export class Recipe {
 	id: any;
 
@@ -32,7 +32,15 @@ export class Recipe {
 				this[key] = rcpData[key];
 	}
 }
-
+/*
+ * Recipe Service:
+ * Manages the state of recipes filter and send requests to server for recipe data
+ *
+ * Search recipe workflow:
+ * 1. Set filter options
+ * 2. Submit search reqeust to sever to obtain a list of recipe IDs
+ * 3. For each ID, send a request containing the ID to obtain the details of that recipe.
+ */
 @Injectable()
 export class RecipeService {
 	private filter = new RecipeFilter();
@@ -59,19 +67,9 @@ export class RecipeService {
 			this.filter[k] = y;
 	}
 
-
-	// / Url builders
-	build_search_url(): string {
-		let f = this.filter; // for simplicity
-		return HOST + `/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=${f.includedIngredieint}&out_ingrd=${f.excludedIngredieint}`;
-	}
-
-	build_rcp_url(id: number): string {
-		return HOST + `/recipe/${id}`;
-	}
-
 	fetchRecipesIDs(): Observable<number[]> {
-		let formatted_url = this.build_search_url();
+		let f = this.filter; // for simplicity
+		let formatted_url = HOST + `/recipe/search?q=${f.keyword}&cuisine=${f.cuisine}&diet=${f.diet}&intolerances=${f.intolerance}&in_ingrd=&out_ingrd=`;
 		return this.http.get(formatted_url)
 			.map((r: Response) => r.json() as number[])
 			.catch(this.helper.handleError);
@@ -79,7 +77,7 @@ export class RecipeService {
 
 	fetchRecipeDetails(id: number): Observable<Recipe> {
 		// nope! then we need to send a request to server
-		let formatted_url = this.build_rcp_url(id);
+		let formatted_url = HOST + `/recipe/${id}`;
 		return this.http.get(formatted_url)
 			.map((r: Response) => new Recipe(r.json()))
 			.catch(this.helper.handleError);

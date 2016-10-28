@@ -1,12 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {Cookie} from 'ng2-cookies/src/cookie';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Cookie } from 'ng2-cookies/src/cookie';
 
-import {ModalDirective} from 'ng2-bootstrap/components/modal/modal.component';
+import { ModalDirective } from 'ng2-bootstrap/components/modal/modal.component';
 
-import {UserService} from '../com/user.service';
-import {AccountData, PasswordData} from '../com/user.service';
+import { UserService } from '../com/user.service';
+import { AuthService } from '../auth/auth.service';
+import { AccountData, PasswordData } from '../com/user.service';
 
+/*
+ * Profile Component:
+ * Manages displaying user information as well as updating user profile
+ */
 @Component({
 	selector: 'app-profile',
 	templateUrl: './templates/profile.html',
@@ -20,6 +25,7 @@ export class ProfileComponent implements OnInit {
 	default_profile_img: string = 'assets/default_profile.png';
 
 	constructor(private user: UserService,
+	            private auth: AuthService,
 	            private router: Router) {
 	}
 
@@ -41,8 +47,14 @@ export class ProfileComponent implements OnInit {
 	}
 
 	logOut(): void {
-		this.user.reset();
-		if (Cookie.check('token')) Cookie.delete('token');
+		this.auth.logout(this.user.getToken())
+			.then(response => {
+				if ('success' in response) {
+					this.user.reset();
+					if (Cookie.check('token')) Cookie.delete('token');
+					this.router.navigate(['/']);
+				}
+			});
 	}
 
 	showEditModal(): void {
@@ -81,5 +93,4 @@ export class ProfileComponent implements OnInit {
 	jump(path: string): void {
 		this.router.navigate([path]);
 	}
-
 }

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import {Restaurant, RestaurantService} from './restaurant.service';
-import {UserService} from '../com/user.service';
+import { Restaurant, RestaurantService } from './restaurant.service';
+import { UserService } from '../com/user.service';
 
 @Component({
 	selector: 'recipe-suggestion',
@@ -20,11 +20,18 @@ export class RestaurantSuggestionComponent implements OnInit {
 
 
 	ngOnInit() {
+		/*
+		 * 1. Search for restaurants using user's previously set filter options
+		 * 2. Cache the search result so that found restaurants are displayed immediately if user wants to view more.
+		 * 3. Pick the best rated restaurant as suggested one.
+		 */
 		this.route.params.forEach((params: Params) => {
 			let filter_url = params['options'];
+			// search for restaurants using user's previously set filter options
 			this.restService.searchRestaurants(filter_url)
 				.then(restaurants => {
 					restaurants.map(r => this.user.hasFavored(r) ? r.bookmarked = true: r.bookmarked = false);
+					// cache the search result so that found restaurants are displayed
 					this.restService.saveSearch(filter_url, restaurants);
 
 					// pick the best rated restaurant

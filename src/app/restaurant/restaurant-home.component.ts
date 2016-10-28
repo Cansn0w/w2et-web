@@ -12,7 +12,9 @@ import {Subject} from 'rxjs/Subject';
 })
 export class RestauranteHomeComponent implements OnInit {
 
+	// The core communication middleware with google map
 	current_loc: marker = new marker(
+		// default google map centre.
 		-33.8858032, 151.1883326, 'You', true, ''
 	);
 
@@ -38,8 +40,9 @@ export class RestauranteHomeComponent implements OnInit {
 				console.log('geo location finished');
 			});
 
-		// config address search
-		this.searchAddr.debounceTime(1700).distinctUntilChanged().subscribe(
+		// Listen to the user's typed address input;
+		// Submit the address name to GoogleGeo service to get lat/lng, then updates the google map.
+		this.searchAddr.debounceTime(1500).distinctUntilChanged().subscribe(
 			addr => {
 				this.geoService.convert_geo(addr) // get lat and lng by address name
 					.subscribe(resp => {

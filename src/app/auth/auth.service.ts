@@ -1,11 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise'
 
-import {HelperService} from '../com/helper.service';
-import {HOST} from '../com/config'
+import { HelperService } from '../com/helper.service';
+import { HOST } from '../com/config'
 
+/*
+ * Provide APIs to make authentication related requests
+ * This service is primarily for applying user access/removing access tokens, and therefore
+ * is independent of user's other internal states.
+ */
 @Injectable()
 export class AuthService {
 
@@ -15,6 +20,7 @@ export class AuthService {
 	            private http: Http) {
 	}
 
+	// build access endpoint
 	private get_endpoint(type: string): string {
 		let path = '';
 		switch (type) {
@@ -36,7 +42,7 @@ export class AuthService {
 		return HOST + path;
 	}
 
-	// HELPER FUNCTIONS
+	// Build request headers
 	private cred_header_opt(token: string): RequestOptions {
 		return new RequestOptions({
 			headers: new Headers({'Authorization': 'Token ' + token})
@@ -47,6 +53,10 @@ export class AuthService {
 		return new RequestOptions({
 			headers: new Headers({'Content-Type': 'application/json'})
 		});
+	}
+
+	restore(): void {
+		this.redirectUrl = '';
 	}
 
 	// LOGIN
@@ -71,18 +81,13 @@ export class AuthService {
 			.catch(this.helper.handleError);
 	}
 
-	// LOGOUT
+	// LOGOUT -
 	logout(token: string): Promise<any> {
 		let options = this.cred_header_opt(token);
 		return this.http.post(this.get_endpoint('logout'), {}, options)
 			.toPromise()
 			.then(response => response.json())
 			.catch(this.helper.handleError);
-	}
-
-	// RESTORE
-	restore(): void {
-		this.redirectUrl = '';
 	}
 
 	// THIRD-PARTY SIGNUP - FB

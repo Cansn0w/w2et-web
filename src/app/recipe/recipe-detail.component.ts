@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Recipe, RecipeService } from './recipe.service';
-import {UserService} from '../com/user.service';
+import { UserService } from '../com/user.service';
 
 @Component({
 	selector: 'recipe-detail',
@@ -20,6 +20,7 @@ export class RecipeDetailComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		// Fetch recipe detail every time component initialises.
 		this.route.params.forEach((params: Params) => {
 			let id = +params['id'];
 			this.recipeService.fetchRecipeDetails(id)

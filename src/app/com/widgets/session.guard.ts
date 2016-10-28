@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {CanActivate} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router';
 
-import {UserService} from '../user.service';
-import {Cookie} from 'ng2-cookies/src/cookie'
+import { UserService } from '../user.service';
+import { Cookie } from 'ng2-cookies/src/cookie'
 
 /*
  * This guard attribute is to be used for pages that are only

@@ -1,16 +1,20 @@
 <div class="container narrow-container" style="padding: 5% 0;">
-  <div class="searchbox" >
-    <label for="input_addr"></label>
-    <input type="text" name="input_addr" id="input_addr" placeholder="Search Your Location"
-           (input)="onInputAddress($event.target.value)" [value]="current_loc.addr" class="search-input">
-    <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
+    <!--Address Search Box-->
+    <div class="searchbox">
+        <label for="input_addr"></label>
+        <input type="text" name="input_addr" id="input_addr" placeholder="Search Your Location"
+               (input)="onInputAddress($event.target.value)" [value]="current_loc.addr" class="search-input">
+        <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
 
-  </div>
-  <google-map [loc]="current_loc"
-              (onSelectLocation)="onSelectLocation($event)"
-              [showNearbyRestaurants]="true">
-  </google-map>
+    </div>
 
+    <!--Google Map-->
+    <google-map [loc]="current_loc"
+                (onSelectLocation)="onSelectLocation($event)"
+                [showNearbyRestaurants]="true">
+    </google-map>
+
+    <!--Confirm Location-->
     <a class="btn btn-lg dine-button " style="display: block; margin-top: 2em; "
        (click)="gotoRestaurantSuggestion()">This is where I am after!</a>
 

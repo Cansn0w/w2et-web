@@ -20,6 +20,7 @@ export class RestaurantListComponent implements OnInit {
 	private all_restaurants: Restaurant[] = [];
 	private restaurants: Restaurant[] = [];
 
+	// filter option trackers
 	private all_ids: any[];
 	private ids_by_category: Set<any>;
 	private ids_by_ratings: Set<any>;
