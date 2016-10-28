@@ -1,6 +1,7 @@
-<div *ngIf="!atProfile" style="margin-top: 20px;">
+<div class="container" *ngIf="!atProfile" style="margin-top: 20px;">
     <restaurant-filter (onFilterOptionSet)="onFilterOptionSet($event)"></restaurant-filter>
 </div>
+
 <div class="container mid-container">
     <!--Recipe Brief Info-->
     <div *ngFor="let restaurant of restaurants"
@@ -28,3 +29,4 @@
         </div>
     </div>
 </div>
+
