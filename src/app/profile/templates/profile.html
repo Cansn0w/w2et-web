@@ -23,9 +23,9 @@
   </div>
   <!--Favourite recipe/restaurant-->
     <tabset style="margin-top: 20px;">
-      <tab routerLink="/profile/fav/recipe" routerLinkActive="active" heading="Favourite Recipes">
+      <tab heading="Favourite Recipes" (select)="jump('/profile/fav/recipe')">
       </tab>
-      <tab routerLink="/profile/fav/restaurant" routerLinkActive="active" heading="Favourite Restaurants">
+      <tab heading="Favourite Restaurants" (select)="jump('/profile/fav/restaurant')">
       </tab>
     </tabset>
 </div>

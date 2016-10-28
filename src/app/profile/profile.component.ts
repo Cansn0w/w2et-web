@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {Cookie} from 'ng2-cookies/src/cookie';
 
 import {ModalDirective} from 'ng2-bootstrap/components/modal/modal.component';
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit {
 
 	default_profile_img: string = 'assets/default_profile.png';
 
-	constructor(private user: UserService) {
+	constructor(private user: UserService,
+	            private router: Router) {
 	}
 
 	ngOnInit() {
@@ -75,4 +77,9 @@ export class ProfileComponent implements OnInit {
 			else alert('Sorry, there is something wrong and your password cannot be reset');
 		})
 	}
+
+	jump(path: string): void {
+		this.router.navigate([path]);
+	}
+
 }
