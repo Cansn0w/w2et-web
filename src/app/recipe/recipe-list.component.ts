@@ -72,7 +72,8 @@ export class RecipeListComponent implements OnInit {
 					if (choice) {
 						// whenever a new filter is set, re-perform the recipe search event flow
 						this.recipeService.updateFilter(choice.key, choice.value);
-						return this.recipeService.fetchRecipesIDs();
+						if (this.recipeService.validateFilter()) return this.recipeService.fetchRecipesIDs();
+						else return Observable.of<number[]>([]);
 					}
 					else {
 						return Observable.of<number[]>([]);

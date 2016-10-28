@@ -30,10 +30,12 @@
             </div>
         </div>
     </div>
-
-
     <div style="dispaly: block; height: 400px;">
         <google-map [loc]="{ lat: restaurant.lat, lng: restaurant.lng}"
                     [showNearbyRestaurants]="false"></google-map>
     </div>
+</div>
+
+<div *ngIf="!restaurant">
+    <div class="loader"></div>
 </div>

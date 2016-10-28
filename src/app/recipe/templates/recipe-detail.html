@@ -1,7 +1,7 @@
 <div *ngIf="recipe" class="container narrow-container">
     <h1 style="padding-top: 5%;">{{recipe.name}}</h1>
     <div class="row">
-        <div class = "col-xs-12 well" style="background-color:white;">
+        <div class = "well" style="background-color:white;">
             <!-- MAIN ROW [0]-->
             <div class="row">
                 <!-- COL 4: IMAGE-->
@@ -42,16 +42,15 @@
             </div>
 
             <!--MAIN ROW [1]-->
-            <div class="row" style="margin-top:5%; margin-left:10px;">
-                <!--Show four ingredients per row-->
-                <div *ngFor="let i of (recipe.ingredients.length/size) | range"
-                     class="row">
-                    <div *ngFor="let j of size | range"
-                         class="col-xs-3">
-                        <div *ngIf="i*size +j < recipe.ingredients.length">
-                            <h5><b>{{recipe.ingredients[i*size +j]['name']}}</b></h5>
-                            <img src="{{recipe.ingredients[i*size+j]['image']}}">
-                        </div>
+            <h3>Ingredients: </h3>
+            <!--Show four ingredients per row-->
+            <div *ngFor="let i of (recipe.ingredients.length/size) | range"
+                 class="row">
+                <div *ngFor="let j of size | range"
+                     class="col-xs-3">
+                    <div *ngIf="i*size +j < recipe.ingredients.length">
+                        <h5><b>{{recipe.ingredients[i*size +j]['name']}}</b></h5>
+                        <img src="{{recipe.ingredients[i*size+j]['image']}}">
                     </div>
                 </div>
             </div>

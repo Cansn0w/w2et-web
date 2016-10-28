@@ -19,7 +19,7 @@
 
                     <p style="display: inline;"><b> Ingredients: </b>
                     </p>
-                    <p *ngFor="let ingrd of recipe.ingredients | slice:0:5;"
+                    <p *ngFor="let ingrd of recipe.ingredients | slice:0:3;"
                        style="display: inline; text-transform: capitalize;">
                         {{ ingrd.name }},
                     </p>
@@ -42,4 +42,5 @@
     <div *ngIf="loading" class="loader">Loading...</div>
     <h2 *ngIf="ids && ids.length == 0 && !loading"><b>No results found ...</b></h2>
     <h2 *ngIf="recipes && recipes.length >= 100"><b>No more to show :)</b></h2>
+    <h2 *ngIf="atProfile && recipes.length == 0"><b>You dont't have bookmarked anything</b></h2>
 </div>
