@@ -22,8 +22,8 @@
                 <div class="col-md-2 vcenter">
                     <p><b>Keywords:</b></p>
                 </div>
-                <a *ngFor="let c of restaurant.categories">
-                    <p class="col-md-2 well well-sm vcenter"style="margin-left:5%; color:black;">
+                <a *ngFor="let c of restaurant.categories" style="text-decoration: none;">
+                    <p class="col-md-2 well well-sm vcenter"style="margin-left:5%; color:black; box-shadow: none;">
                         <small>#{{c['category']}}</small>
                     </p>
                 </a>
