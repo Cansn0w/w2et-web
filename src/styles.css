@@ -39,9 +39,13 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 1rem;
+  padding: 10px;
   background-color: #DBDBDB;
   text-align: center;
+}
+
+.footer-text{
+  margin-top: 5px;
 }
 
 /*------------------------------ Containers ------------------------------*/
@@ -309,7 +313,6 @@ body {
 
 .searchbox{
   background: #fff;
-  border-radius: 2px;
   box-sizing: border-box;
   width: 100%;
   border-bottom: 1px solid transparent;
