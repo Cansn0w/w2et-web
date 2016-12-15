@@ -11,8 +11,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 
-export const HOST = 'https://demo.what2eattoday.com/api';
-
-export const GOOGLE_MAP_API_KEY = 'AIzaSyBynD4V-DFroy61rWE8GeKTfDC34rznRqI';
-export const FACEBOOK_API_KEY = '1862342107330718';
+export const HOST = 'https://api.what2eattoday.com';
+export const GOOGLE_MAP_API_KEY = 'AIzaSyBjSA-6fs6ZoeOv77MH2yCijJ9SIRsAmF4';
+export const FACEBOOK_API_KEY = '1733136166949393';
 
