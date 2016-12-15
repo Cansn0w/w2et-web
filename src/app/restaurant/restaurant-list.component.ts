@@ -1,8 +1,9 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 import {RestaurantFilterComponent} from './restaurant-filter.component'
 
 import {Subject} from 'rxjs/Subject';
+import {Subscription} from 'rxjs/Subscription';
 
 import {RestaurantService, Restaurant} from './restaurant.service'
 import {UserService} from '../com/user.service';
@@ -12,11 +13,11 @@ import {HelperService} from '../com/helper.service';
 	selector: 'restaurant-list',
 	templateUrl: './templates/restaurant-list.html'
 })
-export class RestaurantListComponent implements OnInit {
+export class RestaurantListComponent implements OnInit, OnDestroy {
 
-	@ViewChild(RestaurantFilterComponent)
-	private filterComponent: RestaurantFilterComponent;
+	private subscriptions: Subscription[] = [];
 
+	@ViewChild(RestaurantFilterComponent) filterComponent: RestaurantFilterComponent;
 	private all_restaurants: Restaurant[] = [];
 	private restaurants: Restaurant[] = [];
 
@@ -34,6 +35,7 @@ export class RestaurantListComponent implements OnInit {
 	            private restService: RestaurantService) {
 	}
 
+	ngOnDestroy() { this.subscriptions.forEach(s => s.unsubscribe()) }
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {
 			let filter_url = params['options'];
@@ -55,10 +57,12 @@ export class RestaurantListComponent implements OnInit {
 		});
 
 		// config search
-		this.searchTerm
-			.debounceTime(500)      // wait for 0.5s pause in event
-			.distinctUntilChanged() // ignore if next search option is the same as previous
-			.subscribe((choice) => this.doFiltering(choice));
+		this.subscriptions.push(
+			this.searchTerm
+				.debounceTime(500)      // wait for 0.5s pause in event
+				.distinctUntilChanged() // ignore if next search option is the same as previous
+				.subscribe((choice) => this.doFiltering(choice))
+		);
 	}
 
 	// FILTER FUNCTIONS

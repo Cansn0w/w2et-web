@@ -24,13 +24,8 @@ export class RecipeDetailComponent implements OnInit {
 		this.route.params.forEach((params: Params) => {
 			let id = +params['id'];
 			this.recipeService.fetchRecipeDetails(id)
-				.subscribe(
-					recipe => {
-						this.recipe = recipe;
-						console.log(recipe.ingredients);
-					},
-					error => console.log(error)
-				);
+				.then(recipe => this.recipe = recipe)
+				.catch(console.error);
 		});
 	}
 

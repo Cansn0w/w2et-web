@@ -1,9 +1,9 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
 
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
-
+import {Subscription} from 'rxjs/Subscription';
 
 import {UserService} from '../com/user.service';
 import {Recipe} from './recipe.service';
@@ -15,20 +15,17 @@ import {HelperService} from '../com/helper.service';
 	templateUrl: './templates/recipe-list.html',
 	host: {'(scroll)':'onScroll($event)'}
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
 
-	recipes: Recipe[] = [];
-
-	// vars to keep the track of recipes shown
+	recipes: Recipe[];
 	ids: number[] = [];
-	num_shown: number = 0;
-	batch_size: number =  5;
 
 	// states
 	loading: boolean = true;
 
 	private searchTerm = new Subject<{key: string, value: string}>();
-	private searched_ids: Observable<number[]>;
+	private matchedRecipesIds: Observable<number[]>;
+	private subscriptions: Subscription[] = [];
 
 
 	constructor(public user: UserService,
@@ -37,83 +34,75 @@ export class RecipeListComponent implements OnInit {
 	            private route: ActivatedRoute,) {
 	}
 
-	reset(): void {
-		this.recipes= [];
-		this.ids = [];
-		this.num_shown = 0;
-		this.batch_size =  5;
-	}
-
-	getRecipeList(ids: number[]): void {
-		let start = this.num_shown;
-		let end = start + this.batch_size > this.ids.length? this.ids.length : start + this.batch_size;
-		this.loading = true;
-		for (let id of ids.slice(start, end)) {
-			this.recipeService.fetchRecipeDetails(+id)
-				.subscribe(
-					recipe => {
-						if (ids.indexOf(id) + 1 == end) this.loading = false;
-						if (this.user.hasFavored(recipe)) recipe.bookmarked = true;
-						this.recipes.push(recipe);
-					},
-					error => console.log(error)
-				)
-		}
-		this.num_shown += this.batch_size;
-	}
-
+	ngOnDestroy() { this.subscriptions.forEach(s => s.unsubscribe())}
 	ngOnInit() {
 		// config search stream
-		this.searched_ids = this.searchTerm
+		this.matchedRecipesIds = this.searchTerm
+			.startWith({key: '', value: ''}) // the init search uses pre-set filter options
 			.debounceTime(500)      // trigger interval: 0.5s
 			.distinctUntilChanged() // ignore if next search option is the same as previous
 			.switchMap(
 				(choice) => {
 					if (choice) {
-						// whenever a new filter is set, re-perform the recipe search event flow
+						// whenever a new filter is set, re-do the recipe search event flow
 						this.recipeService.updateFilter(choice.key, choice.value);
 						if (this.recipeService.validateFilter()) return this.recipeService.fetchRecipesIDs();
-						else return Observable.of<number[]>([]);
 					}
-					else {
-						return Observable.of<number[]>([]);
-					}
+					return Observable.of<number[]>([]);
 				}
 			)
 			.catch(error => {
 				this.helper.handleError(error);
 				return Observable.of<number[]>([]);
 			});
+
 		// subscribe to the search results (a list of ids whose recipes matches the filter specifications)
-		this.searched_ids
+		this.subscriptions.push(this.matchedRecipesIds
 			.subscribe(
 				ids => {
-					this.reset();
-					this.ids = ids;
-					this.getRecipeList(ids);
+					[this.recipes, this.ids] = [[], ids];
+					this.loadRecipes();
 				},
 				error => console.log(error)
-			);
+			)
+		);
 
 		// update filter by url specification (useful for bookmarking and re-do search)
 		this.route.params.forEach((params: Params) => {
 			// parse filter url components
 			let components = this.helper.parseUrlString(params['options']);
-			for (let c of components) this.recipeService.updateFilter(c.key, c.value);
-
-			// kick off an init search
-			this.searchTerm.next({key: '', value: ''})
+			components.forEach(c => this.recipeService.updateFilter(c.key, c.value));
 		});
 	}
 
-	// Events
+	loadRecipes(size: number = 5) {
+		let start = this.recipes.length;
+		this.loading = true;
+
+		for (let id of this.ids.slice(start, start + size)) {
+			this.recipeService.fetchRecipeDetails(+id)
+				.then(recipe => {
+					if (this.ids.indexOf(id) + 1 == start + size) this.loading = false; // fixme: this logic should be taken care of externally
+					if (this.user.hasFavored(recipe)) recipe.bookmarked = true;
+					this.recipes.push(recipe);
+				})
+				.catch(console.error);
+		}
+	}
+
+	loadMoreRecipes(): void {
+		if (this.recipes.length < this.ids.length) {
+			this.loadRecipes();
+		}
+	};
+
 	@HostListener('window:scroll', ['$event'])
 	onScroll(_): void {
 		// don't sent new request until the previous list has been loaded
 		if (this.loading) return;
 		// ask for more recipes when user scrolls to the screen bottom.
 		if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-			this.getRecipeList(this.ids);
+			this.loadMoreRecipes();
 	}
 
 	onFilterOptionSet(choice: any): void {

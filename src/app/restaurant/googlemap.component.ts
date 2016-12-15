@@ -38,21 +38,14 @@ export class GoogleMapComponent implements OnInit, OnChanges {
 	}
 
 	// Events
-	locDragEnd($event: any): void {
+	selectLoc($event: any): void {
 		this.onSelectLocation.emit({
 			lat: $event.coords.lat,
 			lng: $event.coords.lng
 		});
 	}
 
-	onClickMap($event: any) {
-		this.onSelectLocation.emit({
-			lat: $event.coords.lat,
-			lng: $event.coords.lng,
-		})
-	}
-
-	onClickRestaurant(rst: Restaurant): void {
+	clickRestaurant(rst: Restaurant): void {
 		this.router.navigate(['/restaurant/detail', rst.id]);
 	}
 }

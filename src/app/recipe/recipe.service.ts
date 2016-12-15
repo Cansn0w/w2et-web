@@ -75,11 +75,12 @@ export class RecipeService {
 			.catch(this.helper.handleError);
 	}
 
-	fetchRecipeDetails(id: number): Observable<Recipe> {
+	fetchRecipeDetails(id: number): Promise<Recipe> {
 		// nope! then we need to send a request to server
 		let formatted_url = HOST + `/recipe/${id}`;
 		return this.http.get(formatted_url)
 			.map((r: Response) => new Recipe(r.json()))
+			.toPromise()
 			.catch(this.helper.handleError);
 	}
 }

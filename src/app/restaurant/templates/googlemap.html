@@ -1,7 +1,7 @@
 <sebm-google-map [latitude]="loc.lat"
                  [longitude]="loc.lng"
                  [zoom]="zoom"
-                 (mapClick)="onClickMap($event)">
+                 (mapClick)="selectLoc($event)">
 
     <!--User's current location-->
     <sebm-google-map-marker
@@ -9,7 +9,7 @@
             [longitude]="loc.lng"
             [markerDraggable]="loc.draggable"
             [label]="loc.label"
-            (dragEnd)="locDragEnd($event)">
+            (dragEnd)="selectLoc($event)">
         <sebm-google-map-info-window>
             <strong>
                 {{ loc.addr }}
@@ -26,7 +26,7 @@
             [iconUrl]="rst_icon_path">
         <sebm-google-map-info-window>
             <strong>
-                <a (click)="onClickRestaurant(r)">{{r.name}}</a>
+                <a (click)="clickRestaurant(r)">{{r.name}}</a>
             </strong>
         </sebm-google-map-info-window>
 
