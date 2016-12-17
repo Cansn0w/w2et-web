@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Restaurant, RestaurantService } from './restaurant.service';
-import { UserService } from '../com/user.service';
+import { RestaurantService } from '../core/services/restaurant.service';
+import { Restaurant } from '../core/classes/restaurant';
+import { UserService } from '../core/services/user.service';
 
 @Component({
 	selector: 'recipe-suggestion',

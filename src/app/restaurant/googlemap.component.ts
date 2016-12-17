@@ -2,9 +2,10 @@ import {Component, Input, Output} from '@angular/core';
 import {EventEmitter, OnInit, OnChanges, SimpleChange} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {RestaurantService, Restaurant} from './restaurant.service'
-import {marker} from './geolocation.service'
+import {RestaurantService} from '../core/services/restaurant.service';
+import {Restaurant} from '../core/classes/restaurant';
 import {Observable} from 'rxjs/Observable';
+import {Marker} from '../core/types';
 
 @Component({
 	selector: 'google-map',
@@ -14,14 +15,13 @@ import {Observable} from 'rxjs/Observable';
 
 export class GoogleMapComponent implements OnInit, OnChanges {
 
-	// user's current location
 	zoom: number = 15;
 
 	restaurants: Observable<Restaurant[]>;
 	rst_icon_path: string = 'assets/restaurant_icon.png';
 
 	@Input() showNearbyRestaurants: boolean;
-	@Input() loc: marker;
+	@Input() loc: Marker;
 	@Output() onSelectLocation = new EventEmitter<any>();
 
 

@@ -7,7 +7,7 @@ import {RestaurantSuggestionComponent} from './restaurant-suggestion.component';
 import {RestaurantListComponent} from './restaurant-list.component';
 import {RestaurantDetailComponent} from './restaurant-detail.component';
 
-import {SessionGuard} from '../com/widgets/session.guard';
+import {SessionGuard} from '../core/guards/session.guard';
 
 const restaurantRoutes: Routes = [
 	{

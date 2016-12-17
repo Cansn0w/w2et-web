@@ -5,7 +5,7 @@ import { ProfileComponent } from './profile.component';
 import { ProfileRecipeComponent } from './profile-recipe.component';
 import { ProfileRestaurantComponent } from './profile-restaurant.component';
 
-import { ProfileGuard } from '../com/widgets/profile.guard';
+import { ProfileGuard } from '../core/guards/profile.guard';
 
 const profileRoutes: Routes = [
 	{

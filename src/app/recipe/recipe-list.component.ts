@@ -5,10 +5,10 @@ import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from 'rxjs/Subscription';
 
-import {UserService} from '../com/user.service';
-import {Recipe} from './recipe.service';
-import {RecipeService} from './recipe.service'
-import {HelperService} from '../com/helper.service';
+import {UserService} from '../core/services/user.service';
+import {Recipe} from '../core/classes/recipe';
+import {RecipeService} from '../core/services/recipe.service'
+import {UtilService} from '../core/services/util.service';
 
 @Component({
 	selector: 'recipe-list',
@@ -29,7 +29,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
 
 	constructor(public user: UserService,
-	            private helper: HelperService,
+	            private helper: UtilService,
 	            private recipeService: RecipeService,
 	            private route: ActivatedRoute,) {
 	}

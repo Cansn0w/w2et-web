@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Cookie } from 'ng2-cookies/ng2-cookies'
 
-import { UserService } from '../com/user.service'
-import { AuthService } from './auth.service'
-
+import { UserService } from '../core/services/user.service'
+import { AuthService } from '../core/services/auth.service'
+import { LoginCredential, SignupCredential } from '../core/types';
 
 @Component({
 	selector: 'app-login',
@@ -14,18 +14,8 @@ export class SigninComponent implements OnInit {
 
 	islogin: boolean = true;
 	keepLoggedin: boolean = false;
-
-	loginData: {
-		email: string,
-		password: string,
-	};
-
-	regData: {
-		username: string,
-		email: string,
-		password1: string,
-		password2: string
-	};
+	loginData: LoginCredential;
+	regData: SignupCredential;
 
 	constructor(private user: UserService,
 	            private auth: AuthService,
@@ -33,7 +23,7 @@ export class SigninComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.islogin = window.location.href.endsWith('signup') ? false : true;
+		this.islogin = !window.location.href.endsWith('signup');
 		this.loginData = {email: '', password: ''};
 		this.regData = {username: '', email: '', password1: '', password2: ''};
 	}
@@ -66,7 +56,7 @@ export class SigninComponent implements OnInit {
 	}
 
 	// submit login credentials and obtain access token
-	submitLogin(loginData: any): void {
+	submitLogin(loginData: LoginCredential): void {
 		this.auth.login(loginData)
 			.then(response => {
 				// set user info, then redirect user
@@ -84,7 +74,7 @@ export class SigninComponent implements OnInit {
 	}
 
 	// submit registration credentials to obtain access token
-	submitSignup(regData: any): void {
+	submitSignup(regData: SignupCredential): void {
 		// validate password
 		if (regData.password1 !== regData.password2) {
 			alert('Please make sure your have entered the same password twice o.O ');

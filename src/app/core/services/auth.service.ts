@@ -3,8 +3,9 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise'
 
-import { HelperService } from '../com/helper.service';
-import { HOST } from '../com/config'
+import { UtilService } from './util.service';
+import { LoginCredential, SignupCredential } from '../types';
+import { HOST } from '../../shared/vendors'
 
 /*
  * Provide APIs to make authentication related requests
@@ -16,7 +17,7 @@ export class AuthService {
 
 	redirectUrl: string = '';
 
-	constructor(private helper: HelperService,
+	constructor(private helper: UtilService,
 	            private http: Http) {
 	}
 
@@ -60,7 +61,7 @@ export class AuthService {
 	}
 
 	// LOGIN
-	login(loginData: {}): Promise<any> {
+	login(loginData: LoginCredential): Promise<any> {
 		let body = JSON.stringify(loginData);
 		let options = this.json_header_opt();
 
@@ -71,7 +72,7 @@ export class AuthService {
 	}
 
 	// SIGN-UP
-	signup(regData: {}): Promise<any> {
+	signup(regData: SignupCredential): Promise<any> {
 		let body = JSON.stringify(regData);
 		let options = this.json_header_opt();
 

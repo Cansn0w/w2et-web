@@ -3,7 +3,7 @@
                  [zoom]="zoom"
                  (mapClick)="selectLoc($event)">
 
-    <!--User's current location-->
+    <!--User's current loc-->
     <sebm-google-map-marker
             [latitude]="loc.lat"
             [longitude]="loc.lng"
@@ -12,7 +12,7 @@
             (dragEnd)="selectLoc($event)">
         <sebm-google-map-info-window>
             <strong>
-                {{ loc.addr }}
+              {{ loc.addr }}
             </strong>
         </sebm-google-map-info-window>
 

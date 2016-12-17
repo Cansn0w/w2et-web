@@ -2,36 +2,13 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs';
 
-import '../com/config';
-import {HOST} from '../com/config';
+import '../../shared/vendors';
+import {HOST} from '../../shared/vendors';
 
-import {RecipeFilter} from './recipe-filter.component';
-import {HelperService} from '../com/helper.service';
+import { RecipeFilter } from '../classes/filters';
+import { UtilService } from '../services/util.service';
+import { Recipe } from '../classes/recipe';
 
-// Recipe data structure
-export class Recipe {
-	id: any;
-
-	name: string;
-	image: string;
-	url: string;
-
-	dairyFree: boolean;
-	glutenFree: boolean;
-	vegetarian: boolean;
-
-	ingredients: any[];
-	instructions: string;
-	duration: number;
-
-	bookmarked: boolean;
-
-	constructor(rcpData?: {}) {
-		if (rcpData)
-			for (let key in rcpData)
-				this[key] = rcpData[key];
-	}
-}
 /*
  * Recipe Service:
  * Manages the state of recipes filter and send requests to server for recipe data
@@ -46,7 +23,7 @@ export class RecipeService {
 	private filter = new RecipeFilter();
 
 	constructor(private http: Http,
-	            private helper: HelperService) {
+	            private helper: UtilService) {
 	}
 
 	// Recipe Filter handlers

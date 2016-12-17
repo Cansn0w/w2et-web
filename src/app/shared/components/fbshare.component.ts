@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FacebookInitialiser } from './fb.initialiser';
+import { FacebookInitialiser } from '../../core/services/fb.initialiser';
 
 declare var FB: any;
 /*

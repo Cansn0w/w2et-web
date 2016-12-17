@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {AgmCoreModule} from 'angular2-google-maps/core';
-import {SharedModule} from '../com/shared.module';
+import {SharedModule} from '../shared/shared.module';
 import { DropdownModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import {RestaurantComponent} from './restaurant.component';
@@ -12,10 +12,8 @@ import {RestaurantFilterComponent} from './restaurant-filter.component';
 
 import {GoogleMapComponent} from './googlemap.component'
 
-import {GeolocationService} from './geolocation.service'
-import {RestaurantService} from './restaurant.service'
 import {restaurantRouting} from './restaurant.routing'
-import {GOOGLE_MAP_API_KEY} from '../com/config'
+import {GOOGLE_MAP_API_KEY} from '../shared/vendors'
 
 
 @NgModule({
@@ -39,17 +37,8 @@ import {GOOGLE_MAP_API_KEY} from '../com/config'
 	],
 
 	exports: [
-		RestaurantComponent,
-		RestauranteHomeComponent,
-		RestaurantListComponent,
 		RestaurantDetailComponent,
 		RestaurantFilterComponent,
-		GoogleMapComponent,
-	],
-
-	providers: [
-		GeolocationService,
-		RestaurantService
 	]
 })
 

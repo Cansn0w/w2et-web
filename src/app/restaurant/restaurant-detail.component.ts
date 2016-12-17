@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import {Restaurant, RestaurantService} from './restaurant.service';
-import {UserService} from '../com/user.service';
+import {RestaurantService} from '../core/services/restaurant.service';
+import {Restaurant} from '../core/classes/restaurant';
+import {UserService} from '../core/services/user.service';
 
 @Component({
 	selector: 'restaurant-detail',
@@ -16,7 +17,6 @@ export class RestaurantDetailComponent implements OnInit {
 	            private route: ActivatedRoute,
 	            public user: UserService) {
 	}
-
 
 	ngOnInit() {
 		this.route.params.forEach((params: Params) => {

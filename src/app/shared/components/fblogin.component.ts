@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FacebookService, FacebookLoginResponse } from 'ng2-facebook-sdk/dist';
-import { FacebookInitialiser } from './fb.initialiser';
+import { FacebookInitialiser } from '../../core/services/fb.initialiser';
 
-import { HelperService } from '../helper.service';
+import { UtilService } from '../../core/services/util.service';
 
 @Component({
 	selector: 'facebook-login',
@@ -23,7 +23,7 @@ export class FacebookLoginButton {
 
 	constructor(private fb_init: FacebookInitialiser,
 	            private fb: FacebookService,
-	            private helper: HelperService ) {
+	            private helper: UtilService ) {
 	}
 
 	onFacebookLoginClick(): void {

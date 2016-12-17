@@ -3,8 +3,8 @@
  * Unit tests on shared utility functions:
  */
 
-import {RangePipe} from './widgets/range.pipe';
-import {HelperService} from './helper.service';
+import {RangePipe} from './pipes/range.pipe';
+import {UtilService} from '../core/services/util.service';
 
 
 describe('RangePipeTest', () => {
@@ -18,7 +18,7 @@ describe('RangePipeTest', () => {
 });
 
 describe('HelperUtiliityTests', () => {
-	let helper = new HelperService();
+	let helper = new UtilService();
 
 	it('list [1, "yo", 3] should contain 1', () => {
 		let lst = [1, 'yo', 3];

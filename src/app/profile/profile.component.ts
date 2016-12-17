@@ -4,9 +4,9 @@ import { Cookie } from 'ng2-cookies/src/cookie';
 
 import { ModalDirective } from 'ng2-bootstrap/components/modal/modal.component';
 
-import { UserService } from '../com/user.service';
-import { AuthService } from '../auth/auth.service';
-import { AccountData, PasswordData } from '../com/user.service';
+import { UserService } from '../core/services/user.service';
+import { AuthService } from '../core/services/auth.service';
+import { AccountData, PasswordData } from '../core/services/user.service';
 
 /*
  * Profile Component:

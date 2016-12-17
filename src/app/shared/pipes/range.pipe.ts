@@ -8,7 +8,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'range' })
 export class RangePipe implements PipeTransform {
 	constructor() {}
-	transform(num): Array<number> {
-		return Array(Math.ceil(num)).fill(null).map((x,i) => i);
+	transform(num: number): Array<number> {
+		console.log(num);
+		if (num) {
+			return Array(Math.ceil(num)).fill(null).map((x,i) => i);
+		}
 	}
 }

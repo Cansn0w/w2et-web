@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {RestaurantService} from './restaurant.service'
-import {GeolocationService, marker} from './geolocation.service'
+import {RestaurantService} from '../core/services/restaurant.service'
+import {GeolocationService} from '../core/services/geolocation.service'
 
 import {Subject} from 'rxjs/Subject';
+import {Marker} from '../core/types';
 
 @Component({
 	selector: 'restaurant-home',
@@ -13,10 +14,13 @@ import {Subject} from 'rxjs/Subject';
 export class RestauranteHomeComponent implements OnInit {
 
 	// The core communication middleware with google map
-	current_loc: marker = new marker(
-		// default google map centre.
-		-33.8858032, 151.1883326, 'You', true, ''
-	);
+	current_loc: Marker = {
+		lat: -33.8858032,
+		lng: 151.1883326,
+		label: 'You',
+		draggable: true,
+		addr: ''
+	};
 
 	searchAddr = new Subject<string>();
 
@@ -27,17 +31,17 @@ export class RestauranteHomeComponent implements OnInit {
 
 
 	ngOnInit() {
-		// ask for user's current geo location
+		// ask for user's current geo loc
 		this.geoService.getLocation({timeout: 200000, maximumAge: 300000})
 			.subscribe((pos) => {
-				this.onSelectLocation(new marker(
-					pos.coords.latitude,
-					pos.coords.longitude
-				));
+				this.onSelectLocation({
+					lat: pos.coords.latitude,
+					lng: pos.coords.longitude
+				} as Marker);
 			}, (error) => {
 				alert(error);
 			}, () => {
-				console.log('geo location finished');
+				console.log('geo loc finished');
 			});
 
 		// Listen to the user's typed address input;
@@ -56,25 +60,31 @@ export class RestauranteHomeComponent implements OnInit {
 	}
 
 	// UPDATERS
-	update_loc(loc: marker): void {
+	update_loc(loc: Marker): void {
 		this.geoService.convert_geo(loc, true) // true: reverse_geocoding, i.e, get address name by lat & lng
 			.subscribe(resp => {
 				if (resp.hasOwnProperty('results')) {
 					// get address
 					let addr = (resp['results'] ?
 						resp['results'][0]['formatted_address'] :
-						'Sorry, I can\t find the address for this location');
+						'Sorry, I can\'t find the address for this loc');
 
-					// update current location and update filter
+					// update current loc and update filter
 					this.restService.updateFilter('lat', loc.lat);
 					this.restService.updateFilter('lng', loc.lng);
-					this.current_loc = new marker(loc.lat, loc.lng, 'Y', true, addr);
+					this.current_loc = {
+						lat: loc.lat,
+						lng: loc.lng,
+						label: 'Y',
+						draggable: true,
+						addr: addr
+					};
 				}
 			});
 	}
 
 	// EVENTS
-	onSelectLocation(loc: marker): void {
+	onSelectLocation(loc: Marker): void {
 		this.update_loc(loc);
 	}
 

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Recipe } from "../recipe/recipe.service";
-import { Restaurant } from '../restaurant/restaurant.service'
-import { HOST } from './config';
+import { Recipe } from "../classes/recipe";
+import { Restaurant } from '../classes/restaurant';
+import { HOST } from '../../shared/vendors';
 
-import { HelperService } from './helper.service';
+import { UtilService } from './util.service';
 
 export interface AccountData { username?: string, image?: string, email?: string }
 export interface PasswordData { oldpassword: string, new_password1: string, new_password2: string }
@@ -38,7 +38,7 @@ export class UserService {
 	private favRestaurants: Restaurant[] = [];
 
 	constructor(private http: Http,
-	            private helper: HelperService) {
+	            private helper: UtilService) {
 		this.reset();
 	}
 
@@ -96,11 +96,8 @@ export class UserService {
 	getFavRestaurants() { return this.favRestaurants; }
 
 	reset(): void {
-		this.token = '';
-		this.email = '';
-		this.username = '';
-		this.favRecipes = [];
-		this.favRestaurants = [];
+		[this.token, this.email, this.username] = ['', '', ''];
+		[this.favRecipes, this.favRestaurants] = [[], []];
 		this.hasLoggedIn = false;
 	}
 

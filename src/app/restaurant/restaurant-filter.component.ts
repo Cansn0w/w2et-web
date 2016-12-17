@@ -15,7 +15,7 @@ export class RestaurantFilterComponent {
 	ratings: any[] = [1, 2, 3, 4, 5];
 	distances: any [] = [1500, 1250, 1000, 750, 500, 250];
 
-	// categories depend on the restaurants found by geo-location
+	// categories depend on the restaurants found by geo-loc
 	categories: string[] = [];
 
 	constructor() {
@@ -30,22 +30,3 @@ export class RestaurantFilterComponent {
 	}
 }
 
-export class RestaurantFilter {
-
-	public lat: number = -33.8858032;
-	public lng: number = 151.1883326;
-
-
-	constructor() {
-
-	}
-
-	get url(): string {
-		let options = [];
-		for (let key in this)
-			if (this[key] && typeof this[key] !== 'function')
-				options.push(key + '=' + this[key]);
-
-		return options.join(';')
-	}
-}

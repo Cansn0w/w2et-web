@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Cookie } from 'ng2-cookies/src/cookie'
 
 /*

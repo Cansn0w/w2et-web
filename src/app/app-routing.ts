@@ -5,7 +5,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {SigninComponent} from './auth/signin.component';
 
-import {SessionGuard} from './com/widgets/session.guard';
+import {SessionGuard} from './core/guards/session.guard';
 
 /*
  * See the 'Router Map' section in frontend doc.

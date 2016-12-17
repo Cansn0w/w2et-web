@@ -1,43 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 
-import {RestaurantFilter} from './restaurant-filter.component';
+import { RestaurantFilter } from '../classes/filters';
+import { Restaurant } from '../classes/restaurant';
+import { Observable } from 'rxjs';
+import { HOST } from  '../../shared/vendors';
 
-import {Observable} from 'rxjs';
-import {HOST} from '../com/config';
-
-import '../com/config'
+import '../../shared/vendors'
 import * as Collections from 'typescript-collections';
-import {HelperService} from '../com/helper.service';
+import { UtilService } from '../services/util.service';
 
-// Restaurant
-export class Restaurant {
-
-	name: string;
-	categories: any[];
-
-	id: string;
-	url: string;
-	image: string;
-	rating: number;
-
-	lat: number;
-	lng: number;
-	distance: number;
-	address: string;
-
-	bookmarked: boolean;
-
-	constructor(restData? : {}) {
-		if (restData)
-			for (let key in restData)
-				this[key] = restData[key];
-	}
-
-	flatterned_categories(): string[] {
-		return this.categories.map((c) => c['category']);
-	}
-}
 
 // SEARCH HISTORY
 type History = { filterUrl: string, result: Restaurant[] };
@@ -92,7 +64,7 @@ export class RestaurantService {
 	private history = new SearchHistory(5);
 
 	constructor(private http: Http,
-	            private helper: HelperService) {
+	            private helper: UtilService) {
 	}
 
 	// History

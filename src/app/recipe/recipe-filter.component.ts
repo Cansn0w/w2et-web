@@ -22,22 +22,3 @@ export class RecipeFilterComponent {
 	}
 }
 
-export class RecipeFilter {
-	keyword: string = '';
-	cuisine: string = '';
-	diet: string = '';
-	intolerance: string = '';
-
-	constructor() {
-	}
-
-	// parse filter object to url string, which is then used in router params
-	get url(): string {
-		let options = [];
-		for (let key in this)
-			if (this[key] && typeof this[key] !== 'function')
-				options.push(key + '=' + this[key]);
-
-		return options.join(';')
-	}
-}

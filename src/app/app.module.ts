@@ -5,14 +5,13 @@ import {HttpModule} from '@angular/http';
 import {RecipeModule} from './recipe/recipe.module';
 import {RestaurantModule} from './restaurant/restaurant.module'
 import {ProfileModule} from './profile/profile.module';
-import {SharedModule} from './com/shared.module'
+import {SharedModule} from './shared/shared.module'
+import {CoreModule} from './core/core.module';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {SigninComponent} from './auth/signin.component';
 
-import {UserService} from './com/user.service'
-import {AuthService} from './auth/auth.service'
 import {app_routing} from './app-routing'
 
 @NgModule({
@@ -21,6 +20,7 @@ import {app_routing} from './app-routing'
 		HttpModule,
 
 		SharedModule,
+		CoreModule,
 		RecipeModule,
 		RestaurantModule,
 		ProfileModule,
@@ -31,10 +31,6 @@ import {app_routing} from './app-routing'
 		AppComponent,
 		HomeComponent,
 		SigninComponent,
-	],
-	providers: [
-		UserService,
-		AuthService,
 	],
 	bootstrap: [AppComponent]
 })

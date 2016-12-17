@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Recipe } from  '../recipe/recipe.service'
-import { UserService } from '../com/user.service';
+import { Recipe } from  '../core/classes/recipe'
+import { UserService } from '../core/services/user.service';
 
 /*
  * Reuses recipe-list template to display user's favorite recipes
@@ -13,7 +13,6 @@ import { UserService } from '../com/user.service';
 export class ProfileRecipeComponent implements OnInit {
 	// indicator to tell the template not to include the filter component
 	atProfile: boolean = true;
-
 	recipes: Recipe[] = [];
 
 	constructor(public user: UserService) {

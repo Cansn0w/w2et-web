@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Restaurant } from  '../restaurant/restaurant.service'
+import { Restaurant } from  '../core/classes/restaurant';
 
-import { UserService } from '../com/user.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
 	selector: 'profile-restaurant',

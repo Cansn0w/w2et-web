@@ -5,9 +5,10 @@ import {RestaurantFilterComponent} from './restaurant-filter.component'
 import {Subject} from 'rxjs/Subject';
 import {Subscription} from 'rxjs/Subscription';
 
-import {RestaurantService, Restaurant} from './restaurant.service'
-import {UserService} from '../com/user.service';
-import {HelperService} from '../com/helper.service';
+import {RestaurantService} from '../core/services/restaurant.service'
+import {Restaurant} from '../core/classes/restaurant';
+import {UserService} from '../core/services/user.service';
+import {UtilService} from '../core/services/util.service';
 
 @Component({
 	selector: 'restaurant-list',
@@ -30,7 +31,7 @@ export class RestaurantListComponent implements OnInit, OnDestroy {
 	private searchTerm = new Subject<{key: string, value: string}>();
 
 	constructor(public  user: UserService,
-	            private helper: HelperService,
+	            private helper: UtilService,
 	            private route: ActivatedRoute,
 	            private restService: RestaurantService) {
 	}

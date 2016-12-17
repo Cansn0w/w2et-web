@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FacebookService, FacebookInitParams } from 'ng2-facebook-sdk/dist';
 
-import { FACEBOOK_API_KEY } from '../config';
+import { FACEBOOK_API_KEY } from '../../shared/vendors';
 
 /*
  * lazy-initialisation of facebook services

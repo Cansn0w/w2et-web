@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Recipe, RecipeService } from './recipe.service';
-import { UserService } from '../com/user.service';
+import { Recipe } from '../core/classes/recipe';
+import { RecipeService } from '../core/services/recipe.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
 	selector: 'recipe-detail',
@@ -11,7 +12,7 @@ import { UserService } from '../com/user.service';
 export class RecipeDetailComponent implements OnInit {
 
 	recipe: Recipe;
-	size: number = 4;
+	readonly recipesPerRow: number = 4;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -34,5 +35,17 @@ export class RecipeDetailComponent implements OnInit {
 			return "glyphicon glyphicon-ok-circle";
 		else
 			return "glyphicon glyphicon-remove-sign";
+	}
+
+	idx(rowNum, colNum): number {
+		return rowNum * this.recipesPerRow + colNum;
+	}
+
+	colWidthClass() {
+		return {
+			'col-xs-6': this.recipesPerRow === 2,
+			'col-xs-4': this.recipesPerRow === 3,
+			'col-xs-3': this.recipesPerRow === 4,
+		}
 	}
 }

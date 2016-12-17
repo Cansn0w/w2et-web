@@ -6,7 +6,7 @@ import { RecipeHomeComponent } from './recipe-home.component'
 import { RecipeDetailComponent } from './recipe-detail.component'
 import { RecipeListComponent } from './recipe-list.component'
 
-import {SessionGuard} from '../com/widgets/session.guard';
+import {SessionGuard} from '../core/guards/session.guard';
 
 const recipeRoutes: Routes = [
 	{
