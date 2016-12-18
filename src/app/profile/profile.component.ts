@@ -66,16 +66,15 @@ export class ProfileComponent implements OnInit {
 	}
 
 	submitAccountUpdate(data: AccountData): void {
-		this.user.updateAccountData(data, (succ) => {
-			if (succ) {
-				this.hideEditModal();
-				this.user.loadUserData(data);
-				this.reset();
-			}
-			else {
-				alert('Sorry, there is something wrong and your account cannot be updated')
-			}
-		})
+		this.user.updateAccountData(data).then(ok => {
+				if (ok) {
+					this.hideEditModal();
+					this.user.setUserData(data);
+					this.reset();
+				} else {
+					alert('Sorry, there is something wrong and your account cannot be updated')
+				}
+			});
 	}
 
 	submitPasswordChange(data: PasswordData): void {
@@ -84,10 +83,10 @@ export class ProfileComponent implements OnInit {
 			return;
 		}
 
-		this.user.changePassword(data, (succ) => {
-			if (succ) this.hideEditModal();
-			else alert('Sorry, there is something wrong and your password cannot be reset');
-		})
+		this.user.changePassword(data).then(ok => {
+				if (ok) this.hideEditModal();
+				else alert('Sorry, there is something wrong and your password cannot be reset');
+			});
 	}
 
 	jump(path: string): void {

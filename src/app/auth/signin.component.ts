@@ -56,55 +56,47 @@ export class SigninComponent implements OnInit {
 	}
 
 	// submit login credentials and obtain access token
-	submitLogin(loginData: LoginCredential): void {
-		this.auth.login(loginData)
-			.then(response => {
-				// set user info, then redirect user
-				this.user.fetchUserData(response.key, (succ) => {
-					if (this.keepLoggedin) this.set_cookie('token', response.key);
-					this.redirect();
-				});
-			})
-			.catch(err => {
-				if (err.status == 403 || err.status == 400) {
+	submitLogin = async function (loginData: LoginCredential) {
+		let response = await this.auth.login(loginData)
+			.catch(error => {
+				if (error.status == 403 || error.status == 400) {
 					alert('Invalid Credential!');
 					this.delete_cookies();
 				}
-			})
-	}
+			});
+
+		let ok = await this.user.fetchUserData(response.key);
+		if (ok) {
+			if (this.keepLoggedin) this.set_cookie('token', response.key);
+			this.redirect();
+		}
+	};
 
 	// submit registration credentials to obtain access token
-	submitSignup(regData: SignupCredential): void {
+	submitSignup = async function(regData: SignupCredential) {
 		// validate password
 		if (regData.password1 !== regData.password2) {
 			alert('Please make sure your have entered the same password twice o.O ');
-			return;
+			return Promise.reject(null);
 		}
+		let response = await this.auth.signup(regData).catch(error => alert(error.toString()));
 
-		// submit signup credentials to obtain access token
-		this.auth.signup(regData)
-			.then(response => {
-				// set user info & redirect to homepage
-				this.user.fetchUserData(response.key, (succ) => {
-					this.redirect();
-				});
-			})
-			.catch(error => alert(error.toString()))
-	}
+		let ok = await this.user.fetchUserData(response.key);
+		if (ok) this.redirect();
+	};
 
 	// EVENTS
-	facebookLogin(fbresponse: any): void {
+	facebookLogin = async function(fbresponse: any) {
 		if (fbresponse.code == 200) {
-			this.auth.fb_signup(fbresponse.data.accessToken)
-				.then(response => response.key)
-				.then(token => this.user.fetchUserData(token, (succ) => {
-					if (this.keepLoggedin) this.set_cookie('token', token);
-					this.redirect();
-				}))
-				.catch(error => alert(error.toString()));
-		}
-		else {
+			let response = await this.auth.fb_signup(fbresponse.data.accessToken).catch(error => alert(error.toString()));
+
+			let ok = await this.user.fetchUserData(response.key);
+			if (ok) {
+				if (this.keepLoggedin) this.set_cookie('token', response.key);
+				this.redirect();
+			}
+		} else {
 			alert(fbresponse.message);
 		}
-	}
+	};
 }

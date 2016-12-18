@@ -22,13 +22,11 @@ export class RestaurantDetailComponent implements OnInit {
 		this.route.params.forEach((params: Params) => {
 			let id = params['id'];
 			this.restService.fetchRestaurantDetail(id)
-				.subscribe(
-					restaurant => {
+				.then ((restaurant: Restaurant) => {
 						if (this.user.hasFavored(restaurant)) restaurant.bookmarked = true;
 						this.restaurant = restaurant;
-					},
-					error => console.log(error)
-				);
+					}
+				).catch(console.error);
 		});
 	}
 

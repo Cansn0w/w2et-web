@@ -15,17 +15,6 @@ export interface PasswordData { oldpassword: string, new_password1: string, new_
  * Maintains a local copy of user data and exposes interfaces to modify its states.
  * All requests changing or retrieving user states are sent from to the server
  * All requests must have an authentication header containing user token.
- *
- * Signatures:
- *
- * > updateAccountData(accountData: AccountData, callback):
- * > changePassword(pswData: PasswordData, callback)
- *
- * > fetchFav(term: string): Promise<any[]>
- * > fav(object: any, callback): void
- * > unfav(object: any, callback): void
- * > bookmark(object: any) : void
- * > fetchUserData(token: string, callback): void
  */
 @Injectable()
 export class UserService {
@@ -86,6 +75,13 @@ export class UserService {
 
 	// SETTERS
 	setToken(token: string) { this.token = token; }
+	setUserData(userdata: AccountData): void {
+		this.email = userdata['email'];
+		this.username = userdata['username'];
+		this.image = userdata['image'];
+		this.hasLoggedIn = true;
+	}
+
 
 	// GETTERS
 	getToken() { return this.token; }
@@ -101,68 +97,48 @@ export class UserService {
 		this.hasLoggedIn = false;
 	}
 
-
-	// Initialise user data content.
-	// Userdata should be first fetched from server
-	loadUserData(userdata: AccountData): void {
-		this.email = userdata['email'];
-		this.username = userdata['username'];
-		this.image = userdata['image'];
-		this.hasLoggedIn = true;
-	}
-
 	// Add a recipe/restaurant to user's fav list. Called by bookmark()
-	fav(object: any, callback): void {
+	fav(object: Recipe | Restaurant): Promise<boolean> {
 		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
-		this.http.put(this.getEndpoint('setfavorite' + term) + object.id, {}, this.requestOption())
+		return this.http.put(this.getEndpoint('setfavorite' + term) + object.id, {}, this.requestOption())
 			.toPromise()
-			.then(response => {
-				let succ = false;
-
-				if (response.status == 204) {
-					// reset local copy of user's favorite term.
-					if (term == 'recipe') this.favRecipes.push(object);
-					if (term == 'restaurant') this.favRestaurants.push(object);
-					succ = true;
+			.then(response => response.status == 204)
+			.then(succ => {
+				if (succ) {
+					if (term == 'recipe') this.favRecipes.push(<Recipe>object);
+					if (term == 'restaurant') this.favRestaurants.push(<Restaurant>object);
 				}
-
-				callback(succ);
+				return succ;
 			})
 			.catch(this.helper.handleError);
 	}
+
 	// Remove a recipe/restaurant from user's fav list. Called by bookmark()
-	unfav(object: any, callback): void {
+	unfav(object: Recipe | Restaurant): Promise<boolean> {
 		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
-		this.http.delete(this.getEndpoint('setfavorite' + term) + object.id, this.requestOption())
+		return this.http.delete(this.getEndpoint('setfavorite' + term) + object.id, this.requestOption())
 			.toPromise()
-			.then(response => {
-				let succ = false;
-
-				if (response.status == 204) {
-					// reset local copy of user's favorite term.
-					if (term == 'recipe') this.favRecipes = this.helper.removeItem(this.favRecipes, object);
-					if (term == 'restaurant') this.favRestaurants = this.helper.removeItem(this.favRestaurants, object);
-					succ = true;
+			.then(response => response.status == 204)
+			.then(succ => {
+				if (succ) {
+					if (term == 'recipe') this.favRecipes = this.helper.removeItem(this.favRecipes, <Recipe>object);
+					if (term == 'restaurant') this.favRestaurants = this.helper.removeItem(this.favRestaurants, <Restaurant>object);
 				}
-
-				callback(succ);
+				return succ
 			})
 			.catch(this.helper.handleError);
 	}
 
-	fetchUserData(token: string, callback): void {
+	fetchUserData(token: string): Promise<boolean> {
 		this.token = token;
-
-		this.http.get(this.getEndpoint('getuser'), this.requestOption())
+		return this.http.get(this.getEndpoint('getuser'), this.requestOption())
 			.toPromise()
-			.then(response => this.loadUserData(response.json()))
-			.then(_ => this.fetchFav('recipes'))
-			.then(_ => this.fetchFav('restaurants'))
-			.then(_ => callback(true))
+			.then(response => this.setUserData(response.json()))
+			.then(_ => Promise.all([this.fetchFav('recipes'), this.fetchFav('restaurants')]))
+			.then(_ => true) // user data is successfully loaded
 			.catch(err => {
 				this.helper.handleError(err);
 				this.reset();
-				callback(false);
 			})
 	}
 
@@ -171,25 +147,21 @@ export class UserService {
 	 * Fetches a list of user favorite recipes/restaurants from server and set
 	 * the 'bookmarked' field as true.
 	 */
-	fetchFav(term: string): Promise<any[]> {
+	fetchFav(term: 'recipes' | 'restaurants'): Promise<any[]> {
 		let local: any[] = term == 'recipes' ? this.favRecipes : this.favRestaurants;
-		if (local.length != 0) {
-			return Promise.resolve(local);
-		}
-		else {
-			return this.http.get(this.getEndpoint('favorite' + term), this.requestOption())
-				.toPromise()
-				.then(response => {
-					// save data of user fav to local copy;
-					response.json()
-						.map(r => {
-							r['bookmarked'] = true;
-							local.push(term == 'recipes' ? new Recipe(r) : new Restaurant(r));
-						});
-					return local;
-				})
-				.catch(this.helper.handleError);
-		}
+		if (local.length != 0) return Promise.resolve(local);
+
+		return this.http.get(this.getEndpoint('favorite' + term), this.requestOption())
+			.toPromise()
+			.then(response => {
+				// save data of user fav to local copy;
+				response.json().map(r => {
+						r['bookmarked'] = true;
+						local.push(term == 'recipes' ? new Recipe(r) : new Restaurant(r));
+					});
+				return local;
+			})
+			.catch(this.helper.handleError);
 	}
 
 	// Fav/unfav a recipe or restaurant
@@ -202,10 +174,10 @@ export class UserService {
 		let term = object.constructor.name == Recipe.name ? 'recipe' : 'restaurant';
 		let method = object.bookmarked ? this.unfav : this.fav;
 
-		method.call(this, object, (succ) => {
-			succ ?
+		method.call(this, object).then(ok => {
+			ok ?
 				object.bookmarked = !object.bookmarked :
-				alert('Sorry we got a problem and could not edit ' + term + ' favorite for you :( .. ');
+				alert('Sorry we got a problem and could not edit your favorite ' + term + ' for you :( .. ');
 		});
 	}
 
@@ -216,20 +188,20 @@ export class UserService {
 			this.helper.contains(this.favRestaurants, object, 'id')
 	}
 
-	updateAccountData(accountData: AccountData, callback): void {
+	updateAccountData(accountData: AccountData): Promise<boolean> {
 		let body = JSON.stringify(accountData);
 
-		this.http.put(this.getEndpoint('setuserdata'), body, this.requestOption())
+		return this.http.put(this.getEndpoint('setuserdata'), body, this.requestOption())
 			.toPromise()
-			.then(response => callback(response.status == 200))
+			.then(response => response.status == 200)
 			.catch(this.helper.handleError);
 	}
 
-	changePassword(pswData: PasswordData, callback): void {
+	changePassword(pswData: PasswordData): Promise<boolean> {
 		let body = JSON.stringify(pswData);
-		this.http.post(this.getEndpoint('changepassword'), body, this.requestOption())
+		return this.http.post(this.getEndpoint('changepassword'), body, this.requestOption())
 			.toPromise()
-			.then(response => callback(response.status == 200))
+			.then(response => response.status == 200)
 			.catch(this.helper.handleError);
 	}
 }

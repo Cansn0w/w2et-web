@@ -18,10 +18,10 @@ export class SessionGuard implements CanActivate {
 
 		if (Cookie.check('token')) {
 			let token = Cookie.get('token');
-			this.user.fetchUserData(token, (succ) => {
-				if (!succ)
-					Cookie.delete('token');
-			});
+			this.user.fetchUserData(token)
+				.then(ok => {
+					if (!ok) Cookie.delete('token');
+			}).catch(error => Cookie.delete('token'));
 		}
 		return true;
 	}

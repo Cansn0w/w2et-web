@@ -25,11 +25,6 @@ export class ProfileRestaurantComponent implements OnInit {
 	}
 
 	unfavRestaurant(rest: Restaurant): void {
-		this.user.unfav(rest, (succ) => {
-			if (succ)
-				this.getFavRestaurants();
-			else
-				alert('Sorry this restaurant could not be removed...');
-		})
+		this.user.unfav(rest).then(ok => ok ? this.getFavRestaurants() : alert('Sorry this restaurant could not be removed...'));
 	}
 }

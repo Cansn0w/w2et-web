@@ -1,3 +1,4 @@
+
 /********* USER *********/
 export interface LoginCredential {
 	email: string;

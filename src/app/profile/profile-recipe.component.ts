@@ -27,12 +27,7 @@ export class ProfileRecipeComponent implements OnInit {
 	}
 
 	unfavRecipe(recipe: Recipe): void {
-		this.user.unfav(recipe, (succ) => {
-			if (succ)
-				this.getFavRecipes();
-			else
-				alert('Sorry this recipe could not be removed...');
-		})
+		this.user.unfav(recipe).then(ok => ok ? this.getFavRecipes() : alert('Sorry this recipe could not be removed...'));
 	}
 }
 

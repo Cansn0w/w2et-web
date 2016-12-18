@@ -6,6 +6,7 @@ import {RestaurantService} from '../core/services/restaurant.service';
 import {Restaurant} from '../core/classes/restaurant';
 import {Observable} from 'rxjs/Observable';
 import {Marker} from '../core/types';
+import '../shared/vendors';
 
 @Component({
 	selector: 'google-map',
@@ -27,7 +28,7 @@ export class GoogleMapComponent implements OnInit, OnChanges {
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
 		if (this.showNearbyRestaurants)
-			this.restaurants = this.restService.fetchRestaurants();
+			this.restaurants = Observable.fromPromise(this.restService.fetchRestaurants());
 	}
 
 	constructor(private restService: RestaurantService,
