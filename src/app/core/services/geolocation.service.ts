@@ -23,7 +23,7 @@ export class GeolocationService {
 		return Promise.reject(error.message || error);
 	}
 
-	public convert_geo(geoinfo: any, reverse = false): Observable<any> {
+	public convertGeo(geoinfo: any, reverse = false): Observable<any> {
 		let formatted_url = reverse ?
 			`https://maps.googleapis.com/maps/api/geocode/json?latlng=${geoinfo.lat},${geoinfo.lng}&key=${GOOGLE_MAP_API_KEY}` :
 			`https://maps.googleapis.com/maps/api/geocode/json?address=${geoinfo}&key=${GOOGLE_MAP_API_KEY}`;

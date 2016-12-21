@@ -1,3 +1,14 @@
+/********* USER *********/
+export interface QuestionSpec<T> {
+	value?: T;
+	key?: string;
+	label?: string;
+	type?: string;
+	controlType?: string;
+	feedbacks?: { [name: string]: string };
+	constraints?: { [name: string]: any }; // expected keys: ['required', 'pattern', 'minlength', 'maxlength', 'email']
+}
+
 
 /********* USER *********/
 export interface LoginCredential {

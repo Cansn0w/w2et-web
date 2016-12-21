@@ -3,7 +3,8 @@ import { ModuleWithProviders } from '@angular/core'
 import {Routes, RouterModule} from '@angular/router';
 
 import {HomeComponent} from './home/home.component';
-import {SigninComponent} from './auth/signin.component';
+import {LoginComponent} from './auth/login.component';
+import {SignupComponent} from './auth/signup.component';
 
 import {SessionGuard} from './core/guards/session.guard';
 
@@ -15,9 +16,8 @@ const routes: Routes = [
 		path: '',
 		canActivate: [SessionGuard],
 		children: [
-			{ path: 'signin', component: SigninComponent },
-			{ path: 'signup', component: SigninComponent },
-			{ path: 'login', component: SigninComponent },
+			{ path: 'signup', component: SignupComponent },
+			{ path: 'login', component: LoginComponent },
 			{ path: '', component: HomeComponent },
 			{ path: '**', redirectTo: '',  pathMatch: 'full'},
 		]

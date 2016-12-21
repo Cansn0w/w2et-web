@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise'
 import { UtilService } from './util.service';
 import { LoginCredential, SignupCredential } from '../types';
 import { HOST } from '../../shared/vendors'
+import { Cookie } from 'ng2-cookies/src/cookie'
 
 /*
  * Provide APIs to make authentication related requests
@@ -21,8 +22,20 @@ export class AuthService {
 	            private http: Http) {
 	}
 
+	// Cookie management
+	static setCookie(name: string, val: string, dur?: number): void {
+		let duration = dur || 10;
+		Cookie.set(name, val, duration /*days from now*/);
+	}
+	static deleteCookies(cookieName?: string): void {
+		if (cookieName)  Cookie.delete(cookieName);
+		else Cookie.deleteAll();
+	}
+	static hasCookie(cookieName: string): boolean { return Cookie.check(cookieName) }
+	static getCookie(cookieName: string): string { return Cookie.get(cookieName) }
+
 	// build access endpoint
-	private get_endpoint(type: string): string {
+	private getEndpoint(type: string): string {
 		let path = '';
 		switch (type) {
 			case 'login':
@@ -43,29 +56,31 @@ export class AuthService {
 		return HOST + path;
 	}
 
-	// Build request headers
-	private cred_header_opt(token: string): RequestOptions {
+	private authHeaderOption(token: string): RequestOptions {
 		return new RequestOptions({
 			headers: new Headers({'Authorization': 'Token ' + token})
 		});
 	}
 
-	private json_header_opt(): RequestOptions {
+	private jsonHeaderOption(): RequestOptions {
 		return new RequestOptions({
 			headers: new Headers({'Content-Type': 'application/json'})
 		});
 	}
 
-	restore(): void {
-		this.redirectUrl = '';
+	private simplePOST(url, body, options={}): Promise<any> {
+		return this.http.post(url, body, options)
+			.toPromise()
+			.then(response => response.json())
+			.catch(this.helper.handleError);
 	}
 
 	// LOGIN
 	login(loginData: LoginCredential): Promise<any> {
 		let body = JSON.stringify(loginData);
-		let options = this.json_header_opt();
+		let options = this.jsonHeaderOption();
 
-		return this.http.post(this.get_endpoint('login'), body, options)
+		return this.http.post(this.getEndpoint('login'), body, options)
 			.toPromise()
 			.then(response => response.json())
 			.catch(error => Promise.reject(error))
@@ -74,30 +89,20 @@ export class AuthService {
 	// SIGN-UP
 	signup(regData: SignupCredential): Promise<any> {
 		let body = JSON.stringify(regData);
-		let options = this.json_header_opt();
-
-		return this.http.post(this.get_endpoint('signup'), body, options)
-			.toPromise()
-			.then(response => response.json())
-			.catch(this.helper.handleError);
+		let options = this.jsonHeaderOption();
+		return this.simplePOST(this.getEndpoint('signup'), body, options);
 	}
 
 	// LOGOUT -
 	logout(token: string): Promise<any> {
-		let options = this.cred_header_opt(token);
-		return this.http.post(this.get_endpoint('logout'), {}, options)
-			.toPromise()
-			.then(response => response.json())
-			.catch(this.helper.handleError);
+		let options = this.authHeaderOption(token);
+		return this.simplePOST(this.getEndpoint('logout'), {}, options);
 	}
 
 	// THIRD-PARTY SIGNUP - FB
-	fb_signup(accessToken: string): Promise<any> {
-		let options = this.json_header_opt();
+	fbSignup(accessToken: string): Promise<any> {
+		let options = this.jsonHeaderOption();
 		let body = JSON.stringify({access_token : accessToken});
-		return this.http.post(this.get_endpoint('facebooklogin'), body, options)
-			.toPromise()
-			.then(response => response.json())
-			.catch(this.helper.handleError);
+		return this.simplePOST(this.getEndpoint('facebooklogin'), body, options);
 	}
 }

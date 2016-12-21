@@ -10,7 +10,8 @@ import {CoreModule} from './core/core.module';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import {SigninComponent} from './auth/signin.component';
+import {LoginComponent} from './auth/login.component';
+import {SignupComponent} from './auth/signup.component';
 
 import {app_routing} from './app-routing'
 
@@ -30,7 +31,8 @@ import {app_routing} from './app-routing'
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		SigninComponent,
+		LoginComponent,
+		SignupComponent
 	],
 	bootstrap: [AppComponent]
 })

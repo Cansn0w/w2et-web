@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Cookie } from 'ng2-cookies/src/cookie';
-
-import { ModalDirective } from 'ng2-bootstrap/components/modal/modal.component';
+import { QuestionBase, TextboxQuestion } from '../core/classes/form-questions';
 
 import { UserService } from '../core/services/user.service';
+import { QuestionControlService } from "../core/services/question-control.service";
 import { AuthService } from '../core/services/auth.service';
 import { AccountData, PasswordData } from '../core/services/user.service';
+
+import { ModalDirective } from 'ng2-bootstrap/components/modal/modal.component';
+import {FormGroup} from "@angular/forms";
 
 /*
  * Profile Component:
@@ -19,14 +21,56 @@ import { AccountData, PasswordData } from '../core/services/user.service';
 export class ProfileComponent implements OnInit {
 
 	@ViewChild('editModal') public editModal: ModalDirective;
+	defaultProfileImg: string = 'assets/default_profile.png';
+
 	accountdata: AccountData;
 	passworddata: PasswordData;
+	accountForm: FormGroup;
+	passwordForm: FormGroup;
 
-	default_profile_img: string = 'assets/default_profile.png';
+	accountFormQuestions: QuestionBase<string>[] = [
+		new TextboxQuestion({
+			key: 'username',
+			label: 'Username',
+			type: 'text',
+			feedbacks: { required: 'username is required'},
+			constraints: { required: true }
+		}),
+		new TextboxQuestion({
+			key: 'image',
+			label: 'Image',
+			type: 'url',
+			feedbacks: { required: 'please specify your profile image url'},
+			constraints: { required: true }
+		}),
+	];
+
+	passwordFormQuestions: QuestionBase<string>[] = [
+		new TextboxQuestion(Object.assign({
+			key: 'oldpassword',
+			label: 'Old Password',
+			type: 'password'
+		}, this.qControlService.passwordVadSpec())),
+		new TextboxQuestion(Object.assign({
+			key: 'new_password1',
+			label: 'New Password',
+			type: 'password'
+		}, this.qControlService.passwordVadSpec())),
+		new TextboxQuestion({
+			key: 'new_password2',
+			label: 'Confirm Password',
+			type: 'password',
+			feedbacks: { required: 'please re-enter your new password' },
+			constraints: { required: true }
+		}),
+	];
 
 	constructor(private user: UserService,
+	            private qControlService: QuestionControlService,
 	            private auth: AuthService,
 	            private router: Router) {
+		this.accountForm = this.qControlService.toFormGroup(this.accountFormQuestions);
+		this.passwordForm = this.qControlService.toFormGroup(this.passwordFormQuestions);
 	}
 
 	ngOnInit() {
@@ -51,8 +95,8 @@ export class ProfileComponent implements OnInit {
 			.then(response => {
 				if ('success' in response) {
 					this.user.reset();
-					if (Cookie.check('token')) Cookie.delete('token');
 					this.router.navigate(['/']);
+					AuthService.deleteCookies()
 				}
 			});
 	}

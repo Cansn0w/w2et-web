@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
 import { UserService } from '../services/user.service';
-import { Cookie } from 'ng2-cookies/src/cookie'
+import { AuthService as auth } from "../services/auth.service";
 
 /*
  * This guard attribute is to be used for pages that are only
@@ -16,12 +16,11 @@ export class SessionGuard implements CanActivate {
 	canActivate(): boolean {
 		if (this.user.isLoggedIn()) return true;
 
-		if (Cookie.check('token')) {
-			let token = Cookie.get('token');
-			this.user.fetchUserData(token)
-				.then(ok => {
-					if (!ok) Cookie.delete('token');
-			}).catch(error => Cookie.delete('token'));
+		if (auth.hasCookie('token')) {
+			let token = auth.getCookie('token');
+			this.user.fetchUserData(token).then(ok => {
+					if (!ok) auth.deleteCookies('token');
+			}).catch(error => auth.deleteCookies('token'));
 		}
 		return true;
 	}

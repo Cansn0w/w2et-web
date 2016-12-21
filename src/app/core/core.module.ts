@@ -12,6 +12,7 @@ import { RestaurantService } from './services/restaurant.service';
 import { GeolocationService } from './services/geolocation.service';
 import { FacebookService } from 'ng2-facebook-sdk/dist';
 import { FacebookInitialiser } from './services/fb.initialiser';
+import { QuestionControlService } from './services/question-control.service';
 
 @NgModule({
 	imports: [SharedModule],
@@ -26,6 +27,7 @@ import { FacebookInitialiser } from './services/fb.initialiser';
 		AuthService,
 		RestaurantService,
 		GeolocationService,
+		QuestionControlService,
 
 		FacebookInitialiser
 	]

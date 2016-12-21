@@ -48,7 +48,7 @@ export class RestauranteHomeComponent implements OnInit {
 		// Submit the address name to GoogleGeo service to get lat/lng, then updates the google map.
 		this.searchAddr.debounceTime(1500).distinctUntilChanged().subscribe(
 			addr => {
-				this.geoService.convert_geo(addr) // get lat and lng by address name
+				this.geoService.convertGeo(addr) // get lat and lng by address name
 					.subscribe(resp => {
 						if (resp.hasOwnProperty('results')) {
 							let loc = resp['results'][0]['geometry']['location'];
@@ -61,7 +61,7 @@ export class RestauranteHomeComponent implements OnInit {
 
 	// UPDATERS
 	update_loc(loc: Marker): void {
-		this.geoService.convert_geo(loc, true) // true: reverse_geocoding, i.e, get address name by lat & lng
+		this.geoService.convertGeo(loc, true) // true: reverse_geocoding, i.e, get address name by lat & lng
 			.subscribe(resp => {
 				if (resp.hasOwnProperty('results')) {
 					// get address

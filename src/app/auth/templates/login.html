@@ -1,0 +1,35 @@
+<div class="container narrow-container" style="padding-top: 5%;">
+
+  <!--LOG IN-->
+    <div class="well login-header">
+      <h3 style="color:white;font-size:20px;">Log in to your account</h3>
+    </div>
+    <div class="col-xs-12 well login-content">
+      <div class="form-group col-md-12" style="padding-bottom: 20px;">
+        <facebook-login (onFacebookLogin)="facebookLogin($event)"></facebook-login>
+      </div>
+
+      <form (ngSubmit)="submitLogin(loginForm.value)" [formGroup]="loginForm">
+        <!--QUESTIONS -->
+        <df-question *ngFor="let question of questions"
+                     [question]="question"
+                     [form]="loginForm">
+        </df-question>
+
+        <!--Options to save user token locally and keep him loggedin for 10 days-->
+        <div class="checkbox">
+          <label><input #chbox_keeplogin type="checkbox" (change)="keep_login(chbox_keeplogin.checked)">
+            Keep me logged-in for 10 days
+          </label>
+        </div>
+
+        <!--Submit Login-->
+        <button type="submit" class="btn btn-primary btn-lg sign_in_btn" aria-pressed="true"
+                [disabled]="!loginForm.valid">Log in
+        </button>
+
+        <!--Goto Sign up-->
+        <a routerLink="/signup" style="margin:5%;">Sign up</a>
+      </form>
+    </div>
+  </div>

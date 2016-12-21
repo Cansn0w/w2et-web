@@ -22,7 +22,7 @@ export class RestaurantFilterComponent {
 	}
 
 	setCategories(categories: string[]) {
-		this.categories = [''].concat(categories);
+		this.categories = ['', ...categories];
 	}
 
 	setOption(key, value) {
