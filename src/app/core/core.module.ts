@@ -15,22 +15,22 @@ import { FacebookInitialiser } from './services/fb.initialiser';
 import { QuestionControlService } from './services/question-control.service';
 
 @NgModule({
-	imports: [SharedModule],
-	providers: [
-		ProfileGuard,
-		SessionGuard,
+  imports: [SharedModule],
+  providers: [
+    ProfileGuard,
+    SessionGuard,
 
-		RecipeService,
-		UtilService,
-		FacebookService,
-		UserService,
-		AuthService,
-		RestaurantService,
-		GeolocationService,
-		QuestionControlService,
+    RecipeService,
+    UtilService,
+    FacebookService,
+    UserService,
+    AuthService,
+    RestaurantService,
+    GeolocationService,
+    QuestionControlService,
 
-		FacebookInitialiser
-	]
+    FacebookInitialiser
+  ]
 })
 
 export class CoreModule {}

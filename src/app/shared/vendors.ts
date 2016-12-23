@@ -1,4 +1,4 @@
-/*
+/**
  * Application-wide config variables can be kept and imported from here
  */
 

@@ -10,18 +10,18 @@ import { AuthService as auth } from "../services/auth.service";
  */
 @Injectable()
 export class SessionGuard implements CanActivate {
-	constructor(private user: UserService) {
-	}
+  constructor(private user: UserService) {
+  }
 
-	canActivate(): boolean {
-		if (this.user.isLoggedIn()) return true;
+  canActivate(): boolean {
+    if (this.user.isLoggedIn()) return true;
 
-		if (auth.hasCookie('token')) {
-			let token = auth.getCookie('token');
-			this.user.fetchUserData(token).then(ok => {
-					if (!ok) auth.deleteCookies('token');
-			}).catch(error => auth.deleteCookies('token'));
-		}
-		return true;
-	}
+    if (auth.hasCookie('token')) {
+      let token = auth.getCookie('token');
+      this.user.fetchUserData(token).then(ok => {
+        if (!ok) auth.deleteCookies('token');
+      }).catch(error => auth.deleteCookies('token'));
+    }
+    return true;
+  }
 }

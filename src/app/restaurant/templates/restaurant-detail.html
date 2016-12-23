@@ -1,41 +1,41 @@
 <div *ngIf="restaurant" class="container narrow-container">
-    <h1 style="padding-top: 5%;">{{ restaurant.name }}</h1>
-    <div class="row">
-        <div class = "well" style="background-color:white;">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{{ restaurant.image }}" class="img-rounded img-responsive" alt="Restaurant" style="width: 150px;">
-                </div>
-                <div class="col-xs-5">
-                    <h4><b>Address</b></h4>
-                    <p>{{restaurant.address}}</p>
-                    <p><b>Rating: </b>{{restaurant.rating}}</p>
-                </div>
-                <div class="col-xs-3" style="float:right;">
-                    <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons bookmark">
-                        {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
-                    </i>
-                  <facebook-share-btn *ngIf="restaurant.url !== null" [url]="restaurant.url"></facebook-share-btn>
-                </div>
-            </div>
-            <div class="row" style="margin-top:5%;">
-                <div class="col-md-2 vcenter">
-                    <p><b>Keywords:</b></p>
-                </div>
-                <a *ngFor="let c of restaurant.categories" style="text-decoration: none;">
-                    <p class="col-md-2 well well-sm vcenter"style="margin-left:5%; color:black; box-shadow: none;">
-                        <small>#{{c['category']}}</small>
-                    </p>
-                </a>
-            </div>
+  <h1 style="padding-top: 5%;">{{ restaurant.name }}</h1>
+  <div class="row">
+    <div class = "well" style="background-color:white;">
+      <div class="row">
+        <div class="col-md-4">
+          <img src="{{ restaurant.image }}" class="img-rounded img-responsive" alt="Restaurant" style="width: 150px;">
         </div>
+        <div class="col-xs-5">
+          <h4><b>Address</b></h4>
+          <p>{{restaurant.address}}</p>
+          <p><b>Rating: </b>{{restaurant.rating}}</p>
+        </div>
+        <div class="col-xs-3" style="float:right;">
+          <i (click)="user.bookmark(restaurant); $event.stopPropagation();" class="material-icons bookmark">
+            {{ restaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
+          </i>
+          <facebook-share-btn *ngIf="restaurant.url !== null" [url]="restaurant.url"></facebook-share-btn>
+        </div>
+      </div>
+      <div class="row" style="margin-top:5%;">
+        <div class="col-md-2 vcenter">
+          <p><b>Keywords:</b></p>
+        </div>
+        <a *ngFor="let c of restaurant.categories" style="text-decoration: none;">
+          <p class="col-md-2 well well-sm vcenter"style="margin-left:5%; color:black; box-shadow: none;">
+            <small>#{{c['category']}}</small>
+          </p>
+        </a>
+      </div>
     </div>
-    <div style="dispaly: block; height: 400px;">
-        <google-map [loc]="{ lat: restaurant.lat, lng: restaurant.lng}"
-                    [showNearbyRestaurants]="false"></google-map>
-    </div>
+  </div>
+
+  <div style="dispaly: block; height: 400px;">
+    <google-map [loc]="{ lat: restaurant.lat, lng: restaurant.lng}" [showNearbyRestaurants]="false"></google-map>
+  </div>
 </div>
 
 <div *ngIf="!restaurant">
-    <div class="loader"></div>
+  <div class="loader"></div>
 </div>

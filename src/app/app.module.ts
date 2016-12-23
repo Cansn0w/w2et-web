@@ -16,25 +16,25 @@ import {SignupComponent} from './auth/signup.component';
 import {app_routing} from './app-routing'
 
 @NgModule({
-	imports: [
-		BrowserModule,
-		HttpModule,
+  imports: [
+    BrowserModule,
+    HttpModule,
 
-		SharedModule,
-		CoreModule,
-		RecipeModule,
-		RestaurantModule,
-		ProfileModule,
+    SharedModule,
+    CoreModule,
+    RecipeModule,
+    RestaurantModule,
+    ProfileModule,
 
-		app_routing
-	],
-	declarations: [
-		AppComponent,
-		HomeComponent,
-		LoginComponent,
-		SignupComponent
-	],
-	bootstrap: [AppComponent]
+    app_routing
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    SignupComponent
+  ],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {

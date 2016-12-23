@@ -1,42 +1,42 @@
 <div *ngIf="!atProfile" style="margin-top: 20px;">
-    <recipe-filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
+  <recipe-filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
 </div>
 
 <div class="container mid-container">
-    <!--Recipe Brief Info-->
-    <div *ngFor="let recipe of recipes"
-         routerLink="/recipe/detail/{{recipe.id}}" routerLinkActive="active">
+  <!--Recipe Brief Info-->
+  <div *ngFor="let recipe of recipes" routerLink="/recipe/detail/{{recipe.id}}" routerLinkActive="active">
 
-        <div class="well" style="background-color:white; cursor:pointer;">
-            <div class="row">
-                <!--Recipe Image & Name-->
-                <div class="col-md-2">
-                    <img src="{{ recipe.image }}" class="img-rounded img-responsive list-image" alt="Opps!">
-                </div>
-                <div class="col-xs-8">
-                    <h4><b> {{ recipe.name }} </b></h4>
-                    <p><b> Duration: </b> {{ recipe.duration }}</p>
-
-                    <p style="display: inline;"><b> Ingredients: </b>
-                    </p>
-                    <p *ngFor="let ingrd of recipe.ingredients | slice:0:3;"
-                       style="display: inline; text-transform: capitalize;">
-                        {{ ingrd.name }},
-                    </p>
-                    <p style="display: inline;">......</p>
-                </div>
-                <!--Recipe Bookmark/share icons-->
-                <div class="col-xs-2">
-                    <i (click)="user.bookmark(recipe); $event.stopPropagation();" class="material-icons bookmark">
-                        {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
-                    </i>
-                    <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
-                </div>
-            </div>
+    <div class="well" style="background-color:white; cursor:pointer;">
+      <div class="row">
+        <!--Recipe Image & Name-->
+        <div class="col-md-2">
+          <img src="{{ recipe.image }}" class="img-rounded img-responsive list-image" alt="Opps!">
         </div>
+        <div class="col-xs-8">
+          <h4><b> {{ recipe.name }} </b></h4>
+          <p><b> Duration: </b> {{ recipe.duration }}</p>
+
+          <p style="display: inline;"><b> Ingredients: </b></p>
+          <p *ngFor="let ingrd of recipe.ingredients | slice:0:3;" style="display: inline; text-transform: capitalize;">
+            {{ ingrd.name }},
+          </p>
+          <p style="display: inline;">......</p>
+        </div>
+        <!--Recipe Bookmark/share icons-->
+        <div class="col-xs-2">
+          <i (click)="user.bookmark(recipe); $event.stopPropagation();" class="material-icons bookmark">
+            {{ recipe.bookmarked ? 'bookmark' : 'bookmark_border' }}
+          </i>
+          <facebook-share-btn *ngIf="recipe.url !== null" [url]="recipe.url"></facebook-share-btn>
+        </div>
+      </div>
     </div>
-    <div *ngIf="loading" class="loader">Loading...</div>
-    <h2 *ngIf="ids && ids.length == 0 && !loading"><b>No results found ...</b></h2>
-    <h2 *ngIf="recipes && recipes.length >= 100"><b>No more to show :)</b></h2>
-    <h2 *ngIf="atProfile && recipes.length == 0"><b>You haven't bookmarked anything</b></h2>
+  </div>
+  <div *ngIf="loading" class="loader">
+    Loading...
+  </div>
+
+  <h2 *ngIf="ids && ids.length == 0 && !loading"><b>No results found ...</b></h2>
+  <h2 *ngIf="recipes && recipes.length >= 100"><b>No more to show :)</b></h2>
+  <h2 *ngIf="atProfile && recipes.length == 0"><b>You haven't bookmarked anything</b></h2>
 </div>

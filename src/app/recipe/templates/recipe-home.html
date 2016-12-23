@@ -1,12 +1,10 @@
 <div class="full">
-    <div class="container" style="padding-top:60px;">
-        <recipe-filter #filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
-        <div class="container mid-container">
-            <button class="btn btn-lg btn-block dine-button" style="display: block; margin-bottom: 140px;"
-                    [disabled]="!isValidFiilter()"
-                    (click)="gotoList()">
-                {{ isValidFiilter() ? 'Get my recipes!' : 'Please fill in ingredient to search'}}
-            </button>
-        </div>
+  <div class="container" style="padding-top:60px;">
+    <recipe-filter #filter (onFilterOptionSet)="onFilterOptionSet($event)"></recipe-filter>
+    <div class="container mid-container">
+      <button class="btn btn-lg btn-block dine-button" style="display: block; margin-bottom: 140px;" [disabled]="!isValidFiilter()" (click)="gotoList()">
+        {{ isValidFiilter() ? 'Get my recipes!' : 'Please fill in ingredient to search'}}
+      </button>
     </div>
+  </div>
 </div>

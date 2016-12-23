@@ -1,27 +1,27 @@
 export class Restaurant {
 
-	name: string;
-	categories: any[];
+  name: string;
+  categories: any[];
 
-	id: string;
-	url: string;
-	image: string;
-	rating: number;
+  id: string;
+  url: string;
+  image: string;
+  rating: number;
 
-	lat: number;
-	lng: number;
-	distance: number;
-	address: string;
+  lat: number;
+  lng: number;
+  distance: number;
+  address: string;
 
-	bookmarked: boolean;
+  bookmarked: boolean;
 
-	constructor(restData? : {}) {
-		if (restData)
-			for (let key in restData)
-				this[key] = restData[key];
-	}
+  constructor(restData? : {}) {
+    if (restData)
+      for (let key in restData)
+        this[key] = restData[key];
+  }
 
-	flatterned_categories(): string[] {
-		return this.categories.map((c) => c['category']);
-	}
+  flatterned_categories(): string[] {
+    return this.categories.map((c) => c['category']);
+  }
 }

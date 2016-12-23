@@ -1,23 +1,23 @@
 export class Recipe {
-	id: any;
+  id: any;
 
-	name: string;
-	image: string;
-	url: string;
+  name: string;
+  image: string;
+  url: string;
 
-	dairyFree: boolean;
-	glutenFree: boolean;
-	vegetarian: boolean;
+  dairyFree: boolean;
+  glutenFree: boolean;
+  vegetarian: boolean;
 
-	ingredients: any[];
-	instructions: string;
-	duration: number;
+  ingredients: any[];
+  instructions: string;
+  duration: number;
 
-	bookmarked: boolean;
+  bookmarked: boolean;
 
-	constructor(rcpData?: {}) {
-		if (rcpData)
-			for (let key in rcpData)
-				this[key] = rcpData[key];
-	}
+  constructor(rcpData?: {}) {
+    if (rcpData)
+      for (let key in rcpData)
+        this[key] = rcpData[key];
+  }
 }

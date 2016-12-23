@@ -8,19 +8,19 @@ import { ProfileRestaurantComponent } from './profile-restaurant.component';
 import { ProfileGuard } from '../core/guards/profile.guard';
 
 const profileRoutes: Routes = [
-	{
-		path: 'profile',
-		canActivate: [ProfileGuard],
-		children: [{
-			path:'',
-			component: ProfileComponent,
-			children: [
-				{ path: 'fav/recipe', component: ProfileRecipeComponent },
-				{ path: 'fav/restaurant', component: ProfileRestaurantComponent },
-				{ path: '', component: ProfileRecipeComponent },
-			]
-		}]
-	}
+  {
+    path: 'profile',
+    canActivate: [ProfileGuard],
+    children: [{
+      path:'',
+      component: ProfileComponent,
+      children: [
+        { path: 'fav/recipe', component: ProfileRecipeComponent },
+        { path: 'fav/restaurant', component: ProfileRestaurantComponent },
+        { path: '', component: ProfileRecipeComponent },
+      ]
+    }]
+  }
 ];
 
 export const profileRouting: ModuleWithProviders = RouterModule.forChild(profileRoutes);

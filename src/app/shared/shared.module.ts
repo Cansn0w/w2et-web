@@ -10,29 +10,29 @@ import {SafePipe} from './pipes/safe-url.pipe';
 import {RangePipe} from './pipes/range.pipe';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		ReactiveFormsModule
-	],
-	declarations: [
-		FacebookShareButton,
-		FacebookLoginButton,
-		DynamicQuestionComponent,
-		SafePipe,
-		RangePipe,
-	],
-	exports: [
-		CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  declarations: [
+    FacebookShareButton,
+    FacebookLoginButton,
+    DynamicQuestionComponent,
+    SafePipe,
+    RangePipe,
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
 
-		FacebookShareButton,
-		FacebookLoginButton,
-		DynamicQuestionComponent,
-		SafePipe,
-		RangePipe
-	]
+    FacebookShareButton,
+    FacebookLoginButton,
+    DynamicQuestionComponent,
+    SafePipe,
+    RangePipe
+  ]
 })
 
 export class SharedModule {}

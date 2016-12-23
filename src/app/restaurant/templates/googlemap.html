@@ -1,35 +1,24 @@
-<sebm-google-map [latitude]="loc.lat"
-                 [longitude]="loc.lng"
-                 [zoom]="zoom"
-                 (mapClick)="selectLoc($event)">
+<sebm-google-map [latitude]="loc.lat" [longitude]="loc.lng" [zoom]="zoom" (mapClick)="selectLoc($event)">
 
-    <!--User's current loc-->
-    <sebm-google-map-marker
-            [latitude]="loc.lat"
-            [longitude]="loc.lng"
-            [markerDraggable]="loc.draggable"
-            [label]="loc.label"
-            (dragEnd)="selectLoc($event)">
-        <sebm-google-map-info-window>
-            <strong>
-              {{ loc.addr }}
-            </strong>
-        </sebm-google-map-info-window>
+  <!--User's current loc-->
+  <sebm-google-map-marker [latitude]="loc.lat" [longitude]="loc.lng" [markerDraggable]="loc.draggable" [label]="loc.label"
+    (dragEnd)="selectLoc($event)">
+    <sebm-google-map-info-window>
+      <strong>
+        {{ loc.addr }}
+      </strong>
+    </sebm-google-map-info-window>
 
-    </sebm-google-map-marker>
+  </sebm-google-map-marker>
 
-    <!--Nearby restaurants..-->
-    <sebm-google-map-marker
-            *ngFor="let r of restaurants | async"
-            [latitude]="r.lat"
-            [longitude]="r.lng"
-            [iconUrl]="rst_icon_path">
-        <sebm-google-map-info-window>
-            <strong>
-                <a (click)="clickRestaurant(r)">{{r.name}}</a>
-            </strong>
-        </sebm-google-map-info-window>
+  <!--Nearby restaurants..-->
+  <sebm-google-map-marker *ngFor="let r of restaurants | async" [latitude]="r.lat" [longitude]="r.lng" [iconUrl]="rst_icon_path">
+    <sebm-google-map-info-window>
+      <strong>
+        <a (click)="clickRestaurant(r)">{{r.name}}</a>
+      </strong>
+    </sebm-google-map-info-window>
 
-    </sebm-google-map-marker>
+  </sebm-google-map-marker>
 
 </sebm-google-map>

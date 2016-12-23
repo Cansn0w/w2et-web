@@ -3,16 +3,13 @@
     <h3 style="color:white;font-size:20px;">Sign up for a new account</h3>
   </div>
   <div class="col-xs-12 well login-content">
-    <form (ngSubmit)="submitSignup(signupForm.value)"
-          [formGroup]="signupForm">
+    <form (ngSubmit)="submitSignup(signupForm.value)" [formGroup]="signupForm">
 
       <!--QUESTIONS -->
-      <df-question *ngFor="let question of questions"
-                   [question]="question"
-                   [form]="signupForm">
+      <df-question *ngFor="let question of questions" [question]="question" [form]="signupForm">
       </df-question>
-      <button type="submit" class="btn btn-primary btn-lg sign_in_btn"
-              [disabled]="!signupForm.valid">Signup
+      <button type="submit" class="btn btn-primary btn-lg sign_in_btn" [disabled]="!signupForm.valid">
+              Signup
       </button>
     </form>
   </div>

@@ -1,61 +1,54 @@
 <div class="container mid-container" style="padding-bottom: 10px">
-    <!--SEARCH BAR-->
-    <!--Validation: input must not be empty-->
-    <div class="searchbox">
-        <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)"
-               ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input"
-               style="border-left: none;">
-        <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
-        <div [hidden]="keyword.valid || keyword.pristine"
-             class="alert alert-danger">Search ingredient is required
-        </div>
+  <!--SEARCH BAR-->
+  <!--Validation: input must not be empty-->
+  <div class="searchbox">
+    <input id="keyword" name="keyword" (input)="setOption('keyword', $event.target.value)" ngModel #keyword="ngModel" placeholder="Search by ingredient" required class="search-input" style="border-left: none;">
+    <span class="glyphicon glyphicon-search" style="cursor: pointer; padding: 3px;"></span>
+    <div [hidden]="keyword.valid || keyword.pristine" class="alert alert-danger">
+      Search ingredient is required
     </div>
+  </div>
 
-    <div class="well" style="background-color:white;">
-        <!--DIET-->
-        <div class="row">
-            <div class="col-md-4" dropdown keyboardNav="true">
-                <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
-                    {{ selected_diet }}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                    <li *ngFor="let i of diet_options" role="menuitem"
-                        (click)="setOption('diet', i); selected_diet = i;">
-                        <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
-                    </li>
-                </ul>
-            </div>
+  <div class="well" style="background-color:white;">
+    <!--DIET-->
+    <div class="row">
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_diet }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of diet_options" role="menuitem" (click)="setOption('diet', i); selected_diet = i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
+      </div>
 
-            <!--CUISINE-->
-            <div class="col-md-4" dropdown keyboardNav="true">
-                <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
-                    {{ selected_cuisine }}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                    <li *ngFor="let i of cuisine_options" role="menuitem"
-                        (click)="setOption('cuisine', i); selected_cuisine = i;">
-                        <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
-                    </li>
-                </ul>
-            </div>
+      <!--CUISINE-->
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_cuisine }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of cuisine_options" role="menuitem" (click)="setOption('cuisine', i); selected_cuisine = i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
+      </div>
 
-            <!--INTOLERANCES-->
-            <div class="col-md-4" dropdown keyboardNav="true">
-                <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
-                    {{ selected_intolerance }}
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                    <li *ngFor="let i of intolerance_options" role="menuitem"
-                        (click)="setOption('intolerance', i); selected_intolerance = 'No '+i;">
-                        <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+      <!--INTOLERANCES-->
+      <div class="col-md-4" dropdown keyboardNav="true">
+        <button type="button" class="btn btn-block dropdown-button" dropdownToggle>
+          {{ selected_intolerance }}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" dropdownMenu role="menu" aria-labelledby="simple-btn-keyboard-nav">
+          <li *ngFor="let i of intolerance_options" role="menuitem" (click)="setOption('intolerance', i); selected_intolerance = 'No '+i;">
+            <a class="dropdown-item" style="cursor: pointer;">{{ i }}</a>
+          </li>
+        </ul>
+      </div>
     </div>
-
+  </div>
 </div>

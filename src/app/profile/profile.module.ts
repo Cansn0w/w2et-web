@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { TabsModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap';
+import { TabsModule } from 'ng2-bootstrap';
 
 import { RecipeModule } from '../recipe/recipe.module';
 import { RestaurantModule } from '../restaurant/restaurant.module';
@@ -12,20 +12,20 @@ import { ProfileRestaurantComponent } from './profile-restaurant.component';
 import { profileRouting } from './profile.routing'
 
 @NgModule({
-	imports: [
-		RecipeModule,
-		RestaurantModule,
-		SharedModule,
-		ModalModule,
-		TabsModule,
-		profileRouting
-	],
+  imports: [
+    RecipeModule,
+    RestaurantModule,
+    SharedModule,
+    ModalModule,
+    TabsModule,
+    profileRouting
+  ],
 
-	declarations: [
-		ProfileComponent,
-		ProfileRecipeComponent,
-		ProfileRestaurantComponent
-	]
+  declarations: [
+    ProfileComponent,
+    ProfileRecipeComponent,
+    ProfileRestaurantComponent
+  ]
 })
 
 export class ProfileModule {

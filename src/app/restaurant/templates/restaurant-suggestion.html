@@ -1,34 +1,36 @@
 <div class="container narrow-container">
-    <h1 style="padding-top: 10%;">How about this restaurant?</h1>
-    <div *ngIf="suggestedRestaurant" class="row"
-         routerLink="/restaurant/detail/{{suggestedRestaurant.id}}" routerLinkActive="active">
-        <div class="col-xs-12 well" style="background-color:white;">
-            <div class="row">
-                <!--Restaurant Image-->
-                <div class="col-md-3">
-                    <img src="{{suggestedRestaurant.image}}" class="img-rounded img-responsive" alt="Restaurant" style="height: 150px;width: 150px;">
-                </div>
-                <!--Restaurant Info-->
-                <div class="col-xs-7">
-                    <h4><b>{{ suggestedRestaurant.name }}</b></h4>
-                    <p> <b> Rating: </b> {{suggestedRestaurant.rating}}</p>
-                    <p> <b> Address: </b> {{suggestedRestaurant.address}}</p>
-                    <p> <b> Distance: </b> {{suggestedRestaurant.distance | number: '1.0-0'}} metres</p>
-                </div>
-                <!--Bookmark or Facebook Share-->
-                <div class="col-xs-2">
-                    <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons bookmark">
-                        {{ suggestedRestaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
-                    </i>
-                    <facebook-share-btn *ngIf="suggestedRestaurant.url !== null" [url]="suggestedRestaurant.url"></facebook-share-btn>
-                </div>
-            </div>
+  <h1 style="padding-top: 10%;">How about this restaurant?</h1>
+  <div *ngIf="suggestedRestaurant" class="row"
+        routerLink="/restaurant/detail/{{suggestedRestaurant.id}}" routerLinkActive="active">
+    <div class="col-xs-12 well" style="background-color:white;">
+      <div class="row">
+        <!--Restaurant Image-->
+        <div class="col-md-3">
+          <img src="{{suggestedRestaurant.image}}" class="img-rounded img-responsive" alt="Restaurant" style="height: 150px;width: 150px;">
         </div>
+        <!--Restaurant Info-->
+        <div class="col-xs-7">
+          <h4><b>{{ suggestedRestaurant.name }}</b></h4>
+          <p> <b> Rating: </b> {{suggestedRestaurant.rating}}</p>
+          <p> <b> Address: </b> {{suggestedRestaurant.address}}</p>
+          <p> <b> Distance: </b> {{suggestedRestaurant.distance | number: '1.0-0'}} metres</p>
+        </div>
+        <!--Bookmark or Facebook Share-->
+        <div class="col-xs-2">
+          <i (click)="user.bookmark(suggestedRestaurant); $event.stopPropagation();" class="material-icons bookmark">
+            {{ suggestedRestaurant.bookmarked ? 'bookmark' : 'bookmark_border' }}
+          </i>
+          <facebook-share-btn *ngIf="suggestedRestaurant.url !== null" [url]="suggestedRestaurant.url"></facebook-share-btn>
+        </div>
+      </div>
     </div>
-    <div *ngIf="!suggestedRestaurant">
-        <div class="loader"></div>
-    </div>
+  </div>
 
-    <a (click)="gotoRestaurantList()" class="btn btn-lg dine-button" style="display: block; margin: auto; margin-bottom:5%;">View
-        More</a>
+  <div *ngIf="!suggestedRestaurant">
+    <div class="loader"></div>
+  </div>
+
+  <a (click)="gotoRestaurantList()" class="btn btn-lg dine-button" style="display: block; margin: auto; margin-bottom:5%;">View
+    More
+  </a>
 </div>
